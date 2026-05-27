@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-explain.py — diagnostic CLI for sectioning_v2_5 results.
+explain.py — diagnostic CLI for sectioning_v2_9 results.
 
-After running sectioning_v2_5.py on a piece, the output directory will
+After running sectioning_v2_9.py on a piece, the output directory will
 contain a result.pkl file alongside the diagnostics.png, boundaries.json,
 and sectioned.musicxml files. This script loads that cached result and
 calls explain() on a specific (part, measure, beat).
@@ -11,7 +11,7 @@ Usage:
     python explain.py <output_dir> <part_idx> <measure> [beat]
 
 Example:
-    python explain.py ./out_v25 0 7 1.0
+    python explain.py ./out_v28 0 7 1.0
 
 The part_idx is zero-indexed and corresponds to the indices shown in
 boundaries.json or in the sectioning console output.
@@ -24,11 +24,11 @@ import os
 import sys
 import argparse
 
-# Add the directory containing sectioning_v2_5.py to sys.path so this
+# Add the directory containing sectioning_v2_9.py to sys.path so this
 # script can be run from anywhere as long as it's next to the module.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from sectioning_v2_7 import load_result, explain
+from sectioning_v2_9 import load_result, explain
 
 
 def main():
@@ -58,7 +58,7 @@ def main():
     cache_path = os.path.join(args.output_dir, 'result.pkl')
     if not os.path.exists(cache_path):
         print(f"ERROR: {cache_path} not found.")
-        print(f"Run sectioning_v2_5.py first to produce it.")
+        print(f"Run sectioning_v2_9.py first to produce it.")
         sys.exit(1)
 
     result = load_result(cache_path)
