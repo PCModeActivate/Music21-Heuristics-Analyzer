@@ -63,6 +63,9 @@ def default_phrase_shape_thresholds():
         # too_long_to_breathe
         'max_phrase_seconds': 12.0,
 
+        # single attack flag
+        'flag_single_attack': True,
+
         # repeated_long_note_fragment
         'repeated_long_min_attacks': 2,
         'repeated_long_max_attacks': 4,
@@ -231,6 +234,12 @@ def compute_phrase_shape(notes_list, start_qn, end_qn, tempo_segments,
             f">={thresholds['repeated_long_min_attack_duration_qn']:.2f}, "
             f"unique_pitches={unique_pitch_count}"
             f"<={thresholds['repeated_long_max_unique_pitches']}"
+        )
+
+    if thresholds.get('flag_single_attack', True) and attack_count == 1:
+        flags.append('single_attack_phrase')
+        flag_details['single_attack_phrase'] = (
+            f"attack_count=1, sounding_seconds={sounding_seconds:.2f}"
         )
 
     return {
