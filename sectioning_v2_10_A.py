@@ -1426,7 +1426,8 @@ def compute_per_part_boundary_signal(chroma_novelty_i, rhythm_novelty_i,
                                       delta=0.5,
                                       slur_delta=0.70,
                                       tuplet_delta=0.80,
-                                      gamma=0.4, zeta=0.4):
+                                      gamma=0.4, zeta=0.4,
+                                      repetition_mult_i=None):
     """
     B_i(t) with separate chroma/rhythm novelty and stateful context.
 
@@ -1453,6 +1454,17 @@ def compute_per_part_boundary_signal(chroma_novelty_i, rhythm_novelty_i,
     cross_norm = (normalize_signal(cross_rhythm_support_i)
                   if cross_rhythm_support_i is not None
                   else np.zeros_like(chroma_norm))
+
+    if repetition_mult_i is not None:
+        # v2.10 repetition mask, applied POST-normalization so the
+        # attenuation has absolute meaning ("rhythm novelty 0.83 x
+        # multiplier 0.37") and unmasked regions are not re-stretched.
+        # Masks rhythm novelty and the slur-endpoint boost: articulation
+        # that repeats with the pattern is pattern-interior evidence.
+        # Chroma novelty, LBDM, structural bumps, and cross support are
+        # deliberately unmasked.
+        rhythm_norm = rhythm_norm * repetition_mult_i
+        slur_endpoints_i = slur_endpoints_i * repetition_mult_i
 
     B_raw = (
         alpha_chroma * chroma_norm +
@@ -2272,6 +2284,7 @@ def run_sectioning(input_path, output_dir='./output',
     rhythm_novelty_per_part = []
     repetition_scores = []
     repetition_best_lags = []
+    repetition_mults = []
     rep_available = compute_repetition_score is not None
     if delta_repetition > 0.0 and not rep_available:
         print("       WARNING: delta_repetition > 0 but repetition_mask "
@@ -2280,13 +2293,15 @@ def run_sectioning(input_path, output_dir='./output',
         print(f"       repetition mask ON: delta={delta_repetition}, "
               f"lags=[{repetition_lag_min_qn},{repetition_lag_max_qn}] qn, "
               f"window={repetition_window_qn} qn "
-              f"(masks rhythm novelty + following-gap)")
+              f"(masks rhythm novelty, slur-endpoint boost, "
+              f"following-gap)")
     for i in range(len(parts)):
         if is_tacet[i]:
             chroma_novelty_per_part.append(np.zeros(T))
             rhythm_novelty_per_part.append(np.zeros(T))
             repetition_scores.append(np.zeros(T))
             repetition_best_lags.append(np.zeros(T))
+            repetition_mults.append(np.ones(T))
             continue
         chroma_ssm = build_ssm(phi_chroma[i])
         rhythm_ssm = build_ssm(phi_rhythm[i])
@@ -2302,18 +2317,16 @@ def run_sectioning(input_path, output_dir='./output',
                 window_qn=repetition_window_qn,
                 return_best_lag=True,
             )
-            # Mask rhythm novelty AT SOURCE: the masked signal flows into
-            # B_i, the first-pass B_pre, and cross-rhythm support, so a
-            # part cannot lend neighbors evidence that its own repetition
-            # context just discounted.
-            rhythm_nu = rhythm_nu * repetition_multiplier(
-                rep_i, delta_repetition
-            )
         else:
             rep_i = np.zeros(T)
             rep_lag_i = np.zeros(T)
         repetition_scores.append(rep_i)
         repetition_best_lags.append(rep_lag_i)
+        if repetition_multiplier is not None:
+            repetition_mults.append(
+                repetition_multiplier(rep_i, delta_repetition))
+        else:
+            repetition_mults.append(np.ones(T))
         chroma_novelty_per_part.append(chroma_nu)
         rhythm_novelty_per_part.append(rhythm_nu)
 
@@ -2381,6 +2394,7 @@ def run_sectioning(input_path, output_dir='./output',
             in_tie_like_i=slur_info[i].get('in_tie_like', np.zeros(T)),
             in_natural_tie_i=natural_tie_info[i]['in_natural_tie'],
             cross_rhythm_support_i=np.zeros(T),
+            repetition_mult_i=repetition_mults[i],
             alpha_chroma=alpha_chroma,
             alpha_rhythm=alpha_rhythm,
             beta_lbdm=beta_lbdm,
@@ -2428,6 +2442,7 @@ def run_sectioning(input_path, output_dir='./output',
             in_tie_like_i=in_tie_i,
             in_natural_tie_i=in_nat_tie_i,
             cross_rhythm_support_i=cross_rhythm_support[i],
+            repetition_mult_i=repetition_mults[i],
             alpha_chroma=alpha_chroma,
             alpha_rhythm=alpha_rhythm,
             beta_lbdm=beta_lbdm,
