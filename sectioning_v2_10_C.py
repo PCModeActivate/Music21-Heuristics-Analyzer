@@ -1,46 +1,48 @@
 #!/usr/bin/env python
 """
-sectioning_v2_10_A.py
+sectioning_v2_10_C.py  (the v2.10-B/C batch)
 
-V2.10-A of the sectioning pipeline: per-part phrase segmentation and
-breath-mark placement for orchestral symbolic music (MusicXML/MXL).
-No trained parameters: all weights are hand-set or literature-grounded
-(LBDM: Cambouropoulos 2001; novelty: Muller checkerboard kernel).
+Changes from v2.10-B:
 
-Changes from v2.9.1:
+  * v2.10-C same-offset event grouping (extract_lbdm_profiles): all
+    pitched elements starting at the same offset collapse into ONE
+    event carrying top_pitch, bass_pitch, pitch_set, onset_count,
+    duration_max/min. Same-time polyphony is no longer a sequence of
+    zero-IOI melodic events. --lbdm_polyphony_mode top|bass|outer
+    selects the melodic surface LBDM hears (default 'top'; single-line
+    parts are unaffected by grouping). Extra keys survive tie merging
+    (merge_tied_notes copies records), so 'outer' is fully live.
 
-  * Phrase material / shape report (phrase_material.py, soft import).
-    Passive per-segment records: note/attack counts, sounding vs elapsed
-    time in qn AND seconds (through the tempo map), rest ratio, pitch
-    stats, plus conservative advisory flags (too_little_material,
-    too_long_to_breathe, repeated_long_note_fragment). Output to
-    phrase_material.json and result['phrase_material_per_part'].
-    Flags are advisory only: postprocess_short_phrases is unchanged
-    and no cleanup behavior consumes them yet.
+  * Structural-event dedup (extract_structural_event_offsets,
+    dedup_window_qn=2.0): same-kind event runs within the window
+    collapse to their FIRST event, with a sliding window so long
+    unrolled rit./accel. tempo cascades stay one gesture. Changes
+    default output: boost spam from playback tempo marks is gone
+    (part event counts drop roughly by half). dedup_window_qn=0
+    disables. Burst-END anchoring (the a tempo) is reserved for F.
 
-  * note_anchor_score weights promoted to kwargs
-    (note_anchor_{long,lbdm,gap,cross}_weight); defaults equal the
-    previous hardcoded literals, so behavior is unchanged.
+  * Fermata extraction: fermatas live in note.expressions, not as
+    stream elements, and were previously invisible to the pipeline.
+    Now emitted as typed 'fermata' events (weight 1.0 via the
+    event-weight default; dedicated kwarg pending). Endpoint
+    side-choice semantics are D1/F work.
 
-  * [KEEP ONLY IF apply_repetition_wiring.py HAS BEEN RUN]
-    Optional rhythm-repetition mask (repetition_mask.py, soft import).
-    Per-frame repetition score R(t) from lagged rhythm-state similarity
-    (both-sided min rule); masks rhythm novelty at source and
-    following-gap evidence by (1 - delta_repetition * R). Chroma
-    novelty, long-note arrivals, and LBDM are deliberately unmasked.
-    delta_repetition defaults to 0.0: default runs are bit-identical
-    to unmasked v2.10-A.
+  * EXPERIMENTAL, default OFF: selection_repetition_penalty adds
+    rhythm-repetition R as a continuation penalty (tuplet-style)
+    into selection_score and note_anchor_score. Validated on Liz
+    (with delta_repetition=0.8): fixes ASax m.54 / removes Harp
+    m.54, but over-suppresses accompaniment parts (R>0.8 across
+    85-89% of Trumpet/Euphonium). NOT promoted to defaults;
+    revisit requires a per-part prevalence gate and onset-gated
+    similarity. See handover notes.
 
-  * [KEEP ONLY IF THE single_attack EDIT WENT INTO phrase_material.py]
-    single_attack_phrase advisory flag: a segment whose entire material
-    is one attack (catches whole-note-per-bar chains that the
-    per-segment repeated_long_note_fragment flag cannot see).
+  * Companion phrase_material.py: single_attack_phrase advisory flag
+    (catches whole-note-per-bar chains split across segments).
 
-Carried invariants from v2.9.1: per-part boundaries (instruments phrase
-independently); candidate/selection/acceptance triad; slur, hairpin, and
-tuplet interiors as soft continuation penalties; tie-like and natural
-ties as hard no-breath zones; boundary validation (rest-in-boundary,
-outgoing-tie, tie-interior rejects) with resolved breath-target records.
+Carried from v2.10-A/B: phrase material report; note_anchor weights
+as kwargs; repetition mask (post-normalization, masks rhythm novelty +
+slur-endpoint boost + following-gap; delta_repetition=0.0 default);
+--chroma_kernel exact|interval (interval-class SSM, default exact).
 
 Usage with caching:
     from sectioning_v2_10_A import run_sectioning, explain, save_result, load_result
