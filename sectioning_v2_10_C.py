@@ -995,10 +995,16 @@ def extract_hairpin_indicators(part, num_frames, division):
     for hp in hairpins:
         try:
             spanned = hp.getSpannedElements()
-            if len(spanned) < 2:
+            if not spanned:
                 continue
-            start_off = _global_offset(spanned[0], part)
-            end_off = _global_offset(spanned[-1], part)
+            try:
+                start_off = float(spanned[0].getOffsetInHierarchy(part))
+                end_off = float(spanned[-1].getOffsetInHierarchy(part))
+            except Exception:
+                start_off = float(spanned[0].offset)
+                end_off = float(spanned[-1].offset)
+            if len(spanned) == 1:
+                end_off = start_off + float(spanned[0].duration.quarterLength)
             if end_off <= start_off:
                 continue
             n_hairpins += 1
