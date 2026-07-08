@@ -28,7 +28,7 @@ import argparse
 # script can be run from anywhere as long as it's next to the module.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from sectioning_v2_10_C import load_result, explain
+from sectioning_v2_10_D import load_result, explain, explain_cross_support
 
 def main():
     parser = argparse.ArgumentParser(
@@ -51,6 +51,8 @@ def main():
                              'measure/beat)')
     parser.add_argument('--window', type=float, default=4.0,
                         help='Window in qn for context (default 4.0)')
+    parser.add_argument('--cross', action='store_true',
+                        help='Append cross-support attribution at the point')
 
     args = parser.parse_args()
 
@@ -69,6 +71,10 @@ def main():
         explain(result, part_idx=args.part_idx,
                 measure=args.measure, beat=args.beat,
                 window_qn=args.window)
+        
+        if args.cross:
+            explain_cross_support(result, args.part_idx,
+                                  measure=args.measure, beat=args.beat)
     else:
         print("ERROR: Must provide either a measure number or --time")
         parser.print_help()
