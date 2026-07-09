@@ -2294,7 +2294,8 @@ def run_sectioning(input_path, output_dir='./output',
                     cross_rhythm_max_shift_qn=0.5,
                     convention='muller',
                     tacet_threshold=0.05,
-                    breath_color='#d62728'):
+                    breath_color='#d62728',
+                    rest_seam_policy='legacy'):
     """
     V2.9.1 top-level pipeline.
 
@@ -2312,6 +2313,7 @@ def run_sectioning(input_path, output_dir='./output',
         computed and stored in result['cross_similarity_info'], but they
         are not used for boundary decisions in this version.
     """
+    _REST_SEAM_POLICY['policy'] = rest_seam_policy
     os.makedirs(output_dir, exist_ok=True)
 
     print(f"[1/11] Loading {input_path}")
@@ -3499,6 +3501,14 @@ def main():
                              '(v2.10-B)')
     parser.add_argument('--convention', choices=['muller', 'foote'],
                         default='muller')
+    parser.add_argument('--rest_seam_policy', choices=['legacy', 'seam'],
+                        default='legacy',
+                        help="'legacy': at-seam boundaries classify as "
+                             "in-rest (v2.9.1 behavior). 'seam': at-seam "
+                             "boundaries are kept (breath after the final "
+                             "note), near-seam boundaries snap to the "
+                             "seam, only strictly-inside-rest boundaries "
+                             "are rejected.")
     parser.add_argument('--tacet_threshold', type=float, default=0.05)
     parser.add_argument('--breath_color', default='#d62728')
 
@@ -3556,6 +3566,7 @@ def main():
         convention=args.convention,
         tacet_threshold=args.tacet_threshold,
         breath_color=args.breath_color,
+        rest_seam_policy=args.rest_seam_policy,
     )
 
 
