@@ -58,6 +58,7 @@ def main() -> int:
     parser.add_argument('--python', default=sys.executable, help='Python executable')
     parser.add_argument('--window', type=float, default=4.0)
     parser.add_argument('--case', action='append', default=[], help='case id to include; may repeat')
+    parser.add_argument('--cross', action='store_true', help='Append --cross to every explain.py call')
     parser.add_argument('--tag', action='append', default=[], help='include cases with this tag; may repeat')
     parser.add_argument('--include-reference', action='store_true', help='also run explain points for reference parts')
     parser.add_argument('--dry-run', action='store_true', help='write command list but do not run commands')
@@ -114,6 +115,8 @@ def main() -> int:
                 str(args.window),
             ]
             commands.append(' '.join(cmd) + f" > {output_path}")
+            if args.cross:
+                cmd.append('--cross')
 
             record = {
                 'case_id': case['id'],
