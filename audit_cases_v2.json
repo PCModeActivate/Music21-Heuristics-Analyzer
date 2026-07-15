@@ -1,0 +1,2625 @@
+{
+  "metadata": {
+    "piece": "Liz and the Blue Bird III, v2 manual diagnostic list",
+    "source_boundaries": "boundaries.json",
+    "boundary_detection": null,
+    "notes": "This is a diagnostic/audit case list, not full ground truth. Cases encode user-observed errors or recommendations and generate explain targets."
+  },
+  "part_map": {
+    "Fl.1": {
+      "index": 0,
+      "name": "Flute 1"
+    },
+    "Fl.2": {
+      "index": 1,
+      "name": "Flute"
+    },
+    "Oboe": {
+      "index": 2,
+      "name": "Oboe"
+    },
+    "Cl.1": {
+      "index": 3,
+      "name": "Clarinet in B\u266d  1"
+    },
+    "Cl.2": {
+      "index": 4,
+      "name": "B\u266d Clarinet"
+    },
+    "A. Sax": {
+      "index": 5,
+      "name": "Alto Saxophone"
+    },
+    "Tpt": {
+      "index": 6,
+      "name": "Trumpet in B\u266d 1"
+    },
+    "Euph": {
+      "index": 7,
+      "name": "Euphonium"
+    },
+    "Harp high": {
+      "index": 8,
+      "name": "Harp"
+    },
+    "Harp low": {
+      "index": 9,
+      "name": "Harp"
+    }
+  },
+  "cases": [
+    {
+      "id": "LIZV2-001",
+      "part_label": "Fl.2",
+      "part_index": 1,
+      "part_name": "Flute",
+      "measure": 74,
+      "measures": [
+        74
+      ],
+      "summary": "should follow Fl.1 here",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "follow_reference"
+      ],
+      "reference_parts": [
+        "Fl.1"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 293.0,
+            "measure": 74,
+            "beat": 2.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 293.0,
+            "measure": 74,
+            "beat": 2.0
+          },
+          {
+            "time_quarter_notes": 297.25,
+            "measure": 75,
+            "beat": 2.25
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 1,
+          "measure": 74,
+          "beat": 2.0,
+          "time_quarter_notes": 293.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 0,
+          "measure": 74,
+          "beat": 2.0,
+          "time_quarter_notes": 293.0,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 0,
+          "measure": 74,
+          "beat": 4.5,
+          "time_quarter_notes": 295.5,
+          "why": "reference part Fl.1 boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-002",
+      "part_label": "Oboe",
+      "part_index": 2,
+      "part_name": "Oboe",
+      "measure": 66,
+      "measures": [
+        66
+      ],
+      "summary": "breaks eighths rhythm / too short",
+      "expected_action": "remove_or_move",
+      "tags": [
+        "rhythmic_run",
+        "too_short",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 263.875,
+            "measure": 66,
+            "beat": 4.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 256.0,
+            "measure": 65,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 263.875,
+            "measure": 66,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 2,
+          "measure": 66,
+          "beat": 4.875,
+          "time_quarter_notes": 263.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-003",
+      "part_label": "Oboe",
+      "part_index": 2,
+      "part_name": "Oboe",
+      "measure": 84,
+      "measures": [
+        84
+      ],
+      "summary": "should follow A Sax. & Euph (rit. & half note), same as Harp Low, Tpt",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "rit",
+        "long_note",
+        "preferred_boundary"
+      ],
+      "reference_parts": [
+        "A. Sax",
+        "Euph",
+        "Harp low",
+        "Tpt"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 333.875,
+            "measure": 84,
+            "beat": 2.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 328.0,
+            "measure": 83,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 333.875,
+            "measure": 84,
+            "beat": 2.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 2,
+          "measure": 84,
+          "beat": 2.875,
+          "time_quarter_notes": 333.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 85,
+          "beat": 1.0,
+          "time_quarter_notes": 336.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 83,
+          "beat": 2.875,
+          "time_quarter_notes": 329.875,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 84,
+          "beat": 2.0,
+          "time_quarter_notes": 333.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 85,
+          "beat": 1.0,
+          "time_quarter_notes": 336.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 9,
+          "measure": 84,
+          "beat": 4.875,
+          "time_quarter_notes": 335.875,
+          "why": "reference part Harp low boundary"
+        },
+        {
+          "part_index": 6,
+          "measure": 84,
+          "beat": 3.0,
+          "time_quarter_notes": 334.0,
+          "why": "reference part Tpt boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-004",
+      "part_label": "Oboe",
+      "part_index": 2,
+      "part_name": "Oboe",
+      "measure": 93,
+      "measures": [
+        93
+      ],
+      "summary": "later one breaks tie",
+      "expected_action": "remove_hard_violation",
+      "tags": [
+        "tie",
+        "hard_violation",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "Later m93 boundary; use exact m93 candidates and inspect tie mask/attachment.",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 369.875,
+            "measure": 93,
+            "beat": 2.875
+          },
+          {
+            "time_quarter_notes": 376.0,
+            "measure": 93,
+            "beat": 9.0
+          },
+          {
+            "time_quarter_notes": 380.875,
+            "measure": 93,
+            "beat": 13.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 369.875,
+            "measure": 93,
+            "beat": 2.875
+          },
+          {
+            "time_quarter_notes": 376.0,
+            "measure": 93,
+            "beat": 9.0
+          },
+          {
+            "time_quarter_notes": 380.875,
+            "measure": 93,
+            "beat": 13.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 2,
+          "measure": 93,
+          "beat": 2.875,
+          "time_quarter_notes": 369.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 2,
+          "measure": 93,
+          "beat": 9.0,
+          "time_quarter_notes": 376.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 2,
+          "measure": 93,
+          "beat": 13.875,
+          "time_quarter_notes": 380.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-005",
+      "part_label": "Cl.1",
+      "part_index": 3,
+      "part_name": "Clarinet in B\u266d  1",
+      "measure": 31,
+      "measures": [
+        31
+      ],
+      "summary": "could use a breath at the end, recommended",
+      "expected_action": "add_optional",
+      "tags": [
+        "recommended",
+        "missing_boundary",
+        "phrase_end"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 122.0,
+            "measure": 31,
+            "beat": 3.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 117.0,
+            "measure": 30,
+            "beat": 2.0
+          },
+          {
+            "time_quarter_notes": 122.0,
+            "measure": 31,
+            "beat": 3.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 3,
+          "measure": 31,
+          "beat": 3.0,
+          "time_quarter_notes": 122.0,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-006",
+      "part_label": "Cl.1",
+      "part_index": 3,
+      "part_name": "Clarinet in B\u266d  1",
+      "measure": 53,
+      "measures": [
+        53
+      ],
+      "summary": "breaks slur",
+      "expected_action": "remove_or_move",
+      "tags": [
+        "slur",
+        "continuation_violation",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 211.0,
+            "measure": 53,
+            "beat": 4.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 205.0,
+            "measure": 52,
+            "beat": 2.0
+          },
+          {
+            "time_quarter_notes": 207.875,
+            "measure": 52,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 211.0,
+            "measure": 53,
+            "beat": 4.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 3,
+          "measure": 53,
+          "beat": 4.0,
+          "time_quarter_notes": 211.0,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-007",
+      "part_label": "Cl.1",
+      "part_index": 3,
+      "part_name": "Clarinet in B\u266d  1",
+      "measure": 74,
+      "measures": [
+        74
+      ],
+      "summary": "should end here with cresc., same as Cl.2",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "consensus",
+        "preferred_boundary"
+      ],
+      "reference_parts": [
+        "Cl.2"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 296.0,
+            "measure": 75,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 298.875,
+            "measure": 75,
+            "beat": 3.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 3,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 3,
+          "measure": 75,
+          "beat": 3.875,
+          "time_quarter_notes": 298.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 4,
+          "measure": 74,
+          "beat": 3.0,
+          "time_quarter_notes": 294.0,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 75,
+          "beat": 2.25,
+          "time_quarter_notes": 297.25,
+          "why": "reference part Cl.2 boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-008",
+      "part_label": "Cl.1",
+      "part_index": 3,
+      "part_name": "Clarinet in B\u266d  1",
+      "measure": 80,
+      "measures": [
+        80
+      ],
+      "summary": "should end here at end of cresc., same with Cl.2 & Harp High",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "consensus",
+        "preferred_boundary"
+      ],
+      "reference_parts": [
+        "Cl.2",
+        "Harp high"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": []
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 3,
+          "measure": 80,
+          "beat": 1.0,
+          "why": "no nearby boundary; inspect requested location"
+        }
+      ],
+      "boundary_presence": "no_boundary_nearby_pm1"
+    },
+    {
+      "id": "LIZV2-009",
+      "part_label": "Cl.2",
+      "part_index": 4,
+      "part_name": "B\u266d Clarinet",
+      "measure": 69,
+      "measures": [
+        69
+      ],
+      "summary": "should really be merged in with the next section (same as Euph)",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_little_material",
+        "merge_next",
+        "consensus"
+      ],
+      "reference_parts": [
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 272.0,
+            "measure": 69,
+            "beat": 1.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 272.0,
+            "measure": 69,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 279.875,
+            "measure": 70,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 4,
+          "measure": 69,
+          "beat": 1.0,
+          "time_quarter_notes": 272.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 7,
+          "measure": 69,
+          "beat": 1.0,
+          "time_quarter_notes": 272.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 70,
+          "beat": 4.875,
+          "time_quarter_notes": 279.875,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-010",
+      "part_label": "Cl.2",
+      "part_index": 4,
+      "part_name": "B\u266d Clarinet",
+      "measure": 74,
+      "measures": [
+        74
+      ],
+      "summary": "should end here with cresc., same as Cl.1 & Euph",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "consensus",
+        "preferred_boundary"
+      ],
+      "reference_parts": [
+        "Cl.1",
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 294.0,
+            "measure": 74,
+            "beat": 3.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 294.0,
+            "measure": 74,
+            "beat": 3.0
+          },
+          {
+            "time_quarter_notes": 297.25,
+            "measure": 75,
+            "beat": 2.25
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 4,
+          "measure": 74,
+          "beat": 3.0,
+          "time_quarter_notes": 294.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 3,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 3,
+          "measure": 75,
+          "beat": 3.875,
+          "time_quarter_notes": 298.875,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-011",
+      "part_label": "Cl.2",
+      "part_index": 4,
+      "part_name": "B\u266d Clarinet",
+      "measure": 75,
+      "measures": [
+        75
+      ],
+      "summary": "follows from 74; should be removed, too short",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_short",
+        "false_positive",
+        "merge_previous"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 297.25,
+            "measure": 75,
+            "beat": 2.25
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 294.0,
+            "measure": 74,
+            "beat": 3.0
+          },
+          {
+            "time_quarter_notes": 297.25,
+            "measure": 75,
+            "beat": 2.25
+          },
+          {
+            "time_quarter_notes": 300.375,
+            "measure": 76,
+            "beat": 1.375
+          },
+          {
+            "time_quarter_notes": 303.75,
+            "measure": 76,
+            "beat": 4.75
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 4,
+          "measure": 75,
+          "beat": 2.25,
+          "time_quarter_notes": 297.25,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-012",
+      "part_label": "Cl.2",
+      "part_index": 4,
+      "part_name": "B\u266d Clarinet",
+      "measure": 80,
+      "measures": [
+        80
+      ],
+      "summary": "should end here at end of cresc., same with Cl.1 & Harp High",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "consensus",
+        "preferred_boundary"
+      ],
+      "reference_parts": [
+        "Cl.1",
+        "Harp high"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": []
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 4,
+          "measure": 80,
+          "beat": 1.0,
+          "why": "no nearby boundary; inspect requested location"
+        }
+      ],
+      "boundary_presence": "no_boundary_nearby_pm1"
+    },
+    {
+      "id": "LIZV2-013",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": [
+        46,
+        50
+      ],
+      "measures": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "summary": "too frequent boundaries",
+      "expected_action": "reduce_density",
+      "tags": [
+        "too_frequent",
+        "phrase_material",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 183.875,
+            "measure": 46,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 188.0,
+            "measure": 48,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 194.875,
+            "measure": 49,
+            "beat": 3.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 179.875,
+            "measure": 45,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 183.875,
+            "measure": 46,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 188.0,
+            "measure": 48,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 194.875,
+            "measure": 49,
+            "beat": 3.875
+          },
+          {
+            "time_quarter_notes": 201.0,
+            "measure": 51,
+            "beat": 2.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 46,
+          "beat": 4.875,
+          "time_quarter_notes": 183.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 48,
+          "beat": 1.0,
+          "time_quarter_notes": 188.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 49,
+          "beat": 3.875,
+          "time_quarter_notes": 194.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-014",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": 49,
+      "measures": [
+        49
+      ],
+      "summary": "breaks tie",
+      "expected_action": "remove_hard_violation",
+      "tags": [
+        "tie",
+        "hard_violation",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 194.875,
+            "measure": 49,
+            "beat": 3.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 188.0,
+            "measure": 48,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 194.875,
+            "measure": 49,
+            "beat": 3.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 49,
+          "beat": 3.875,
+          "time_quarter_notes": 194.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-015",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": 54,
+      "measures": [
+        54
+      ],
+      "summary": "section too short (only a triplet)",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_short",
+        "rhythmic_run",
+        "triplet",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 212.5,
+            "measure": 54,
+            "beat": 1.5
+          },
+          {
+            "time_quarter_notes": 215.5,
+            "measure": 54,
+            "beat": 4.5
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 212.5,
+            "measure": 54,
+            "beat": 1.5
+          },
+          {
+            "time_quarter_notes": 215.5,
+            "measure": 54,
+            "beat": 4.5
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 54,
+          "beat": 1.5,
+          "time_quarter_notes": 212.5,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 54,
+          "beat": 4.5,
+          "time_quarter_notes": 215.5,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-016",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": 62,
+      "measures": [
+        62
+      ],
+      "summary": "section too short (only a quarter note)",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_short",
+        "too_little_material",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 244.875,
+            "measure": 62,
+            "beat": 1.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 244.875,
+            "measure": 62,
+            "beat": 1.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 62,
+          "beat": 1.875,
+          "time_quarter_notes": 244.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-017",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": 76,
+      "measures": [
+        76
+      ],
+      "summary": "should end with many other instruments at end of bar",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "ensemble_end",
+        "preferred_boundary"
+      ],
+      "reference_parts": [
+        "Fl.1",
+        "Fl.2",
+        "Oboe",
+        "Tpt",
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 296.0,
+            "measure": 75,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 304.0,
+            "measure": 77,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 77,
+          "beat": 1.0,
+          "time_quarter_notes": 304.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 0,
+          "measure": 76,
+          "beat": 4.875,
+          "time_quarter_notes": 303.875,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 1,
+          "measure": 75,
+          "beat": 2.25,
+          "time_quarter_notes": 297.25,
+          "why": "reference part Fl.2 boundary"
+        },
+        {
+          "part_index": 1,
+          "measure": 76,
+          "beat": 1.375,
+          "time_quarter_notes": 300.375,
+          "why": "reference part Fl.2 boundary"
+        },
+        {
+          "part_index": 1,
+          "measure": 76,
+          "beat": 4.875,
+          "time_quarter_notes": 303.875,
+          "why": "reference part Fl.2 boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 77,
+          "beat": 1.0,
+          "time_quarter_notes": 304.0,
+          "why": "reference part Oboe boundary"
+        },
+        {
+          "part_index": 6,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "reference part Tpt boundary"
+        },
+        {
+          "part_index": 6,
+          "measure": 77,
+          "beat": 1.0,
+          "time_quarter_notes": 304.0,
+          "why": "reference part Tpt boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 77,
+          "beat": 1.0,
+          "time_quarter_notes": 304.0,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-018",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": 83,
+      "measures": [
+        83
+      ],
+      "summary": "too short (only an eighth), should follow Euph",
+      "expected_action": "snap_or_merge",
+      "tags": [
+        "too_short",
+        "rhythmic_run",
+        "consensus"
+      ],
+      "reference_parts": [
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 328.0,
+            "measure": 83,
+            "beat": 1.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 328.0,
+            "measure": 83,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 7,
+          "measure": 82,
+          "beat": 2.875,
+          "time_quarter_notes": 325.875,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 83,
+          "beat": 2.875,
+          "time_quarter_notes": 329.875,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 84,
+          "beat": 2.0,
+          "time_quarter_notes": 333.0,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-019",
+      "part_label": "A. Sax",
+      "part_index": 5,
+      "part_name": "Alto Saxophone",
+      "measure": 87,
+      "measures": [
+        87
+      ],
+      "summary": "breaks cresc., too short (quarter)",
+      "expected_action": "remove_or_move",
+      "tags": [
+        "hairpin_interior",
+        "breaks_cresc",
+        "too_short",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 344.875,
+            "measure": 87,
+            "beat": 1.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 344.875,
+            "measure": 87,
+            "beat": 1.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 87,
+          "beat": 1.875,
+          "time_quarter_notes": 344.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-020",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 12,
+      "measures": [
+        12
+      ],
+      "summary": "long rest after; other instruments stop here",
+      "expected_action": "add_or_snap_consensus",
+      "tags": [
+        "long_rest_after",
+        "consensus",
+        "missing_boundary"
+      ],
+      "reference_parts": [
+        "Fl.1",
+        "Oboe",
+        "Cl.1",
+        "Cl.2",
+        "A. Sax",
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 46.0,
+            "measure": 12,
+            "beat": 3.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 46.0,
+            "measure": 12,
+            "beat": 3.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 12,
+          "beat": 3.0,
+          "time_quarter_notes": 46.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 0,
+          "measure": 11,
+          "beat": 2.0,
+          "time_quarter_notes": 41.0,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 0,
+          "measure": 13,
+          "beat": 1.0,
+          "time_quarter_notes": 48.0,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 12,
+          "beat": 2.0,
+          "time_quarter_notes": 45.0,
+          "why": "reference part Oboe boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 13,
+          "beat": 1.0,
+          "time_quarter_notes": 48.0,
+          "why": "reference part Oboe boundary"
+        },
+        {
+          "part_index": 3,
+          "measure": 13,
+          "beat": 1.0,
+          "time_quarter_notes": 48.0,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 12,
+          "beat": 4.875,
+          "time_quarter_notes": 47.875,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 11,
+          "beat": 1.0,
+          "time_quarter_notes": 40.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 12,
+          "beat": 3.0,
+          "time_quarter_notes": 46.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 11,
+          "beat": 1.0,
+          "time_quarter_notes": 40.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 12,
+          "beat": 4.875,
+          "time_quarter_notes": 47.875,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-021",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 54,
+      "measures": [
+        54
+      ],
+      "summary": "section too short (only a half note) and should follow Euph",
+      "expected_action": "snap_or_merge",
+      "tags": [
+        "too_short",
+        "consensus",
+        "too_little_material"
+      ],
+      "reference_parts": [
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 215.875,
+            "measure": 54,
+            "beat": 4.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 211.875,
+            "measure": 53,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 215.875,
+            "measure": 54,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 54,
+          "beat": 4.875,
+          "time_quarter_notes": 215.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 7,
+          "measure": 53,
+          "beat": 1.0,
+          "time_quarter_notes": 208.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 54,
+          "beat": 1.0,
+          "time_quarter_notes": 212.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 55,
+          "beat": 1.0,
+          "time_quarter_notes": 216.0,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-022",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 57,
+      "measures": [
+        57
+      ],
+      "summary": "should follow Euph (same rhythm/phrase here)",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "same_rhythm"
+      ],
+      "reference_parts": [
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 224.0,
+            "measure": 57,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 227.875,
+            "measure": 57,
+            "beat": 4.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 220.0,
+            "measure": 56,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 224.0,
+            "measure": 57,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 227.875,
+            "measure": 57,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 57,
+          "beat": 1.0,
+          "time_quarter_notes": 224.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 6,
+          "measure": 57,
+          "beat": 4.875,
+          "time_quarter_notes": 227.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 7,
+          "measure": 56,
+          "beat": 1.0,
+          "time_quarter_notes": 220.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 57,
+          "beat": 1.0,
+          "time_quarter_notes": 224.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 58,
+          "beat": 1.0,
+          "time_quarter_notes": 228.0,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-023",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 59,
+      "measures": [
+        59
+      ],
+      "summary": "should follow A Sax & Cl.2 here",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "same_rhythm"
+      ],
+      "reference_parts": [
+        "A. Sax",
+        "Cl.2"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 232.0,
+            "measure": 59,
+            "beat": 1.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 232.0,
+            "measure": 59,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 236.0,
+            "measure": 60,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 59,
+          "beat": 1.0,
+          "time_quarter_notes": 232.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 58,
+          "beat": 2.0,
+          "time_quarter_notes": 229.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 59,
+          "beat": 1.5,
+          "time_quarter_notes": 232.5,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 60,
+          "beat": 1.0,
+          "time_quarter_notes": 236.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 59,
+          "beat": 1.0,
+          "time_quarter_notes": 232.0,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 60,
+          "beat": 1.0,
+          "time_quarter_notes": 236.0,
+          "why": "reference part Cl.2 boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-024",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 69,
+      "measures": [
+        69
+      ],
+      "summary": "should start new section because of piano (same as Cl.2)",
+      "expected_action": "add_or_snap_structural_start",
+      "tags": [
+        "dynamic",
+        "phrase_start",
+        "consensus"
+      ],
+      "reference_parts": [
+        "Cl.2"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 271.0,
+            "measure": 68,
+            "beat": 4.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 68,
+          "beat": 4.0,
+          "time_quarter_notes": 271.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 4,
+          "measure": 69,
+          "beat": 1.0,
+          "time_quarter_notes": 272.0,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 70,
+          "beat": 4.875,
+          "time_quarter_notes": 279.875,
+          "why": "reference part Cl.2 boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-025",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 82,
+      "measures": [
+        82
+      ],
+      "summary": "should end with other instruments like Flute 1, 2, Cl.1, Cl.2, Harp Hi, same as Euph",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "ensemble_end"
+      ],
+      "reference_parts": [
+        "Fl.1",
+        "Fl.2",
+        "Cl.1",
+        "Cl.2",
+        "Harp high",
+        "Euph"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 325.875,
+            "measure": 82,
+            "beat": 2.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 325.875,
+            "measure": 82,
+            "beat": 2.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 82,
+          "beat": 2.875,
+          "time_quarter_notes": 325.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 0,
+          "measure": 81,
+          "beat": 2.875,
+          "time_quarter_notes": 321.875,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 0,
+          "measure": 82,
+          "beat": 2.0,
+          "time_quarter_notes": 325.0,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 0,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part Fl.1 boundary"
+        },
+        {
+          "part_index": 1,
+          "measure": 82,
+          "beat": 1.875,
+          "time_quarter_notes": 324.875,
+          "why": "reference part Fl.2 boundary"
+        },
+        {
+          "part_index": 1,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part Fl.2 boundary"
+        },
+        {
+          "part_index": 3,
+          "measure": 82,
+          "beat": 1.875,
+          "time_quarter_notes": 324.875,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 3,
+          "measure": 82,
+          "beat": 4.875,
+          "time_quarter_notes": 327.875,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 82,
+          "beat": 1.875,
+          "time_quarter_notes": 324.875,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 82,
+          "beat": 4.75,
+          "time_quarter_notes": 327.75,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 8,
+          "measure": 82,
+          "beat": 3.0,
+          "time_quarter_notes": 326.0,
+          "why": "reference part Harp high boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 82,
+          "beat": 2.875,
+          "time_quarter_notes": 325.875,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 83,
+          "beat": 2.875,
+          "time_quarter_notes": 329.875,
+          "why": "reference part Euph boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-026",
+      "part_label": "Tpt",
+      "part_index": 6,
+      "part_name": "Trumpet in B\u266d 1",
+      "measure": 84,
+      "measures": [
+        84
+      ],
+      "summary": "should follow A Sax. & Euph (rit. & half note), same as Harp Low, Oboe",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "rit",
+        "long_note"
+      ],
+      "reference_parts": [
+        "A. Sax",
+        "Euph",
+        "Harp low",
+        "Oboe"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 334.0,
+            "measure": 84,
+            "beat": 3.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 334.0,
+            "measure": 84,
+            "beat": 3.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 84,
+          "beat": 3.0,
+          "time_quarter_notes": 334.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 85,
+          "beat": 1.0,
+          "time_quarter_notes": 336.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 83,
+          "beat": 2.875,
+          "time_quarter_notes": 329.875,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 84,
+          "beat": 2.0,
+          "time_quarter_notes": 333.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 85,
+          "beat": 1.0,
+          "time_quarter_notes": 336.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 9,
+          "measure": 84,
+          "beat": 4.875,
+          "time_quarter_notes": 335.875,
+          "why": "reference part Harp low boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part Oboe boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 84,
+          "beat": 2.875,
+          "time_quarter_notes": 333.875,
+          "why": "reference part Oboe boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-027",
+      "part_label": "Euph",
+      "part_index": 7,
+      "part_name": "Euphonium",
+      "measure": 71,
+      "measures": [
+        71
+      ],
+      "summary": "should follow Cl.2 (too short)",
+      "expected_action": "snap_or_merge",
+      "tags": [
+        "consensus",
+        "too_short",
+        "too_little_material"
+      ],
+      "reference_parts": [
+        "Cl.2"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 279.875,
+            "measure": 70,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 287.875,
+            "measure": 72,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 70,
+          "beat": 4.875,
+          "time_quarter_notes": 279.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 7,
+          "measure": 72,
+          "beat": 4.875,
+          "time_quarter_notes": 287.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 4,
+          "measure": 70,
+          "beat": 4.875,
+          "time_quarter_notes": 279.875,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 72,
+          "beat": 4.875,
+          "time_quarter_notes": 287.875,
+          "why": "reference part Cl.2 boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-028",
+      "part_label": "Euph",
+      "part_index": 7,
+      "part_name": "Euphonium",
+      "measure": 74,
+      "measures": [
+        74
+      ],
+      "summary": "should end at cresc., same with Cl.1 & Cl.2",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "consensus"
+      ],
+      "reference_parts": [
+        "Cl.1",
+        "Cl.2"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 296.0,
+            "measure": 75,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 3,
+          "measure": 75,
+          "beat": 1.0,
+          "time_quarter_notes": 296.0,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 3,
+          "measure": 75,
+          "beat": 3.875,
+          "time_quarter_notes": 298.875,
+          "why": "reference part Cl.1 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 74,
+          "beat": 3.0,
+          "time_quarter_notes": 294.0,
+          "why": "reference part Cl.2 boundary"
+        },
+        {
+          "part_index": 4,
+          "measure": 75,
+          "beat": 2.25,
+          "time_quarter_notes": 297.25,
+          "why": "reference part Cl.2 boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-029",
+      "part_label": "Euph",
+      "part_index": 7,
+      "part_name": "Euphonium",
+      "measure": 81,
+      "measures": [
+        81
+      ],
+      "summary": "too short (only a quarter), should be merged into next",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_short",
+        "too_little_material",
+        "merge_next"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 325.875,
+            "measure": 82,
+            "beat": 2.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 82,
+          "beat": 2.875,
+          "time_quarter_notes": 325.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-030",
+      "part_label": "Euph",
+      "part_index": 7,
+      "part_name": "Euphonium",
+      "measure": 89,
+      "measures": [
+        89
+      ],
+      "summary": "too few notes (only one whole note), should be merged with 90",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_little_material",
+        "single_sustained_note",
+        "merge_next"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 351.875,
+            "measure": 88,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 356.0,
+            "measure": 90,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 88,
+          "beat": 4.875,
+          "time_quarter_notes": 351.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 7,
+          "measure": 90,
+          "beat": 1.0,
+          "time_quarter_notes": 356.0,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-031",
+      "part_label": "Harp high",
+      "part_index": 8,
+      "part_name": "Harp",
+      "measure": 3,
+      "measures": [
+        3
+      ],
+      "summary": "Harp low also sections here",
+      "expected_action": "add_or_snap_consensus",
+      "tags": [
+        "consensus",
+        "missing_boundary"
+      ],
+      "reference_parts": [
+        "Harp low"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 4.0,
+            "measure": 2,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 7.875,
+            "measure": 2,
+            "beat": 4.875
+          },
+          {
+            "time_quarter_notes": 12.0,
+            "measure": 4,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 8,
+          "measure": 2,
+          "beat": 1.0,
+          "time_quarter_notes": 4.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 8,
+          "measure": 2,
+          "beat": 4.875,
+          "time_quarter_notes": 7.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 9,
+          "measure": 2,
+          "beat": 1.0,
+          "time_quarter_notes": 4.0,
+          "why": "reference part Harp low boundary"
+        },
+        {
+          "part_index": 9,
+          "measure": 2,
+          "beat": 4.875,
+          "time_quarter_notes": 7.875,
+          "why": "reference part Harp low boundary"
+        },
+        {
+          "part_index": 9,
+          "measure": 3,
+          "beat": 4.875,
+          "time_quarter_notes": 11.875,
+          "why": "reference part Harp low boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-032",
+      "part_label": "Harp high",
+      "part_index": 8,
+      "part_name": "Harp",
+      "measure": 54,
+      "measures": [
+        54
+      ],
+      "summary": "section too short and should start before tutti (same as A Sax)",
+      "expected_action": "snap_or_merge",
+      "tags": [
+        "too_short",
+        "tutti",
+        "consensus"
+      ],
+      "reference_parts": [
+        "A. Sax"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 209.0,
+            "measure": 53,
+            "beat": 2.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 8,
+          "measure": 53,
+          "beat": 2.0,
+          "time_quarter_notes": 209.0,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 54,
+          "beat": 1.5,
+          "time_quarter_notes": 212.5,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 54,
+          "beat": 4.5,
+          "time_quarter_notes": 215.5,
+          "why": "reference part A. Sax boundary"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-033",
+      "part_label": "Harp high",
+      "part_index": 8,
+      "part_name": "Harp",
+      "measure": 80,
+      "measures": [
+        80
+      ],
+      "summary": "should end here at end of cresc., same with Cl.1, Cl.2",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "consensus"
+      ],
+      "reference_parts": [
+        "Cl.1",
+        "Cl.2"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": []
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 8,
+          "measure": 80,
+          "beat": 1.0,
+          "why": "no nearby boundary; inspect requested location"
+        }
+      ],
+      "boundary_presence": "no_boundary_nearby_pm1"
+    },
+    {
+      "id": "LIZV2-034",
+      "part_label": "Harp high",
+      "part_index": 8,
+      "part_name": "Harp",
+      "measure": 81,
+      "measures": [
+        81
+      ],
+      "summary": "should end at the cresc. before this note",
+      "expected_action": "move_to_hairpin_endpoint",
+      "tags": [
+        "hairpin_endpoint",
+        "cresc",
+        "wrong_target"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 326.0,
+            "measure": 82,
+            "beat": 3.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 8,
+          "measure": 82,
+          "beat": 3.0,
+          "time_quarter_notes": 326.0,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-035",
+      "part_label": "Harp low",
+      "part_index": 9,
+      "part_name": "Harp",
+      "measure": 28,
+      "measures": [
+        28
+      ],
+      "summary": "interrupts slur",
+      "expected_action": "remove_or_move",
+      "tags": [
+        "slur",
+        "continuation_violation",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 108.0,
+            "measure": 28,
+            "beat": 1.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 108.0,
+            "measure": 28,
+            "beat": 1.0
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 9,
+          "measure": 28,
+          "beat": 1.0,
+          "time_quarter_notes": 108.0,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-036",
+      "part_label": "Harp low",
+      "part_index": 9,
+      "part_name": "Harp",
+      "measure": 83,
+      "measures": [
+        83
+      ],
+      "summary": "too short (only a quarter)",
+      "expected_action": "remove_or_merge",
+      "tags": [
+        "too_short",
+        "too_little_material"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 335.875,
+            "measure": 84,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 9,
+          "measure": 84,
+          "beat": 4.875,
+          "time_quarter_notes": 335.875,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "nearby_boundary_only"
+    },
+    {
+      "id": "LIZV2-037",
+      "part_label": "Harp low",
+      "part_index": 9,
+      "part_name": "Harp",
+      "measure": 84,
+      "measures": [
+        84
+      ],
+      "summary": "should follow A Sax. & Euph (rit. & half note), same as Tpt, Oboe",
+      "expected_action": "snap_or_add_consensus",
+      "tags": [
+        "consensus",
+        "rit",
+        "long_note"
+      ],
+      "reference_parts": [
+        "A. Sax",
+        "Euph",
+        "Tpt",
+        "Oboe"
+      ],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 335.875,
+            "measure": 84,
+            "beat": 4.875
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 335.875,
+            "measure": 84,
+            "beat": 4.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 9,
+          "measure": 84,
+          "beat": 4.875,
+          "time_quarter_notes": 335.875,
+          "why": "current/nearby boundary in this part"
+        },
+        {
+          "part_index": 5,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 5,
+          "measure": 85,
+          "beat": 1.0,
+          "time_quarter_notes": 336.0,
+          "why": "reference part A. Sax boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 83,
+          "beat": 2.875,
+          "time_quarter_notes": 329.875,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 84,
+          "beat": 2.0,
+          "time_quarter_notes": 333.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 7,
+          "measure": 85,
+          "beat": 1.0,
+          "time_quarter_notes": 336.0,
+          "why": "reference part Euph boundary"
+        },
+        {
+          "part_index": 6,
+          "measure": 84,
+          "beat": 3.0,
+          "time_quarter_notes": 334.0,
+          "why": "reference part Tpt boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 83,
+          "beat": 1.0,
+          "time_quarter_notes": 328.0,
+          "why": "reference part Oboe boundary"
+        },
+        {
+          "part_index": 2,
+          "measure": 84,
+          "beat": 2.875,
+          "time_quarter_notes": 333.875,
+          "why": "reference part Oboe boundary"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    },
+    {
+      "id": "LIZV2-038",
+      "part_label": "Harp low",
+      "part_index": 9,
+      "part_name": "Harp",
+      "measure": 91,
+      "measures": [
+        91
+      ],
+      "summary": "breaks decresc.",
+      "expected_action": "remove_or_move",
+      "tags": [
+        "hairpin_interior",
+        "breaks_decresc",
+        "false_positive"
+      ],
+      "reference_parts": [],
+      "notes": "",
+      "boundary_check": {
+        "exact_measure_boundaries": [
+          {
+            "time_quarter_notes": 360.0,
+            "measure": 91,
+            "beat": 1.0
+          }
+        ],
+        "nearby_boundaries_pm1_measure": [
+          {
+            "time_quarter_notes": 360.0,
+            "measure": 91,
+            "beat": 1.0
+          },
+          {
+            "time_quarter_notes": 365.875,
+            "measure": 92,
+            "beat": 2.875
+          }
+        ]
+      },
+      "diagnostic_points": [
+        {
+          "part_index": 9,
+          "measure": 91,
+          "beat": 1.0,
+          "time_quarter_notes": 360.0,
+          "why": "current/nearby boundary in this part"
+        }
+      ],
+      "boundary_presence": "boundary_in_exact_measure"
+    }
+  ]
+}

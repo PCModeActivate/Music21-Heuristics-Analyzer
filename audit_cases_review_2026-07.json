@@ -1,0 +1,172 @@
+{
+  "cases": [
+    {
+      "id": "trumpet_m12_missing_end",
+      "summary": "Trumpet missing expected breath at end of m.12 (Diminuendo wedge ends there).",
+      "tags": ["F", "hairpin_endpoint", "trumpet_euph_desert"],
+      "part_index": 6,
+      "diagnostic_points": [
+        {"part_index": 6, "measure": 12, "beat": 4.0,
+         "why": "Diminuendo wedge ends qn 46 (end of m.12); no boundary detected here by default run."},
+        {"part_index": 7, "measure": 12, "beat": 4.0,
+         "why": "Reference: Euphonium has a similar wedge here (possible doubling) -- check cross-support."}
+      ]
+    },
+    {
+      "id": "euph_m15_and_19_22",
+      "summary": "Euphonium m.15 boundary looks undeserved; mm.19-22 stretch is generally weird (ties to A-report single_attack_phrase flags per handover).",
+      "tags": ["E", "trumpet_euph_desert", "single_attack_flag"],
+      "part_index": 7,
+      "diagnostic_points": [
+        {"part_index": 7, "measure": 15, "beat": 1.0,
+         "why": "Boundary present looks spurious -- why did it clear threshold?"},
+        {"part_index": 7, "measure": 19, "beat": 1.0,
+         "why": "Start of the mm.19-22 weird stretch; handover notes single_attack_phrase flags here."},
+        {"part_index": 7, "measure": 22, "beat": 1.0,
+         "why": "End of the mm.19-22 weird stretch."}
+      ]
+    },
+    {
+      "id": "cl1_dynamic_arc_18_19",
+      "summary": "Cl1 mf>p across mm.18-19 should read as one gesture, not two independent dynamic events.",
+      "tags": ["D1", "dynamic_arc"],
+      "part_index": 3,
+      "diagnostic_points": [
+        {"part_index": 3, "measure": 18, "beat": 1.0,
+         "why": "mf marking -- start of the arc."},
+        {"part_index": 3, "measure": 19, "beat": 1.0,
+         "why": "p arrival -- likely scored as a second independent dynamic event rather than one gesture's resolution."}
+      ]
+    },
+    {
+      "id": "cl2_m18_end_undetected",
+      "summary": "Cl2 end-of-phrase near m.18 not detected well; may relate to the Cl1 dynamic-arc case above.",
+      "tags": ["unresolved"],
+      "part_index": 4,
+      "diagnostic_points": [
+        {"part_index": 4, "measure": 18, "beat": 1.0,
+         "why": "Expected end boundary near here not detected."}
+      ]
+    },
+    {
+      "id": "cl2_m30_31_short_phrase",
+      "summary": "Cl2 mm.30-31 phrase feels unnaturally short; cause not yet identified.",
+      "tags": ["unresolved", "short_phrase"],
+      "part_index": 4,
+      "diagnostic_points": [
+        {"part_index": 4, "measure": 30, "beat": 1.0,
+         "why": "Phrase feels too short starting here."},
+        {"part_index": 4, "measure": 31, "beat": 1.0,
+         "why": "End of the short phrase in question."}
+      ]
+    },
+    {
+      "id": "harp_lower_midmeasure_31_33",
+      "summary": "Harp 2 (lower) lands boundaries mid-measure at m.31 and m.33, which looks unnatural.",
+      "tags": ["unresolved"],
+      "part_index": 9,
+      "diagnostic_points": [
+        {"part_index": 9, "measure": 31, "beat": 2.5,
+         "why": "Boundary lands mid-measure; beat is a placeholder guess, window=4.0 should still catch the actual peak."},
+        {"part_index": 9, "measure": 33, "beat": 2.5,
+         "why": "Same mid-measure pattern; beat is a placeholder guess."}
+      ]
+    },
+    {
+      "id": "asax40_cl2_45_pattern_break",
+      "summary": "ASax m.40 and Cl2 m.45 both break from the repeated pattern in sibling parts, both near a fermata (matches handover's Cl2 43-45 regression bar).",
+      "tags": ["F", "fermata_sidechoice", "D1", "known_regression"],
+      "part_index": 5,
+      "diagnostic_points": [
+        {"part_index": 5, "measure": 40, "beat": 1.0,
+         "why": "Doesn't follow the repeated pattern visible in sibling parts nearby."},
+        {"part_index": 4, "measure": 45, "beat": 1.0,
+         "why": "Same pattern break; fermata nearby (handover: Cl2 43-45, 'ONE slowing event + [fermata]')."}
+      ]
+    },
+    {
+      "id": "euph_m39_missing_end",
+      "summary": "Euph m.39 not folded in as the end of the previous phrase despite a decresc. and rit. there.",
+      "tags": ["F", "endpoint_targeting", "trumpet_euph_desert"],
+      "part_index": 7,
+      "diagnostic_points": [
+        {"part_index": 7, "measure": 39, "beat": 4.0,
+         "why": "Expected phrase end here (decresc. + rit. both present); not currently treated as an endpoint."}
+      ]
+    },
+    {
+      "id": "known_block_54_58",
+      "summary": "The mm.54-58 cluster (ASax/Harp m.54, Trumpet+Euph mm.56-57) is still unresolved; now checkable with cross-support attribution.",
+      "tags": ["E", "trumpet_euph_desert", "known_regression"],
+      "part_index": 5,
+      "diagnostic_points": [
+        {"part_index": 5, "measure": 54, "beat": 1.0,
+         "why": "ASax m.54 -- see repetition-mechanism dossier in handover."},
+        {"part_index": 8, "measure": 54, "beat": 1.0,
+         "why": "Harp upper, end-of-53 miss; cross-support attribution shows NO source passes the gate here (call-and-response evidence, not synchronous)."},
+        {"part_index": 6, "measure": 57, "beat": 1.0,
+         "why": "Trumpet mm.56-57 misalignment."},
+        {"part_index": 7, "measure": 57, "beat": 1.0,
+         "why": "Euph mm.56-57 misalignment."}
+      ]
+    },
+    {
+      "id": "asax_tpt_m59_breath_before_rest",
+      "summary": "ASax & Trumpet m.59: boundary lands before a long rest, splitting a pickup figure, instead of after it. Verified in result.pkl at qn 232.5.",
+      "tags": ["E", "breath_before_rest", "verified"],
+      "part_index": 5,
+      "diagnostic_points": [
+        {"part_index": 5, "measure": 59, "beat": 1.5,
+         "why": "Verified boundary at qn 232.5 splits the pickup eighths; should land after the following rest instead."},
+        {"part_index": 6, "measure": 59, "beat": 1.5,
+         "why": "Same pattern in Trumpet."}
+      ]
+    },
+    {
+      "id": "cl1_cl2_m70_mismatch",
+      "summary": "Cl1 has a boundary at m.70; Cl2 does not, despite likely doubling.",
+      "tags": ["doubling_mismatch", "E"],
+      "part_index": 3,
+      "diagnostic_points": [
+        {"part_index": 3, "measure": 70, "beat": 1.0,
+         "why": "Boundary present."},
+        {"part_index": 4, "measure": 70, "beat": 1.0,
+         "why": "Reference: corresponding boundary absent here -- compare cross-support attribution between the two parts."}
+      ]
+    },
+    {
+      "id": "cl_m74_75_76_cluster",
+      "summary": "mm.74-76 cluster: Cl1+Cl2 both missing at 74, Cl2 also missing at 75, Cl1 has an unexplained boundary at 76. Possibly related to the carried-forward Oboe m.74 error (handover issue 7).",
+      "tags": ["doubling_mismatch", "E"],
+      "part_index": 3,
+      "diagnostic_points": [
+        {"part_index": 3, "measure": 74, "beat": 1.0,
+         "why": "Expected boundary missing."},
+        {"part_index": 4, "measure": 74, "beat": 1.0,
+         "why": "Expected boundary missing (same spot as Cl1)."},
+        {"part_index": 4, "measure": 75, "beat": 1.0,
+         "why": "Also missing here."},
+        {"part_index": 3, "measure": 76, "beat": 1.0,
+         "why": "Unexplained boundary appears here."},
+        {"part_index": 2, "measure": 74, "beat": 4.125,
+         "why": "Reference: carried-forward handover issue 7 (Oboe m.74 beat 4.125 error, diagnosis never finished) -- may be related to this cluster."}
+      ]
+    },
+    {
+      "id": "m80_doubling_missing",
+      "summary": "m.80 boundary missing in Cl1/Cl2 and not doubling onto ASax or Harp upper as expected.",
+      "tags": ["doubling_mismatch", "E"],
+      "part_index": 3,
+      "diagnostic_points": [
+        {"part_index": 3, "measure": 80, "beat": 1.0,
+         "why": "Missing boundary."},
+        {"part_index": 4, "measure": 80, "beat": 1.0,
+         "why": "Missing boundary."},
+        {"part_index": 5, "measure": 80, "beat": 1.0,
+         "why": "Reference: ASax -- check whether it doubles/supports here."},
+        {"part_index": 8, "measure": 80, "beat": 1.0,
+         "why": "Reference: Harp upper -- check whether it doubles/supports here."}
+      ]
+    }
+  ]
+}

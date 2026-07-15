@@ -1,0 +1,1906 @@
+{
+  "cases": [
+    {
+      "id": "trumpet_m12_missing_end",
+      "summary": "Trumpet missing expected breath at end of m.12 (Diminuendo wedge ends there). (Euph doubling point moved to errata_euph_mm11_21.)",
+      "tags": [
+        "F",
+        "hairpin_endpoint",
+        "trumpet_euph_desert"
+      ],
+      "part_index": 6,
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 12,
+          "beat": "end",
+          "why": "Notes fill m.12 releasing at qn 48; no mark exists in qn 40-56. Mark required after the last note.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "euph_m39_missing_end",
+      "summary": "Euph m.39 not folded in as the end of the previous phrase despite a decresc. and rit. there.",
+      "tags": [
+        "F",
+        "endpoint_targeting",
+        "trumpet_euph_desert"
+      ],
+      "part_index": 7,
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 39,
+          "beat": "end",
+          "why": "decresc. + rit. end the phrase here; seam run ADDED qn 156 -- keep (sentinel).",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "asax_tpt_m59_breath_before_rest",
+      "summary": "ASax & Trumpet m.59: boundary lands before a long rest, splitting a pickup figure, instead of after it. Verified in result.pkl at qn 232.5.",
+      "tags": [
+        "E",
+        "breath_before_rest",
+        "verified"
+      ],
+      "part_index": 5,
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 59,
+          "beat": 1.5,
+          "expect": "absent",
+          "why": "Verified boundary at qn 232.5 splits the pickup eighths; should land after the following rest instead.",
+          "tol": 0.3
+        },
+        {
+          "part_index": 6,
+          "measure": 59,
+          "beat": 1.5,
+          "expect": "absent",
+          "why": "Same pattern in Trumpet.",
+          "tol": 0.3
+        }
+      ]
+    },
+    {
+      "id": "cl1_cl2_m70_mismatch",
+      "summary": "m.70 ruling (errata): Cl2 breath after the dotted half at m.70 b1 (releases qn 279). Cl1's qn 276 (m.69 end) stays. Cl2's existing qn 280 (m.70 end) awaits a verdict once 279 exists.",
+      "tags": [
+        "doubling_mismatch",
+        "E"
+      ],
+      "part_index": 3,
+      "diagnostic_points": [
+        {
+          "part_index": 3,
+          "measure": 69,
+          "beat": "end",
+          "why": "Cl1 correct -- keep (sentinel).",
+          "expect": "present",
+          "tol": 0.3
+        },
+        {
+          "part_index": 4,
+          "measure": 70,
+          "beat": 4.0,
+          "why": "Required after the dotted half (276-279).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 70,
+          "beat": "end",
+          "why": "Robert: must not exist if the qn-279 mark exists.",
+          "expect": "absent",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "onset_landing_marks",
+      "summary": "Marks landing at the last-note ONSET (or inside the final note) instead of its RELEASE, at note-to-note seams the rest-seam policy does not cover (no rest, next note attacks at the barline -- verified: Fl1 and Ob share the SAME final figure at m.74; Fl1's mark snapped to 296.0, Ob's stayed at the 295.75 onset). Single bug signature; connects to open issue 7 (ends-before vs ends-after semantics). (Ob 295.75 point moved under the m.74 interior ban.)",
+      "tags": [
+        "seam_run",
+        "note_to_note_seam",
+        "verified",
+        "issue7"
+      ],
+      "part_index": 2,
+      "diagnostic_points": [
+        {
+          "part_index": 1,
+          "measure": 80,
+          "beat": 4.75,
+          "why": "Fl2: mark ON final-16th onset (releases 320).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 80,
+          "beat": 4.75,
+          "why": "Ob: same figure/shape as Fl2 here.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 78,
+          "beat": 4.875,
+          "why": "Cl2 'm.79 weird': one frame before qn 312; check next onset at 312 (note-to-note).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 80,
+          "beat": 4.125,
+          "why": "ASax: mark INSIDE the final note (onset 319, release 320).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 45,
+          "beat": 4.875,
+          "why": "ASax: one frame inside a sustained note releasing at 180.",
+          "expect": "absent",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "tpt_m84_missing",
+      "summary": "Trumpet missing a mark near m.84; part jumps qn 304 -> 352 (mm.77-89 desert).",
+      "tags": [
+        "E",
+        "trumpet_euph_desert"
+      ],
+      "part_index": 6,
+      "diagnostic_points": [
+        {
+          "part_index": 6,
+          "measure": 84,
+          "beat": 1.0,
+          "why": "Robert expects a mark around here; Euph's 333 (itself questionable) is the nearest sibling evidence.",
+          "expect": "present"
+        }
+      ]
+    },
+    {
+      "id": "ensemble_seam_m45_end",
+      "summary": "End of m.45 (after the fermata): breath for everyone who has anything. Active: Fl1, Fl2, Cl1, Cl2 (notes in bar) + Ob, ASax, Harp-lower (sustaining into the bar). Cl1/Ob/Harp-lower correct; Cl2's mark sits BEFORE the fermata at 175.875. Robert: Cl2 has nothing until end of m.45 (the '44' in the errata meant 45).",
+      "tags": [
+        "ensemble_seam",
+        "F",
+        "fermata_sidechoice"
+      ],
+      "part_index": 4,
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 45,
+          "beat": "end",
+          "why": "Fl1 mark expected after last note.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 45,
+          "beat": "end",
+          "why": "Fl2 mark expected.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 45,
+          "beat": "end",
+          "why": "Ob sustains in; keep (sentinel).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 45,
+          "beat": "end",
+          "why": "Cl1 -- correct, keep (sentinel).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 45,
+          "beat": "end",
+          "why": "Cl2 expected here, after the fermata.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 44,
+          "beat": 4.875,
+          "why": "Cl2's actual mark, before the fermata -- wrong side.",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 5,
+          "measure": 45,
+          "beat": "end",
+          "why": "ASax sustains in; its 179.875 is the mislanded version (see onset_landing_marks).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 45,
+          "beat": "end",
+          "why": "Harp-lower sustains in; keep (sentinel).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 44,
+          "beat": "end",
+          "why": "Guard: Cl2 has nothing until end of m.45; no m.44-end mark allowed either.",
+          "expect": "absent",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "ensemble_seam_m59_end",
+      "summary": "End of m.59: ALL TEN active parts release exactly at the barline -- strongest ensemble seam in the review. Only ASax and Harp-lower currently marked.",
+      "tags": [
+        "ensemble_seam",
+        "E"
+      ],
+      "part_index": 5,
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 59,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 59,
+          "beat": "end",
+          "why": "last note releases at barline; mark expected after it",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 59,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "ensemble_seam_m74_end",
+      "summary": "End of m.74: breath after the last note for everyone who has anything (Robert). Active: Fl1, Fl2, Ob, Cl1, Cl2, Euph, Harp-upper (whole note). NOTHING belongs in m.75 (tutti attacks at the barline). Cl2's 297.25, Euph's 294.125, Ob's 295.75 are the mislanded versions. Interior bans added for m.74 (all active) and Cl2 m.75; Euph's 294.125 in-cresc mark (old euph_m74_cresc_violation) is covered by the m.74 ban.",
+      "tags": [
+        "ensemble_seam",
+        "E",
+        "doubling_mismatch"
+      ],
+      "part_index": 3,
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 74,
+          "beat": "end",
+          "why": "Fl1 -- correct, keep (sentinel).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 74,
+          "beat": "end",
+          "why": "Fl2 missing (Robert).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 74,
+          "beat": "end",
+          "why": "Ob: mark exists but at the final-16th ONSET (295.75), not the release -- counts as missing here.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 74,
+          "beat": "end",
+          "why": "Cl1 missing.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 74,
+          "beat": "end",
+          "why": "Cl2 expected here.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 74,
+          "beat": "end",
+          "why": "Euph expected here (its 294.125 is the mislanded version).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 74,
+          "beat": "end",
+          "why": "Harp-upper whole note releases at barline; was omitted in first encoding -- mark expected.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 0,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 1,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 2,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 3,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 4,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 7,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 8,
+          "measure": 74,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.74 (window qn 292.1-295.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 4,
+          "measure": 75,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.75 (window qn 296.1-299.9; both barline instants excluded). Robert: no Cl2 marks in m.75 regardless of position.",
+          "expect": "absent",
+          "tol": 1.9
+        }
+      ]
+    },
+    {
+      "id": "ensemble_seam_m76_end",
+      "summary": "End of m.76: likely everyone active (Robert). Active: Fl1, Fl2, Ob, Cl1, Cl2, ASax, Tpt, Euph. Five present, Cl2/ASax/Euph missing.",
+      "tags": [
+        "ensemble_seam",
+        "E"
+      ],
+      "part_index": 4,
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 76,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 76,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 76,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 76,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 76,
+          "beat": "end",
+          "why": "Cl2 missing.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 76,
+          "beat": "end",
+          "why": "ASax missing (nearest is the 301.0 cluster inside m.76).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 76,
+          "beat": "end",
+          "why": "keep (sentinel) -- was a seam-run ADD.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 76,
+          "beat": "end",
+          "why": "Euph missing.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "ensemble_seam_m80_end",
+      "summary": "End of m.80, FINAL VERDICT (Robert 2026-07-10): everyone active must have a mark at m.80 end EXCEPT the flutes, which must be unison -- both or neither (marginal preference for both, acceptable without). Active w/ release at 320: Fl1, Fl2, Ob, Cl1, Cl2, ASax, Harp-upper, Harp-lower. Tpt inactive. Euph has a mark at 320 with NOTHING sounding in m.80 -- spurious in its own silence. Replaces m80_doubling_missing and ensemble_seam_m80_end_arguable. Flute unison encoded as a constraint. 2nd errata: both flutes soft-recommended at m.80 end; unison stays hard.",
+      "tags": [
+        "ensemble_seam",
+        "E",
+        "doubling_mismatch",
+        "verdict_final"
+      ],
+      "part_index": 3,
+      "diagnostic_points": [
+        {
+          "part_index": 2,
+          "measure": 80,
+          "beat": "end",
+          "why": "Ob required; its 319.75 is the onset-landed version (see onset_landing_marks).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 80,
+          "beat": "end",
+          "why": "Cl1 required; missing.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 80,
+          "beat": "end",
+          "why": "Cl2 required; missing.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 80,
+          "beat": "end",
+          "why": "ASax required; its 319.125 is the mislanded version.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 80,
+          "beat": "end",
+          "why": "Harp-upper required; 320.0 exists -- keep (sentinel).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 80,
+          "beat": "end",
+          "why": "Harp-lower required (notes release at 320); missing.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 80,
+          "beat": "end",
+          "why": "Euph has NOTHING sounding in m.80; its 320.0 mark sits in silence -- no mark allowed. Flip if earlier-phrase context justifies it.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 0,
+          "measure": 80,
+          "beat": "end",
+          "why": "Robert errs toward both flutes marking m.80 end (soft); the HARD rule is the unison constraint below.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 1,
+          "measure": 80,
+          "beat": "end",
+          "why": "Robert errs toward both flutes marking m.80 end (soft); the HARD rule is the unison constraint below.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "unison",
+          "parts": [
+            0,
+            1
+          ],
+          "qn_lo": 319.5,
+          "qn_hi": 320.5
+        }
+      ]
+    },
+    {
+      "id": "sentinel_m27_correct",
+      "summary": "m.27 sentinels RE-ENCODED after the annotation diagnosis: the approved commas render at m.27 end (qn 108); the underlying boundaries sit at 106 and only render correctly via the attach-next bug. GT = 108, ban 106. Regression here still means a mechanism overreached.",
+      "tags": [
+        "sentinel",
+        "regression_bar"
+      ],
+      "part_index": 0,
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 27,
+          "beat": "end",
+          "why": "Rendered comma (approved) is after the note ending at qn 108; boundary must be here once annotation is fixed.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 27,
+          "beat": "end",
+          "why": "Rendered comma (approved) is after the note ending at qn 108; boundary must be here once annotation is fixed.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 27,
+          "beat": "end",
+          "why": "Rendered comma (approved) is after the note ending at qn 108; boundary must be here once annotation is fixed.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 27,
+          "beat": "end",
+          "why": "Rendered comma (approved) is after the note ending at qn 108; boundary must be here once annotation is fixed.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 27,
+          "beat": "end",
+          "why": "Rendered comma (approved) is after the note ending at qn 108; boundary must be here once annotation is fixed.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 0,
+          "measure": 27,
+          "beat": 3.0,
+          "why": "Current qn-106 boundary renders at 108 only via the attach-next bug. Not allowed.",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 1,
+          "measure": 27,
+          "beat": 3.0,
+          "why": "Current qn-106 boundary renders at 108 only via the attach-next bug. Not allowed.",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 3,
+          "measure": 27,
+          "beat": 3.0,
+          "why": "Current qn-106 boundary renders at 108 only via the attach-next bug. Not allowed.",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 7,
+          "measure": 27,
+          "beat": 3.0,
+          "why": "Current qn-106 boundary renders at 108 only via the attach-next bug. Not allowed.",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 8,
+          "measure": 27,
+          "beat": 3.0,
+          "why": "Current qn-106 boundary renders at 108 only via the attach-next bug. Not allowed.",
+          "expect": "absent",
+          "tol": 0.3
+        }
+      ]
+    },
+    {
+      "id": "sentinel_m49_correct",
+      "summary": "m.49-end area: correctly done already (Robert). Euph holds the end-of-49 mark; keep-sentinel.",
+      "tags": [
+        "sentinel",
+        "regression_bar"
+      ],
+      "part_index": 7,
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 49,
+          "beat": "end",
+          "why": "keep (sentinel)",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "counterexample_m35_no_ensemble_seam",
+      "summary": "m.35 end: HarpHi REQUIRED (errata_mm35_40). HarpLo's qn-140 boundary BANNED (Robert: HarpLo correctly has nothing there). Euph's qn-140 kept required per earlier answer -- flag if 'only Harp high' covered Euph too. Still NOT an everyone-seam.",
+      "tags": [
+        "counterexample",
+        "ensemble_seam",
+        "E"
+      ],
+      "part_index": 7,
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 35,
+          "beat": "end",
+          "why": "Required (Robert: 35 end both required). Exists in boundaries.json.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 35,
+          "beat": "end",
+          "why": "CORRECTED per Robert: HarpLo has nothing at m.35 end and that is correct -- the qn-140 boundary in boundaries.json is banned (it never rendered, which was the tell).",
+          "expect": "absent",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "errata_flutes_early",
+      "tags": [
+        "errata"
+      ],
+      "part_index": 0,
+      "summary": "Errata 2026-07-10: Fl1 m.6 end required; Fl1 m.18 end recommended (existing qn 74 mark unjudged).",
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 6,
+          "beat": "end",
+          "why": "Notes release at qn 24; required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 0,
+          "measure": 18,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        }
+      ]
+    },
+    {
+      "id": "errata_euph_mm11_21",
+      "tags": [
+        "errata",
+        "onset_landing"
+      ],
+      "part_index": 7,
+      "summary": "Errata: Euph m.12 end required (doubles Tpt m.12 wedge); ends of 14/15/16 not allowed (existing 56/60/64); m.17 end required; m.18 has no note (existing qn-72 mark sits in silence -- not allowed); ends of 19/20 not allowed (72 covers 18; 76/80); m.21 end required -- existing 83.875 is onset-landed.",
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 12,
+          "beat": "end",
+          "why": "Required (wedge doubling with Tpt).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 14,
+          "beat": "end",
+          "why": "Not allowed (existing qn 56).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 15,
+          "beat": "end",
+          "why": "Not allowed (existing qn 60).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 16,
+          "beat": "end",
+          "why": "Not allowed (existing qn 64).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 17,
+          "beat": "end",
+          "why": "Required; note releases qn 68.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 18,
+          "beat": "end",
+          "why": "No note in m.18; existing qn-72 mark is in silence.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 19,
+          "beat": "end",
+          "why": "Not allowed (existing qn 76).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 20,
+          "beat": "end",
+          "why": "Not allowed (existing qn 80).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 21,
+          "beat": 4.875,
+          "why": "Onset-landed version of m.21 end.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 21,
+          "beat": "end",
+          "why": "Required; note releases qn 84.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "errata_cl2_harplo_mm17_29",
+      "tags": [
+        "errata",
+        "onset_landing"
+      ],
+      "part_index": 4,
+      "summary": "Errata: Cl2 m.17 end not allowed, m.18 end required. HarpLo: m.17 no mark; m.18 end required (existing 71.875 onset-landed); ends of 19/20 not allowed (75.875, 80); m.21 end correct (sentinel); m.29 end required (pitch chroma matches parts that stop there).",
+      "diagnostic_points": [
+        {
+          "part_index": 4,
+          "measure": 18,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 17,
+          "beat": "end",
+          "why": "Not allowed (guard).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 18,
+          "beat": 4.875,
+          "why": "Onset-landed version of m.18 end.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 18,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 19,
+          "beat": 4.875,
+          "why": "m.19 end not allowed; this is its onset-landed mark.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 19,
+          "beat": "end",
+          "why": "Not allowed (guard at the exact end).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 20,
+          "beat": "end",
+          "why": "Not allowed (existing qn 80).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 21,
+          "beat": "end",
+          "why": "Required -- keep (sentinel, qn 84 exists).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 29,
+          "beat": "end",
+          "why": "Required; eighths release at qn 116.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "errata_mm31_33",
+      "tags": [
+        "errata"
+      ],
+      "part_index": 9,
+      "summary": "Errata: ASax + HarpHi + Euph m.31 end recommended. Oboe recommended after the b2 half note (releases qn 123). HarpLo's mid-measure 121.5 / 129.625 (the old harp_lower_midmeasure case -- Robert wrote 'Harp high' but the marks live on Harp low) not allowed, shifted to m.31 / m.33 ends (required). Cl2: qn-120 mark (m.30 end / displays m.31 b1) not allowed, m.31 end required; supersedes cl2_m30_31_short_phrase.",
+      "diagnostic_points": [
+        {
+          "part_index": 5,
+          "measure": 31,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 8,
+          "measure": 31,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 7,
+          "measure": 31,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 2,
+          "measure": 31,
+          "beat": 4.0,
+          "why": "Recommended: release of the b2 half note.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 9,
+          "measure": 31,
+          "beat": 2.5,
+          "why": "Mid-measure; not allowed, shift to m.31 end.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 31,
+          "beat": "end",
+          "why": "Shift target; required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 33,
+          "beat": 2.625,
+          "why": "Mid-measure; not allowed, shift to m.33 end.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 33,
+          "beat": "end",
+          "why": "Shift target; required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 30,
+          "beat": "end",
+          "why": "Cl2's only mark here (qn 120, displays m.31 b1) not allowed -- move to m.31 end.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 31,
+          "beat": "end",
+          "why": "Required (move target). Nothing at m.29/m.30 ends is correct as-is.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "errata_mm35_40",
+      "tags": [
+        "errata"
+      ],
+      "part_index": 8,
+      "summary": "Errata: HarpHi m.35 end required. HarpLo m.38 end + m.39 end required. Oboe required after the m.39 b2 half note (releases qn 155). ASax m.40 end required to match others (replaces asax40 case point).",
+      "diagnostic_points": [
+        {
+          "part_index": 8,
+          "measure": 35,
+          "beat": "end",
+          "why": "Required (last release qn 140).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 38,
+          "beat": "end",
+          "why": "Required (notes release qn 152).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 39,
+          "beat": 4.0,
+          "why": "Required: release of the b2 half note, matches others.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 39,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 40,
+          "beat": "end",
+          "why": "Required to match others.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    },
+    {
+      "id": "errata_m41_unison",
+      "tags": [
+        "errata",
+        "unison"
+      ],
+      "part_index": 0,
+      "summary": "Errata: ASax, Fl1, Fl2, Cl1, Cl2 at m.41 end recommended, but UNISON REQUIRED: all five or none (all release at qn 164). Fl2's qn 162 and Cl1's 163/166 mid-marks are unjudged.",
+      "constraints": [
+        {
+          "type": "unison",
+          "parts": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "qn_lo": 163.9,
+          "qn_hi": 164.1
+        }
+      ],
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 41,
+          "beat": "end",
+          "why": "Recommended; unison rule governs.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 1,
+          "measure": 41,
+          "beat": "end",
+          "why": "Recommended; unison rule governs.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 3,
+          "measure": 41,
+          "beat": "end",
+          "why": "Recommended; unison rule governs.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 4,
+          "measure": 41,
+          "beat": "end",
+          "why": "Recommended; unison rule governs.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 5,
+          "measure": 41,
+          "beat": "end",
+          "why": "Recommended; unison rule governs.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        }
+      ]
+    },
+    {
+      "id": "errata_mm42_48",
+      "tags": [
+        "errata"
+      ],
+      "part_index": 9,
+      "summary": "Errata: HarpLo m.42 end required, mid-m.43 (170.5) not allowed. Fl1+Fl2 required after the m.43 b1 half note (releases qn 170). Cl2 m.48 end not allowed; its 188.875 mark still needs a verdict.",
+      "diagnostic_points": [
+        {
+          "part_index": 9,
+          "measure": 42,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 43,
+          "beat": 3.5,
+          "why": "Mid-m.43; not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 0,
+          "measure": 43,
+          "beat": 3.0,
+          "why": "Required: release of the b1 half note.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 43,
+          "beat": 3.0,
+          "why": "Required: same figure.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 48,
+          "beat": "end",
+          "why": "Not allowed (existing qn 192).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 48,
+          "beat": 1.875,
+          "why": "Robert: fine only if exactly at m.47 end (qn 188); it is at 188.875, so not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 47,
+          "beat": "end",
+          "why": "Recommended (2nd errata).",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        }
+      ]
+    },
+    {
+      "id": "errata_mm50_58",
+      "tags": [
+        "errata",
+        "unison"
+      ],
+      "part_index": 7,
+      "summary": "Errata: Euph ends of 50/51/52 not allowed (200/204/guard 208), m.53 end required. Fl2's 203.5 recommended moved to m.52 end. Cl1 m.53: end required, mid (211) not allowed. HarpHi m.53 end required, 213.5 (m.54 b2.5) not allowed. ASax + HarpHi m.55 and m.57 ends recommended. FINAL (score review): Tpt keeps its existing m.57 mark (qn 226); the earlier 'm.57 end required' is withdrawn -- current Tpt state is correct. Euph's qn-220 mark banned, m.58 end required. Tpt m.59 (232.5) stays banned. DOUBLE-BUG NOTE: Tpt approval re-encoded at m.57 end (228); the 226 boundary banned.",
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 50,
+          "beat": "end",
+          "why": "Not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 51,
+          "beat": "end",
+          "why": "Not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 52,
+          "beat": "end",
+          "why": "Not allowed (guard).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 53,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 51,
+          "beat": 4.5,
+          "why": "Recommended moved to m.52 end.",
+          "expect": "absent",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 1,
+          "measure": 52,
+          "beat": "end",
+          "why": "Recommended (move target).",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 3,
+          "measure": 53,
+          "beat": 4.0,
+          "why": "Mid-m.53; not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 53,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 53,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 54,
+          "beat": 2.5,
+          "why": "m.54 b2.5; not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 55,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 8,
+          "measure": 55,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 5,
+          "measure": 57,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 8,
+          "measure": 57,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 7,
+          "measure": 55,
+          "beat": "end",
+          "why": "Euph's qn-220 mark (renders in m.56): not allowed -- 'should be 58 instead'.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 58,
+          "beat": "end",
+          "why": "Required (replaces the 220/m.56 mark).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 57,
+          "beat": "end",
+          "why": "Robert approved the RENDERED comma = after the note ending at qn 228. Required here.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 57,
+          "beat": 3.0,
+          "why": "The qn-226 boundary renders at 228 only via the attach-next bug (double-bug cancellation); once annotation is fixed it would render mid-measure. Not allowed.",
+          "expect": "absent",
+          "tol": 0.3
+        }
+      ]
+    },
+    {
+      "id": "errata_mm59_62",
+      "tags": [
+        "errata"
+      ],
+      "part_index": 7,
+      "summary": "Errata: m.59 b1.5 absents + m.59 ends already encoded (asax_tpt case + ensemble_seam_m59_end). Euph mid-m.60 (238.125) not allowed. Euph mid-m.62 recommended (long phrase, maybe one breath).",
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 60,
+          "beat": 3.125,
+          "why": "Mid-m.60; not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 62,
+          "beat": 3.0,
+          "why": "Recommended somewhere mid-m.62; loose window.",
+          "expect": "present",
+          "tol": 2.0,
+          "strength": "recommended"
+        }
+      ]
+    },
+    {
+      "id": "errata_mm71_78",
+      "tags": [
+        "errata"
+      ],
+      "part_index": 4,
+      "summary": "Errata: Cl2 + Euph m.71 end recommended (together). Euph mid-m.76 (301, b2) not allowed, end required (seam case). Cl2 m.78 b1 (308) not allowed, m.78 end required (311.875 already ruled onset-landed).",
+      "diagnostic_points": [
+        {
+          "part_index": 4,
+          "measure": 71,
+          "beat": "end",
+          "why": "Recommended (with Euph).",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 7,
+          "measure": 71,
+          "beat": "end",
+          "why": "Recommended (with Cl2).",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 4,
+          "measure": 77,
+          "beat": "end",
+          "why": "m.78 b1; not allowed.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 78,
+          "beat": "end",
+          "why": "Required.",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 76,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.76 (window qn 300.1-303.9; both barline instants excluded). Replaces the specific qn-301 point.",
+          "expect": "absent",
+          "tol": 1.9
+        }
+      ]
+    },
+    {
+      "id": "errata_mm82_88",
+      "tags": [
+        "errata",
+        "onset_landing"
+      ],
+      "part_index": 0,
+      "summary": "Errata: m.82 end required for everyone playing (Fl1/Fl2/Ob/Cl1/Cl2/Tpt/Euph/HarpHi; currently missing Fl1, Tpt, Euph; HarpHi has mid-mark 326 -- unjudged). m.84 end required for all who play (Ob/Cl1/ASax/Tpt/Euph/HarpLo), mids not allowed (ASax+Euph 333). Oboe m.85 end soft-not-recommended. Fl1/Tpt/HarpHi/HarpLo m.86 end recommended (Oboe's 343.75 = onset-landed m.86 end, unjudged). m.88 end required for everyone playing (Fl1/Fl2/Cl1/ASax/Tpt/HarpHi/HarpLo); Fl2's 351.625 onset-landed; Cl1's m.87-end mark (347.875) not allowed; HarpLo guard at m.87 end. Euph's 352-in-silence unjudged. Interior bans added for m.84 and m.88 (replace the specific ASax/Euph 333 and Fl2 351.625 points; Fl2's onset-landed 351.625 is inside the m.88 ban).",
+      "diagnostic_points": [
+        {
+          "part_index": 0,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 82,
+          "beat": "end",
+          "why": "Required (playing m.82).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 84,
+          "beat": "end",
+          "why": "Required (playing m.84).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 84,
+          "beat": "end",
+          "why": "Required (playing m.84).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 84,
+          "beat": "end",
+          "why": "Required (playing m.84).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 84,
+          "beat": "end",
+          "why": "Required (playing m.84).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 84,
+          "beat": "end",
+          "why": "Required (playing m.84).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 84,
+          "beat": "end",
+          "why": "Required (playing m.84).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 2,
+          "measure": 85,
+          "beat": "end",
+          "why": "Soft: not recommended but can be allowed.",
+          "expect": "absent",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 0,
+          "measure": 86,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 6,
+          "measure": 86,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 8,
+          "measure": 86,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 9,
+          "measure": 86,
+          "beat": "end",
+          "why": "Recommended.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 0,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 1,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 5,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 6,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 8,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 9,
+          "measure": 88,
+          "beat": "end",
+          "why": "Required (playing m.88).",
+          "expect": "present",
+          "tol": 0.1
+        },
+        {
+          "part_index": 3,
+          "measure": 87,
+          "beat": "end",
+          "why": "Cl1 m.87-end mark not allowed (actual 347.875).",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 9,
+          "measure": 87,
+          "beat": "end",
+          "why": "Not allowed (guard; Robert reports a violation here).",
+          "expect": "absent",
+          "tol": 0.3
+        },
+        {
+          "part_index": 2,
+          "measure": 84,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.84 (window qn 332.1-335.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 3,
+          "measure": 84,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.84 (window qn 332.1-335.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 5,
+          "measure": 84,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.84 (window qn 332.1-335.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 6,
+          "measure": 84,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.84 (window qn 332.1-335.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 7,
+          "measure": 84,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.84 (window qn 332.1-335.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 9,
+          "measure": 84,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.84 (window qn 332.1-335.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 0,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 1,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 3,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 5,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 6,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 8,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        },
+        {
+          "part_index": 9,
+          "measure": 88,
+          "beat": 3.0,
+          "why": "INTERIOR BAN: no marks anywhere inside m.88 (window qn 348.1-351.9; both barline instants excluded).",
+          "expect": "absent",
+          "tol": 1.9
+        }
+      ]
+    },
+    {
+      "id": "errata_mm90_93",
+      "tags": [
+        "errata",
+        "onset_landing"
+      ],
+      "part_index": 7,
+      "summary": "Errata: Euph m.90 end recommended -- existing 359.875 is onset-landed and must go either way. HarpLo's 360 (displays m.91 b1) not allowed. Cl2 required after its last note (releases qn 370, m.93 b3); end-of-piece semantics noted.",
+      "diagnostic_points": [
+        {
+          "part_index": 7,
+          "measure": 90,
+          "beat": 4.875,
+          "why": "Onset-landed; not allowed regardless of the m.90 verdict.",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 7,
+          "measure": 90,
+          "beat": "end",
+          "why": "Recommended: if Euph breathes here it is exactly qn 360.",
+          "expect": "present",
+          "tol": 0.1,
+          "strength": "recommended"
+        },
+        {
+          "part_index": 9,
+          "measure": 90,
+          "beat": "end",
+          "why": "Not allowed (HarpLo's 360, displays as m.91 b1).",
+          "expect": "absent",
+          "tol": 0.1
+        },
+        {
+          "part_index": 4,
+          "measure": 93,
+          "beat": 3.0,
+          "why": "Required after Cl2's final note (m.93 b3 release); end-of-piece -- flag if trailing marks are moot.",
+          "expect": "present",
+          "tol": 0.1
+        }
+      ]
+    }
+  ]
+}

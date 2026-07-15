@@ -1,0 +1,1548 @@
+{
+  "source_boundaries": "/mnt/user-data/uploads/boundaries.json",
+  "source_params": {
+    "rest_seam_policy": "seam",
+    "input_sha256": "2f4090f999e36d64"
+  },
+  "audit_file": "audit_cases_full_2026-07-10.json",
+  "include_soft": false,
+  "per_part": [
+    {
+      "index": 0,
+      "name": "Flute 1",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 6.5,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 24.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 28.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 38.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 46.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 74.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 108.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 121.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 147.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 153.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 170.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 176.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 203.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 216.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 224.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 229.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 233.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 255.5,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 261.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 272.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 312.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 325.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 368.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 386.0,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        106.0
+      ]
+    },
+    {
+      "index": 1,
+      "name": "Flute",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 88.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 108.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 130.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 143.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 152.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 162.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 170.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 176.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 199.5,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 203.5,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 216.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 224.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 229.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 233.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 255.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 325.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 386.0,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        106.0,
+        319.75,
+        351.625
+      ]
+    },
+    {
+      "index": 2,
+      "name": "Oboe",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 13.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 21.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 28.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 37.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 45.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 70.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 80.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 84.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 98.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 104.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 115.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 129.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 136.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 147.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 155.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 156.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 170.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 176.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 211.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 220.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 229.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 233.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 244.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 252.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 262.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 271.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 277.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 285.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 301.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 320.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 339.75,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 343.75,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 348.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 359.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 376.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 381.75,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        295.75,
+        319.75,
+        334.0
+      ]
+    },
+    {
+      "index": 3,
+      "name": "Clarinet in B♭  1",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 54.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 72.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 80.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 84.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 98.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 108.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 136.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 147.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 158.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 163.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 166.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 176.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 192.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 200.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 207.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 212.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 228.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 256.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 264.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 271.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 276.0,
+          "status": "required",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 320.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 367.75,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 386.0,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        106.0,
+        211.0,
+        347.875
+      ]
+    },
+    {
+      "index": 4,
+      "name": "B♭ Clarinet",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 54.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 60.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 63.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 72.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 76.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 80.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 84.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 98.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 104.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 124.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 136.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 151.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 158.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 167.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 184.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 211.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 233.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 256.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 279.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 312.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 320.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 359.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 370.0,
+          "status": "required",
+          "release_ok": true
+        }
+      ],
+      "removed_from_run": [
+        120.0,
+        175.875,
+        188.875,
+        192.0,
+        280.0,
+        297.25,
+        308.0,
+        311.875
+      ]
+    },
+    {
+      "index": 5,
+      "name": "Alto Saxophone",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 24.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 48.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 56.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 88.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 104.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 114.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 152.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 160.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 166.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 171.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 176.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 192.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 204.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 213.5,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 229.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 248.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 256.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 280.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 301.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 312.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 320.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        }
+      ],
+      "removed_from_run": [
+        179.875,
+        232.5,
+        319.125,
+        333.0
+      ]
+    },
+    {
+      "index": 6,
+      "name": "Trumpet in B♭ 1",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 48.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 79.5,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 228.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 244.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 252.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 271.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 301.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 332.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        }
+      ],
+      "removed_from_run": [
+        226.0,
+        232.5
+      ]
+    },
+    {
+      "index": 7,
+      "name": "Euphonium",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 44.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 48.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 68.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 84.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 88.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 108.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 114.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 140.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 151.75,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 156.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 166.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 171.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 185.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 196.0,
+          "status": "required",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 212.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 232.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 256.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 271.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 276.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 304.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 309.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 368.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 386.0,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        56.0,
+        60.0,
+        64.0,
+        72.0,
+        76.0,
+        80.0,
+        83.875,
+        106.0,
+        200.0,
+        204.0,
+        220.0,
+        238.125,
+        294.125,
+        301.0,
+        320.0,
+        333.0,
+        359.875
+      ]
+    },
+    {
+      "index": 8,
+      "name": "Harp",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 23.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 27.75,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 31.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 108.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 140.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 148.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 171.625,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 184.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 188.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 192.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 204.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 212.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 226.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 231.5,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 241.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 255.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 258.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 264.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 279.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 291.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 296.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 320.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 326.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 328.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 386.0,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        106.0,
+        213.5
+      ]
+    },
+    {
+      "index": 9,
+      "name": "Harp",
+      "gt_boundaries": [
+        {
+          "time_quarter_notes": 8.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 56.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 63.875,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 72.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 84.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 116.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 124.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 132.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 152.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 156.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 168.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 176.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 180.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 184.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 192.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 228.125,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 232.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 236.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 266.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 270.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 312.0,
+          "status": "kept",
+          "release_ok": false
+        },
+        {
+          "time_quarter_notes": 316.0,
+          "status": "kept",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 320.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 336.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 352.0,
+          "status": "required",
+          "release_ok": true
+        },
+        {
+          "time_quarter_notes": 386.0,
+          "status": "kept",
+          "release_ok": false
+        }
+      ],
+      "removed_from_run": [
+        71.875,
+        75.875,
+        80.0,
+        121.5,
+        129.625,
+        140.0,
+        170.5,
+        350.0,
+        360.0
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "unison",
+      "parts": [
+        0,
+        1
+      ],
+      "qn_lo": 319.5,
+      "qn_hi": 320.5,
+      "case": "ensemble_seam_m80_end"
+    },
+    {
+      "type": "unison",
+      "parts": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ],
+      "qn_lo": 163.9,
+      "qn_hi": 164.1,
+      "case": "errata_m41_unison"
+    }
+  ]
+}
