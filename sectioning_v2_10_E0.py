@@ -1,48 +1,33 @@
 #!/usr/bin/env python
 """
-sectioning_v2_10_C.py  (the v2.10-B/C batch)
+sectioning_v2_10_E0.py
 
-Changes from v2.10-B:
+Changes from v2.10-D-patch -- E0 (2026-07-10): fix the attach-to-next
+annotation bug.
 
-  * v2.10-C same-offset event grouping (extract_lbdm_profiles): all
-    pitched elements starting at the same offset collapse into ONE
-    event carrying top_pitch, bass_pitch, pitch_set, onset_count,
-    duration_max/min. Same-time polyphony is no longer a sequence of
-    zero-IOI melodic events. --lbdm_polyphony_mode top|bass|outer
-    selects the melodic surface LBDM hears (default 'top'; single-line
-    parts are unaffected by grouping). Extra keys survive tie merging
-    (merge_tied_notes copies records), so 'outer' is fully live.
+DIAGNOSIS (annotation_check v2 on liz_seam: 42 correct / 145 ATTACH-NEXT
+/ 69 missing / 52 extra): resolve_breath_target_for_part() selects its
+primary candidate by ONSET proximity to the boundary -- a v2.3/v2.5-era
+convention from when boundaries sat at phrase-final-note onsets (LBDM
+long-IOI). The pipeline now uses Mueller RELEASE instants, so at every
+note-to-note seam the note STARTING at bt wins and the comma renders one
+note late. Rest-followed boundaries hit the previous-note fallback and
+render correctly, which is why eye tests approved exactly those.
 
-  * Structural-event dedup (extract_structural_event_offsets,
-    dedup_window_qn=2.0): same-kind event runs within the window
-    collapse to their FIRST event, with a sliding window so long
-    unrolled rit./accel. tempo cascades stay one gesture. Changes
-    default output: boost spam from playback tempo marks is gone
-    (part event counts drop roughly by half). dedup_window_qn=0
-    disables. Burst-END anchoring (the a tempo) is reserved for F.
+FIX: annotation-only retarget in add_breath_marks_per_part(), applied
+AFTER the resolver returns (resolver untouched -- the D-patch
+seam_snap_to logic lives there). If the resolved target's offset equals
+the boundary, redirect to the note whose release equals bt, provided it
+has no outgoing tie. Module flag _ANNOT_RELEASE_RETARGET (shipped True:
+bug fix restoring the documented convention, not a new mechanism; False
+reproduces legacy rendering).
 
-  * Fermata extraction: fermatas live in note.expressions, not as
-    stream elements, and were previously invisible to the pipeline.
-    Now emitted as typed 'fermata' events (weight 1.0 via the
-    event-weight default; dedicated kwarg pending). Endpoint
-    side-choice semantics are D1/F work.
-
-  * EXPERIMENTAL, default OFF: selection_repetition_penalty adds
-    rhythm-repetition R as a continuation penalty (tuplet-style)
-    into selection_score and note_anchor_score. Validated on Liz
-    (with delta_repetition=0.8): fixes ASax m.54 / removes Harp
-    m.54, but over-suppresses accompaniment parts (R>0.8 across
-    85-89% of Trumpet/Euphonium). NOT promoted to defaults;
-    revisit requires a per-part prevalence gate and onset-gated
-    similarity. See handover notes.
-
-  * Companion phrase_material.py: single_attack_phrase advisory flag
-    (catches whole-note-per-bar chains split across segments).
-
-Carried from v2.10-A/B: phrase material report; note_anchor weights
-as kwargs; repetition mask (post-normalization, masks rhythm novelty +
-slur-endpoint boost + following-gap; delta_repetition=0.0 default);
---chroma_kernel exact|interval (interval-class SSM, default exact).
+VALIDATION: boundaries.json must be byte-identical (this change cannot
+move boundaries). annotation_check: expect ATTACH-NEXT ~145 -> ~0,
+OK ~42 -> ~187+. Fl1 m.27 commas render 108 -> 106 and Tpt m.57
+228 -> 226: per GT those are the musically WRONG positions -- expected;
+the boundaries themselves must move under E0b (onset-landing fix),
+tracked separately.
 
 Usage with caching:
     from sectioning_v2_10_A import run_sectioning, explain, save_result, load_result

@@ -1,48 +1,54 @@
 #!/usr/bin/env python
 """
-sectioning_v2_10_C.py  (the v2.10-B/C batch)
+sectioning_v2_10_D.py
 
-Changes from v2.10-B:
+V2.10-D of the sectioning pipeline (= v2.10-C + G0 + E1 + S0/S1; file
+letters track delivery batches, NOT roadmap letters).
 
-  * v2.10-C same-offset event grouping (extract_lbdm_profiles): all
-    pitched elements starting at the same offset collapse into ONE
-    event carrying top_pitch, bass_pitch, pitch_set, onset_count,
-    duration_max/min. Same-time polyphony is no longer a sequence of
-    zero-IOI melodic events. --lbdm_polyphony_mode top|bass|outer
-    selects the melodic surface LBDM hears (default 'top'; single-line
-    parts are unaffected by grouping). Extra keys survive tie merging
-    (merge_tied_notes copies records), so 'outer' is fully live.
+Changes from v2.10-C:
 
-  * Structural-event dedup (extract_structural_event_offsets,
-    dedup_window_qn=2.0): same-kind event runs within the window
-    collapse to their FIRST event, with a sliding window so long
-    unrolled rit./accel. tempo cascades stay one gesture. Changes
-    default output: boost spam from playback tempo marks is gone
-    (part event counts drop roughly by half). dedup_window_qn=0
-    disables. Burst-END anchoring (the a tempo) is reserved for F.
+G0 -- one-note wedge fix (committed 2026-07-08):
+    A hairpin spanner containing a single element previously yielded a
+    zero-length span and was dropped. A one-note wedge now spans the
+    note's duration (end = start + quarterLength), per ruling "one-note
+    wedge = the note's duration". ~27 such wedges exist in Liz and were
+    invisible pre-G0. Isolated effect unmeasured (BC->D diff was
+    dominated by the unserialized delta_repetition knob; sentinel if
+    ever wanted: Cl1 m.49 whole-note dim., now spanned).
 
-  * Fermata extraction: fermatas live in note.expressions, not as
-    stream elements, and were previously invisible to the pipeline.
-    Now emitted as typed 'fermata' events (weight 1.0 via the
-    event-weight default; dedicated kwarg pending). Endpoint
-    side-choice semantics are D1/F work.
+E1 -- cross-support attribution (roadmap E deliverable 1; pure
+diagnostics, boundaries.json / sectioned.musicxml bit-identical):
+    1. compute_cross_rhythm_support gains attribution_out=None; when a
+       dict is passed it is filled with 'sim' (N,N,T), 'contrib' (N,N,T),
+       'raw_support' (N,T), 'local_B_pre' (N,T), plus shift_frames,
+       window_qn, similarity_threshold.
+    2. run_sectioning stores it as result['cross_support_attribution']
+       (pickled; ~3-4 MB extra).
+    3. New top-level explain_cross_support(result, part_idx, time_qn=None,
+       measure=None, beat=1.0): per-source attribution at a point --
+       similarity, borrowed evidence within max_shift, nearest peak in a
+       wider display window with distance in qn (the E snap-design view).
 
-  * EXPERIMENTAL, default OFF: selection_repetition_penalty adds
-    rhythm-repetition R as a continuation penalty (tuplet-style)
-    into selection_score and note_anchor_score. Validated on Liz
-    (with delta_repetition=0.8): fixes ASax m.54 / removes Harp
-    m.54, but over-suppresses accompaniment parts (R>0.8 across
-    85-89% of Trumpet/Euphonium). NOT promoted to defaults;
-    revisit requires a per-part prevalence gate and onset-gated
-    similarity. See handover notes.
+S0 -- provenance hardening:
+    run_sectioning captures every scalar knob via locals() plus the input
+    file's sha256, and augments 'parameters' in BOTH boundaries.json and
+    result.pkl with input_file, input_sha256, rest_seam_policy, all_knobs.
+    boundaries_diff.py's parameter check now catches experimental flags
+    (delta_repetition!) and input drift automatically.
 
-  * Companion phrase_material.py: single_attack_phrase advisory flag
-    (catches whole-note-per-bar chains split across segments).
-
-Carried from v2.10-A/B: phrase material report; note_anchor weights
-as kwargs; repetition mask (post-normalization, masks rhythm novelty +
-slur-endpoint boost + following-gap; delta_repetition=0.0 default);
---chroma_kernel exact|interval (interval-class SSM, default exact).
+S1 -- rest_seam_policy ('legacy' default; no output change until 'seam'):
+    legacy: v2.9.1 behavior, bit-identical.
+    seam:
+      * a boundary at EXACTLY a note-end/rest-start seam (|bt - rest
+        start| <= 0.02 qn) is kept, target = the final note (breath
+        after it) -- recovers the 15.
+      * a boundary within 0.25 qn before the target note's end, when
+        that end is a seam, snaps TO it (rec['seam_snap_to']) --
+        normalizes the 21 "b4.88" keeps; closes issue 7's placement half.
+      * strictly-inside-rest boundaries are still rejected (the 38).
+      * DIAGNOSTIC FIELD ONLY: rec['boundary_at_entry_onset'] (the 26);
+        penalty deferred per "penalize, never ban".
+    NOTE: the CLI/kwarg wiring for the policy landed in v2.10-D-patch.
 
 Usage with caching:
     from sectioning_v2_10_A import run_sectioning, explain, save_result, load_result

@@ -1,48 +1,18 @@
 #!/usr/bin/env python
 """
-sectioning_v2_10_C.py  (the v2.10-B/C batch)
+sectioning_v2_10_D_patch.py
 
-Changes from v2.10-B:
-
-  * v2.10-C same-offset event grouping (extract_lbdm_profiles): all
-    pitched elements starting at the same offset collapse into ONE
-    event carrying top_pitch, bass_pitch, pitch_set, onset_count,
-    duration_max/min. Same-time polyphony is no longer a sequence of
-    zero-IOI melodic events. --lbdm_polyphony_mode top|bass|outer
-    selects the melodic surface LBDM hears (default 'top'; single-line
-    parts are unaffected by grouping). Extra keys survive tie merging
-    (merge_tied_notes copies records), so 'outer' is fully live.
-
-  * Structural-event dedup (extract_structural_event_offsets,
-    dedup_window_qn=2.0): same-kind event runs within the window
-    collapse to their FIRST event, with a sliding window so long
-    unrolled rit./accel. tempo cascades stay one gesture. Changes
-    default output: boost spam from playback tempo marks is gone
-    (part event counts drop roughly by half). dedup_window_qn=0
-    disables. Burst-END anchoring (the a tempo) is reserved for F.
-
-  * Fermata extraction: fermatas live in note.expressions, not as
-    stream elements, and were previously invisible to the pipeline.
-    Now emitted as typed 'fermata' events (weight 1.0 via the
-    event-weight default; dedicated kwarg pending). Endpoint
-    side-choice semantics are D1/F work.
-
-  * EXPERIMENTAL, default OFF: selection_repetition_penalty adds
-    rhythm-repetition R as a continuation penalty (tuplet-style)
-    into selection_score and note_anchor_score. Validated on Liz
-    (with delta_repetition=0.8): fixes ASax m.54 / removes Harp
-    m.54, but over-suppresses accompaniment parts (R>0.8 across
-    85-89% of Trumpet/Euphonium). NOT promoted to defaults;
-    revisit requires a per-part prevalence gate and onset-gated
-    similarity. See handover notes.
-
-  * Companion phrase_material.py: single_attack_phrase advisory flag
-    (catches whole-note-per-bar chains split across segments).
-
-Carried from v2.10-A/B: phrase material report; note_anchor weights
-as kwargs; repetition mask (post-normalization, masks rhythm novelty +
-slur-endpoint boost + following-gap; delta_repetition=0.0 default);
---chroma_kernel exact|interval (interval-class SSM, default exact).
+Changes from v2.10-D: completes S0/S1 by wiring rest_seam_policy
+end-to-end (patch_S1_wire_rest_seam_cli):
+  W1  run_sectioning() gains rest_seam_policy='legacy' as a kwarg
+  W2  the first line of its body sets _REST_SEAM_POLICY['policy'] so
+      resolve_breath_target_for_part / validate_boundaries_for_part
+      pick it up
+  W3  main()'s argparse gains --rest_seam_policy {legacy,seam}
+  W4  main()'s run_sectioning(...) call passes it through
+Validated: legacy run diff-identical to output_v2_10_D; 'seam' run
+(liz_seam) matched the predicted bands and is the GT-audited baseline
+(audit_cases_full_2026-07-10, 26 cases / 276 compiled boundaries).
 
 Usage with caching:
     from sectioning_v2_10_A import run_sectioning, explain, save_result, load_result
