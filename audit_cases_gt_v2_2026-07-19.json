@@ -1,0 +1,1814 @@
+{
+ "cases": [
+  {
+   "id": "gtv2_required_p0",
+   "summary": "Flute 1: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 0,
+   "diagnostic_points": [
+    {
+     "part_index": 0,
+     "measure": 6,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 24)"
+    },
+    {
+     "part_index": 0,
+     "measure": 27,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 108)"
+    },
+    {
+     "part_index": 0,
+     "measure": 37,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 148)"
+    },
+    {
+     "part_index": 0,
+     "measure": 41,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 164)"
+    },
+    {
+     "part_index": 0,
+     "measure": 43,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 170)"
+    },
+    {
+     "part_index": 0,
+     "measure": 45,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 180)"
+    },
+    {
+     "part_index": 0,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 0,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 0,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 0,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 0,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    },
+    {
+     "part_index": 0,
+     "measure": 94,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p0",
+   "summary": "Flute 1: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 0,
+   "diagnostic_points": [
+    {
+     "part_index": 0,
+     "measure": 37,
+     "beat": 4.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 147)."
+    },
+    {
+     "part_index": 0,
+     "measure": 84,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 336)."
+    },
+    {
+     "part_index": 0,
+     "measure": 93,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 386)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p1",
+   "summary": "Flute: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 1,
+   "diagnostic_points": [
+    {
+     "part_index": 1,
+     "measure": 27,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 108)"
+    },
+    {
+     "part_index": 1,
+     "measure": 43,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 170)"
+    },
+    {
+     "part_index": 1,
+     "measure": 45,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 180)"
+    },
+    {
+     "part_index": 1,
+     "measure": 51,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 204)"
+    },
+    {
+     "part_index": 1,
+     "measure": 53,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 212)"
+    },
+    {
+     "part_index": 1,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 1,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 1,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 1,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 1,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    },
+    {
+     "part_index": 1,
+     "measure": 93,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 370)"
+    },
+    {
+     "part_index": 1,
+     "measure": 94,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p1",
+   "summary": "Flute: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 1,
+   "diagnostic_points": [
+    {
+     "part_index": 1,
+     "measure": 50,
+     "beat": 4.5,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 199.5)."
+    },
+    {
+     "part_index": 1,
+     "measure": 51,
+     "beat": 4.5,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 203.5)."
+    },
+    {
+     "part_index": 1,
+     "measure": 93,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 386)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p2",
+   "summary": "Oboe: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 2,
+   "diagnostic_points": [
+    {
+     "part_index": 2,
+     "measure": 31,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 123)"
+    },
+    {
+     "part_index": 2,
+     "measure": 37,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 148)"
+    },
+    {
+     "part_index": 2,
+     "measure": 39,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 155)"
+    },
+    {
+     "part_index": 2,
+     "measure": 41,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 163)"
+    },
+    {
+     "part_index": 2,
+     "measure": 45,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 180)"
+    },
+    {
+     "part_index": 2,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 2,
+     "measure": 66,
+     "beat": 3.5,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 262.5)"
+    },
+    {
+     "part_index": 2,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 2,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 2,
+     "measure": 80,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 320)"
+    },
+    {
+     "part_index": 2,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 2,
+     "measure": 84,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 336)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p2",
+   "summary": "Oboe: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 2,
+   "diagnostic_points": [
+    {
+     "part_index": 2,
+     "measure": 37,
+     "beat": 4.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 147)."
+    },
+    {
+     "part_index": 2,
+     "measure": 66,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 262)."
+    },
+    {
+     "part_index": 2,
+     "measure": 83,
+     "beat": 2.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 329)."
+    },
+    {
+     "part_index": 2,
+     "measure": 85,
+     "beat": 4.75,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 339.75)."
+    },
+    {
+     "part_index": 2,
+     "measure": 93,
+     "beat": 14.8,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 381.8)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p3",
+   "summary": "Clarinet in B♭  1: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 3,
+   "diagnostic_points": [
+    {
+     "part_index": 3,
+     "measure": 18,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 72)"
+    },
+    {
+     "part_index": 3,
+     "measure": 27,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 108)"
+    },
+    {
+     "part_index": 3,
+     "measure": 31,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 124)"
+    },
+    {
+     "part_index": 3,
+     "measure": 41,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 164)"
+    },
+    {
+     "part_index": 3,
+     "measure": 45,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 180)"
+    },
+    {
+     "part_index": 3,
+     "measure": 53,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 212)"
+    },
+    {
+     "part_index": 3,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 3,
+     "measure": 60,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 240)"
+    },
+    {
+     "part_index": 3,
+     "measure": 70,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 279)"
+    },
+    {
+     "part_index": 3,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 3,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 3,
+     "measure": 80,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 320)"
+    },
+    {
+     "part_index": 3,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 3,
+     "measure": 84,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 336)"
+    },
+    {
+     "part_index": 3,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    },
+    {
+     "part_index": 3,
+     "measure": 93,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 370)"
+    },
+    {
+     "part_index": 3,
+     "measure": 94,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p3",
+   "summary": "Clarinet in B♭  1: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 3,
+   "diagnostic_points": [
+    {
+     "part_index": 3,
+     "measure": 41,
+     "beat": 4.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 163)."
+    },
+    {
+     "part_index": 3,
+     "measure": 69,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 276)."
+    },
+    {
+     "part_index": 3,
+     "measure": 92,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 368)."
+    },
+    {
+     "part_index": 3,
+     "measure": 93,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 386)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p4",
+   "summary": "B♭ Clarinet: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 4,
+   "diagnostic_points": [
+    {
+     "part_index": 4,
+     "measure": 18,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 72)"
+    },
+    {
+     "part_index": 4,
+     "measure": 31,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 124)"
+    },
+    {
+     "part_index": 4,
+     "measure": 41,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 164)"
+    },
+    {
+     "part_index": 4,
+     "measure": 45,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 180)"
+    },
+    {
+     "part_index": 4,
+     "measure": 46,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 184)"
+    },
+    {
+     "part_index": 4,
+     "measure": 49,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 196)"
+    },
+    {
+     "part_index": 4,
+     "measure": 60,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 240)"
+    },
+    {
+     "part_index": 4,
+     "measure": 70,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 279)"
+    },
+    {
+     "part_index": 4,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 4,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 4,
+     "measure": 78,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 312)"
+    },
+    {
+     "part_index": 4,
+     "measure": 80,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 320)"
+    },
+    {
+     "part_index": 4,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 4,
+     "measure": 93,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 370)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p4",
+   "summary": "B♭ Clarinet: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 4,
+   "diagnostic_points": [
+    {
+     "part_index": 4,
+     "measure": 19,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 74)."
+    },
+    {
+     "part_index": 4,
+     "measure": 32,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 126)."
+    },
+    {
+     "part_index": 4,
+     "measure": 47,
+     "beat": 2.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 185)."
+    },
+    {
+     "part_index": 4,
+     "measure": 60,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 238)."
+    },
+    {
+     "part_index": 4,
+     "measure": 79,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 314)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p5",
+   "summary": "Alto Saxophone: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 5,
+   "diagnostic_points": [
+    {
+     "part_index": 5,
+     "measure": 40,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 160)"
+    },
+    {
+     "part_index": 5,
+     "measure": 41,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 164)"
+    },
+    {
+     "part_index": 5,
+     "measure": 43,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 172)"
+    },
+    {
+     "part_index": 5,
+     "measure": 46,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 183)"
+    },
+    {
+     "part_index": 5,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 5,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 5,
+     "measure": 80,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 320)"
+    },
+    {
+     "part_index": 5,
+     "measure": 84,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 336)"
+    },
+    {
+     "part_index": 5,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p5",
+   "summary": "Alto Saxophone: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 5,
+   "diagnostic_points": [
+    {
+     "part_index": 5,
+     "measure": 43,
+     "beat": 4.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 171)."
+    },
+    {
+     "part_index": 5,
+     "measure": 54,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 214)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p6",
+   "summary": "Trumpet in B♭ 1: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 6,
+   "diagnostic_points": [
+    {
+     "part_index": 6,
+     "measure": 12,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 48)"
+    },
+    {
+     "part_index": 6,
+     "measure": 20,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 80)"
+    },
+    {
+     "part_index": 6,
+     "measure": 57,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 228)"
+    },
+    {
+     "part_index": 6,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 6,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 6,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 6,
+     "measure": 84,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 336)"
+    },
+    {
+     "part_index": 6,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p6",
+   "summary": "Trumpet in B♭ 1: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 6,
+   "diagnostic_points": [
+    {
+     "part_index": 6,
+     "measure": 20,
+     "beat": 4.5,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 79.5)."
+    },
+    {
+     "part_index": 6,
+     "measure": 83,
+     "beat": 2.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 329)."
+    },
+    {
+     "part_index": 6,
+     "measure": 84,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 334)."
+    },
+    {
+     "part_index": 6,
+     "measure": 85,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 338)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p7",
+   "summary": "Euphonium: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 7,
+   "diagnostic_points": [
+    {
+     "part_index": 7,
+     "measure": 12,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 48)"
+    },
+    {
+     "part_index": 7,
+     "measure": 17,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 68)"
+    },
+    {
+     "part_index": 7,
+     "measure": 22,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 86)"
+    },
+    {
+     "part_index": 7,
+     "measure": 27,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 108)"
+    },
+    {
+     "part_index": 7,
+     "measure": 31,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 124)"
+    },
+    {
+     "part_index": 7,
+     "measure": 35,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 140)"
+    },
+    {
+     "part_index": 7,
+     "measure": 37,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 148)"
+    },
+    {
+     "part_index": 7,
+     "measure": 39,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 156)"
+    },
+    {
+     "part_index": 7,
+     "measure": 50,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 200)"
+    },
+    {
+     "part_index": 7,
+     "measure": 53,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 212)"
+    },
+    {
+     "part_index": 7,
+     "measure": 58,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 232)"
+    },
+    {
+     "part_index": 7,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 7,
+     "measure": 60,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 240)"
+    },
+    {
+     "part_index": 7,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 7,
+     "measure": 76,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 304)"
+    },
+    {
+     "part_index": 7,
+     "measure": 78,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 312)"
+    },
+    {
+     "part_index": 7,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 7,
+     "measure": 84,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 336)"
+    },
+    {
+     "part_index": 7,
+     "measure": 90,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 360)"
+    },
+    {
+     "part_index": 7,
+     "measure": 94,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p7",
+   "summary": "Euphonium: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 7,
+   "diagnostic_points": [
+    {
+     "part_index": 7,
+     "measure": 28,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 112)."
+    },
+    {
+     "part_index": 7,
+     "measure": 36,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 142)."
+    },
+    {
+     "part_index": 7,
+     "measure": 38,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 152)."
+    },
+    {
+     "part_index": 7,
+     "measure": 49,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 196)."
+    },
+    {
+     "part_index": 7,
+     "measure": 54,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 214)."
+    },
+    {
+     "part_index": 7,
+     "measure": 60,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 238)."
+    },
+    {
+     "part_index": 7,
+     "measure": 78,
+     "beat": 2.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 309)."
+    },
+    {
+     "part_index": 7,
+     "measure": 88,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 352)."
+    },
+    {
+     "part_index": 7,
+     "measure": 93,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 386)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p8",
+   "summary": "Harp: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 8,
+   "diagnostic_points": [
+    {
+     "part_index": 8,
+     "measure": 3,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 12)"
+    },
+    {
+     "part_index": 8,
+     "measure": 27,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 108)"
+    },
+    {
+     "part_index": 8,
+     "measure": 35,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 140)"
+    },
+    {
+     "part_index": 8,
+     "measure": 53,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 212)"
+    },
+    {
+     "part_index": 8,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 8,
+     "measure": 61,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 242)"
+    },
+    {
+     "part_index": 8,
+     "measure": 68,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 270)"
+    },
+    {
+     "part_index": 8,
+     "measure": 74,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 296)"
+    },
+    {
+     "part_index": 8,
+     "measure": 80,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 320)"
+    },
+    {
+     "part_index": 8,
+     "measure": 82,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 328)"
+    },
+    {
+     "part_index": 8,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    },
+    {
+     "part_index": 8,
+     "measure": 94,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p8",
+   "summary": "Harp: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 8,
+   "diagnostic_points": [
+    {
+     "part_index": 8,
+     "measure": 61,
+     "beat": 2.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 241)."
+    },
+    {
+     "part_index": 8,
+     "measure": 66,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 264)."
+    },
+    {
+     "part_index": 8,
+     "measure": 73,
+     "beat": 5.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 292)."
+    },
+    {
+     "part_index": 8,
+     "measure": 81,
+     "beat": 2.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 321)."
+    },
+    {
+     "part_index": 8,
+     "measure": 84,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 336)."
+    },
+    {
+     "part_index": 8,
+     "measure": 93,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 386)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_required_p9",
+   "summary": "Harp: GT v2 required breaths (hand-corrected score 2026-07-15/19).",
+   "tags": [
+    "gt_v2",
+    "required"
+   ],
+   "part_index": 9,
+   "diagnostic_points": [
+    {
+     "part_index": 9,
+     "measure": 6,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 24)"
+    },
+    {
+     "part_index": 9,
+     "measure": 7,
+     "beat": 3.5,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 26.5)"
+    },
+    {
+     "part_index": 9,
+     "measure": 18,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 72)"
+    },
+    {
+     "part_index": 9,
+     "measure": 21,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 84)"
+    },
+    {
+     "part_index": 9,
+     "measure": 29,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 116)"
+    },
+    {
+     "part_index": 9,
+     "measure": 31,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 124)"
+    },
+    {
+     "part_index": 9,
+     "measure": 33,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 132)"
+    },
+    {
+     "part_index": 9,
+     "measure": 34,
+     "beat": 3.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 134)"
+    },
+    {
+     "part_index": 9,
+     "measure": 37,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 148)"
+    },
+    {
+     "part_index": 9,
+     "measure": 39,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 156)"
+    },
+    {
+     "part_index": 9,
+     "measure": 43,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 171)"
+    },
+    {
+     "part_index": 9,
+     "measure": 47,
+     "beat": 4.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 187)"
+    },
+    {
+     "part_index": 9,
+     "measure": 59,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 236)"
+    },
+    {
+     "part_index": 9,
+     "measure": 65,
+     "beat": 2.25,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 257.25)"
+    },
+    {
+     "part_index": 9,
+     "measure": 68,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 272)"
+    },
+    {
+     "part_index": 9,
+     "measure": 80,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 320)"
+    },
+    {
+     "part_index": 9,
+     "measure": 84,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 336)"
+    },
+    {
+     "part_index": 9,
+     "measure": 88,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 352)"
+    },
+    {
+     "part_index": 9,
+     "measure": 94,
+     "beat": "end",
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390)"
+    }
+   ]
+  },
+  {
+   "id": "gtv2_banned_p9",
+   "summary": "Harp: positions Robert removed in the hand-correction pass -- must stay absent.",
+   "tags": [
+    "gt_v2",
+    "banned"
+   ],
+   "part_index": 9,
+   "diagnostic_points": [
+    {
+     "part_index": 9,
+     "measure": 14,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 56)."
+    },
+    {
+     "part_index": 9,
+     "measure": 19,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 76)."
+    },
+    {
+     "part_index": 9,
+     "measure": 38,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 152)."
+    },
+    {
+     "part_index": 9,
+     "measure": 43,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 170)."
+    },
+    {
+     "part_index": 9,
+     "measure": 46,
+     "beat": 4.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 183)."
+    },
+    {
+     "part_index": 9,
+     "measure": 46,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 184)."
+    },
+    {
+     "part_index": 9,
+     "measure": 67,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 266)."
+    },
+    {
+     "part_index": 9,
+     "measure": 68,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 270)."
+    },
+    {
+     "part_index": 9,
+     "measure": 78,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 312)."
+    },
+    {
+     "part_index": 9,
+     "measure": 85,
+     "beat": 3.0,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was required, qn 338)."
+    },
+    {
+     "part_index": 9,
+     "measure": 93,
+     "beat": "end",
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 386)."
+    }
+   ]
+  },
+  {
+   "id": "gtv2_ensemble_seam_m80_end",
+   "summary": "Unison constraint ensemble_seam_m80_end: parts [0, 1] must match in [319.5, 320.5] (all or none, within 0.1 qn).",
+   "tags": [
+    "gt_v2",
+    "unison"
+   ],
+   "part_index": 0,
+   "constraints": [
+    {
+     "type": "unison",
+     "parts": [
+      0,
+      1
+     ],
+     "qn_lo": 319.5,
+     "qn_hi": 320.5
+    }
+   ],
+   "diagnostic_points": []
+  },
+  {
+   "id": "gtv2_errata_m41_unison",
+   "summary": "Unison constraint errata_m41_unison: parts [0, 1, 3, 4, 5] must match in [163.9, 164.1] (all or none, within 0.1 qn).",
+   "tags": [
+    "gt_v2",
+    "unison"
+   ],
+   "part_index": 0,
+   "constraints": [
+    {
+     "type": "unison",
+     "parts": [
+      0,
+      1,
+      3,
+      4,
+      5
+     ],
+     "qn_lo": 163.9,
+     "qn_hi": 164.1
+    }
+   ],
+   "diagnostic_points": []
+  },
+  {
+   "id": "gtv2_unison_m93_fermata_release",
+   "summary": "Unison constraint unison_m93_fermata_release: parts [0, 1, 3, 4, 7] must match in [369.9, 370.1] (all or none, within 0.1 qn).",
+   "tags": [
+    "gt_v2",
+    "unison"
+   ],
+   "part_index": 0,
+   "constraints": [
+    {
+     "type": "unison",
+     "parts": [
+      0,
+      1,
+      3,
+      4,
+      7
+     ],
+     "qn_lo": 369.9,
+     "qn_hi": 370.1
+    }
+   ],
+   "diagnostic_points": []
+  },
+  {
+   "id": "gtv2_unison_final_chord_release",
+   "summary": "Unison constraint unison_final_chord_release: parts [0, 1, 3, 7, 8, 9] must match in [389.9, 390.1] (all or none, within 0.1 qn).",
+   "tags": [
+    "gt_v2",
+    "unison"
+   ],
+   "part_index": 0,
+   "constraints": [
+    {
+     "type": "unison",
+     "parts": [
+      0,
+      1,
+      3,
+      7,
+      8,
+      9
+     ],
+     "qn_lo": 389.9,
+     "qn_hi": 390.1
+    }
+   ],
+   "diagnostic_points": []
+  }
+ ]
+}

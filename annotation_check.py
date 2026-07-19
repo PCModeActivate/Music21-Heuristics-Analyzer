@@ -3,6 +3,13 @@
 annotation_check.py -- cross-check breath marks in an annotated MusicXML
 against boundaries.json.
 
+v3 (2026-07-19)
+    Release-first matching: v2's boundary-ordered greedy matching let an
+    entry-onset attach steal the next boundary's correct mark, cascading
+    OK+OK into ATTACH-NEXT+ATTACH-NEXT+MISSING (Euph m.15-16 shape;
+    ~11 misclassifications on the E0 run). Boundaries now match all
+    releases globally first, then starts, then leftovers.
+
 v2 (2026-07-10)
     Two fixes after first-run diagnosis:
     (a) Grand-staff mapping: the XML Harp is ONE part (staff 1 = upper,
@@ -124,10 +131,19 @@ def main() -> int:
         pool = sorted(pool)
 
         rows = []
+        # v3 pass 1: match every boundary to a mark by RELEASE first,
+        # so an attach-shaped mark cannot steal a later boundary's
+        # correctly rendered mark.
+        unmatched = []
         for q in bqns:
             rel = next((m for m in pool if abs(m[1] - q) <= args.tol), None)
             if rel is not None:
-                pool.remove(rel); n_ok += 1; continue
+                pool.remove(rel); n_ok += 1
+            else:
+                unmatched.append(q)
+        # v3 pass 2: remaining boundaries match by START (ATTACH-NEXT),
+        # pass 3: leftovers are MISSING.
+        for q in unmatched:
             st = next((m for m in pool if abs(m[0] - q) <= args.tol), None)
             if st is not None:
                 pool.remove(st); n_attach += 1

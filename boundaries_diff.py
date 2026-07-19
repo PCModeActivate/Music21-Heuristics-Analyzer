@@ -2,6 +2,10 @@
 """
 boundaries_diff.py -- compare two boundaries.json outputs.
 
+v2 (2026-07-19): parameter check ignores ephemeral all_knobs keys and
+skips GT reference files ('gt': True); measure/beat display is built
+from the JSON files' own measure/beat fields (18/4 m.93 correct).
+
 Answers "what did this change actually do?" after any pipeline commit:
 per part, lists boundaries that were ADDED, REMOVED, or MOVED (paired
 within a tolerance), plus a one-line count summary.
@@ -40,11 +44,56 @@ def load(path):
     return parts
 
 
+_MB_STARTS = []   # [(start_qn, measure_number)], built from the inputs
+
+
+def build_mb_map(*json_paths):
+    """Harvest (measure -> start_qn) from boundary entries that carry
+    numeric measure/beat fields. Barline instants are recorded as
+    next-measure b1 by the pipeline, so they contribute exact starts."""
+    starts = {}
+    for path in json_paths:
+        try:
+            data = json.load(open(path))
+        except Exception:
+            continue
+        for p in data.get('per_part', []):
+            for b in p.get('boundaries', []):
+                m, bt, t = b.get('measure'), b.get('beat'), \
+                    b.get('time_quarter_notes')
+                if isinstance(m, int) and isinstance(bt, (int, float)) \
+                        and t is not None:
+                    starts.setdefault(m, round(float(t) - (float(bt) - 1.0), 6))
+    _MB_STARTS[:] = sorted((s, m) for m, s in starts.items())
+
+
 def qn_to_mb(qn):
-    """Liz convention (4/4): for display only."""
-    m = int(qn // 4) + 1
-    b = (qn % 4) + 1
-    return 'm.%d b%.3g' % (m, b)
+    """Display via the harvested measure map; 4/4 fallback for gaps.
+    Barline instants render as 'm.N end' (project convention)."""
+    if not _MB_STARTS:
+        m = int(qn // 4) + 1
+        return 'm.%d b%.3g' % (m, (qn % 4) + 1)
+    prev = None
+    for s, m in _MB_STARTS:
+        if s > qn + 1e-6:
+            break
+        if abs(qn - s) <= 1e-6 and m > _MB_STARTS[0][1]:
+            return 'm.%d end' % (m - 1)
+        prev = (s, m)
+    if prev is None:
+        m = int(qn // 4) + 1
+        return 'm.%d b%.3g' % (m, (qn % 4) + 1)
+    s, m = prev
+    off = qn - s
+    nxt = next((sn for sn, _ in _MB_STARTS if sn > s + 1e-6), None)
+    if nxt is None and off >= 4.0:
+        # beyond the last harvested measure start: extrapolate 4/4
+        skip = int(off // 4.0)
+        m += skip
+        off -= 4.0 * skip
+    # if nxt exists, qn < nxt lies inside measure m's real span
+    # (covers the 18/4 m.93 correctly: beats run 1..18)
+    return 'm.%d b%.3g' % (m, off + 1.0)
 
 
 def pair_greedy(old, new, tol):
@@ -70,9 +119,23 @@ def pair_greedy(old, new, tol):
     added = [n for i, n in enumerate(new) if i not in used_n]
     return pairs, removed, added
 
+_EPHEMERAL_KNOBS = {'annotated_path', 'plot_path', 'output_dir', 'i',
+                    'marker', 'n_flagged', 'n_hp', 'n_nat_ties',
+                    'n_phrase', 'n_struct', 'n_tie_like', 'n_tuplets'}
+
+
 def diff_parameters(old_json, new_json):
     po = json.load(open(old_json)).get('parameters', {})
     pn = json.load(open(new_json)).get('parameters', {})
+    if po.get('gt') is True or pn.get('gt') is True:
+        print('(GT reference file: parameter comparison skipped)')
+        print()
+        return False
+    for _d in (po, pn):
+        _ak = _d.get('all_knobs')
+        if isinstance(_ak, dict):
+            for _k in _EPHEMERAL_KNOBS:
+                _ak.pop(_k, None)
     keys = sorted(set(po) | set(pn))
     diffs = [(k, po.get(k, '<absent>'), pn.get(k, '<absent>'))
              for k in keys if po.get(k) != pn.get(k)]
@@ -93,6 +156,7 @@ def main():
     ap.add_argument('--part', type=int, default=None,
                     help='Restrict to one part index')
     args = ap.parse_args()
+    build_mb_map(args.old_json, args.new_json)
     diff_parameters(args.old_json, args.new_json)
 
     old = load(args.old_json)
