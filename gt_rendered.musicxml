@@ -720,7 +720,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -1142,7 +1142,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <top-system-distance>70.00</top-system-distance>
           </system-layout>
@@ -1530,7 +1530,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -1763,7 +1763,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <top-system-distance>124.09</top-system-distance>
           </system-layout>
@@ -2267,7 +2267,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -2565,7 +2565,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <top-system-distance>70.00</top-system-distance>
           </system-layout>
@@ -2858,7 +2858,7 @@
           <slur type="start" placement="above" number="1"/>
           </notations>
         </note>
-      <note default-x="59.38" default-y="-10.00">
+      <note default-x="59.37" default-y="-10.00">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -2894,7 +2894,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -3581,7 +3581,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <top-system-distance>79.90</top-system-distance>
           </system-layout>
@@ -4404,7 +4404,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <system-distance>150.00</system-distance>
           </system-layout>
@@ -4479,7 +4479,7 @@
         <system-layout>
           <system-margins>
             <left-margin>89.11</left-margin>
-            <right-margin>-0.00</right-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <top-system-distance>204.81</top-system-distance>
           </system-layout>
@@ -7041,7 +7041,7 @@
           <slur type="start" placement="above" number="1"/>
           </notations>
         </note>
-      <note default-x="59.38" default-y="-125.00">
+      <note default-x="59.37" default-y="-125.00">
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -11692,7 +11692,7 @@
           <slur type="start" placement="above" number="1"/>
           </notations>
         </note>
-      <note default-x="59.38" default-y="-222.42">
+      <note default-x="59.37" default-y="-222.42">
         <pitch>
           <step>D</step>
           <octave>5</octave>
@@ -21385,7 +21385,7 @@
         </note>
       <direction placement="below">
         <direction-type>
-          <wedge type="crescendo" number="1" default-y="-76.40"/>
+          <wedge type="crescendo" number="1" default-y="-78.79"/>
           </direction-type>
         </direction>
       <note default-x="40.28" default-y="-526.93">
@@ -21440,7 +21440,6 @@
         <stem>up</stem>
         <notehead color="#5500FF">normal</notehead>
         <notations>
-          <slur type="stop" number="1"/>
           <fermata type="upright" relative-y="5.00"/>
           </notations>
         </note>
@@ -21455,6 +21454,7 @@
         <stem>up</stem>
         <notehead color="#5500FF">normal</notehead>
         <notations>
+          <slur type="stop" number="1"/>
           <articulations>
             <breath-mark/>
             </articulations>
@@ -25909,7 +25909,7 @@
           <slur type="start" placement="below" number="1"/>
           </notations>
         </note>
-      <note default-x="59.38" default-y="-557.42">
+      <note default-x="59.37" default-y="-557.42">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -37015,7 +37015,7 @@
         <staff>1</staff>
         <sound dynamics="56.67"/>
         </direction>
-      <note default-x="59.38" default-y="-930.34">
+      <note default-x="59.37" default-y="-930.34">
         <pitch>
           <step>F</step>
           <octave>3</octave>

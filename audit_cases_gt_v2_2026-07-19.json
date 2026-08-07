@@ -343,14 +343,6 @@
     },
     {
      "part_index": 2,
-     "measure": 66,
-     "beat": 3.5,
-     "expect": "present",
-     "tol": 0.1,
-     "why": "GT v2 required (qn 262.5)"
-    },
-    {
-     "part_index": 2,
      "measure": 74,
      "beat": "end",
      "expect": "present",
@@ -388,6 +380,22 @@
      "expect": "present",
      "tol": 0.1,
      "why": "GT v2 required (qn 336)"
+    },
+    {
+     "part_index": 2,
+     "measure": 93,
+     "beat": 15.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 382, m.93 b15), added in the 2026-08-07 correction pass"
+    },
+    {
+     "part_index": 2,
+     "measure": 94,
+     "beat": 5.0,
+     "expect": "present",
+     "tol": 0.1,
+     "why": "GT v2 required (qn 390, m.94 b5), added in the 2026-08-07 correction pass"
     }
    ]
   },
@@ -439,6 +447,14 @@
      "expect": "absent",
      "tol": 0.1,
      "why": "Robert deleted this run mark in the GT correction pass (was kept, qn 381.8)."
+    },
+    {
+     "part_index": 2,
+     "measure": 66,
+     "beat": 3.5,
+     "expect": "absent",
+     "tol": 0.1,
+     "why": "Robert deleted this GT mark in the 2026-08-07 correction pass (was required, qn 262.5)."
     }
    ]
   },
