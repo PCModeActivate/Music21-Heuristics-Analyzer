@@ -2388,6 +2388,7 @@ def _f1_extract_part_events(part):
 
 def _f1_build_release_grids(parts, is_tacet, T, division):
     """Per-part exact-frame delta grids + full event records."""
+    _F1_ANCHOR_SETS.clear()
     wmap = {'fermata_release': _F1_EXPRESSIVE['fermata_release_weight'],
             'dim_end': _F1_EXPRESSIVE['dim_end_weight'],
             'cresc_end': _F1_EXPRESSIVE['cresc_end_weight'],
