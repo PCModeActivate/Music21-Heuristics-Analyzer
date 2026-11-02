@@ -1473,10 +1473,14 @@ def postprocess_short_phrases(boundaries, notes_list, selection_score,
                     prev_i = min(max(int(round(prev_boundary * division)), 0), len(selection_score) - 1)
                     cur_i = min(max(int(round(cur * division)), 0), len(selection_score) - 1)
                     remove_idx = idx - 1 if selection_score[prev_i] < selection_score[cur_i] else idx
+
                 removed_boundary = bdys.pop(remove_idx)
                 record = {
                     'time_quarter_notes': float(removed_boundary),
                     'reason': 'short_phrase_fragment',
+                    'segment_start_qn': float(prev),
+                    'segment_end_qn': float(cur),
+                    'removed_side': 'start' if remove_idx == idx - 1 else 'end',
                 }
                 record.update(material)
                 removed.append(record)
