@@ -155,7 +155,7 @@ def main():
 
     log = [f"gt_from_score: {args.musicxml}", "=" * 64]
     gt_parts, bnd_parts = [], []
-    n_marks = n_added = n_removed = n_inherit = 0
+    n_marks = n_added = n_removed = n_inherit = n_carried = 0
     for i, fp in enumerate(flat):
         notes = fp['notes']
         marks = []
@@ -194,12 +194,33 @@ def main():
                 removed.append(dict(x))
                 n_removed += 1
 
+        removed_this_run = list(removed)
+
+        # Carry the prior's own bans forward. Without this every recompile
+        # silently dropped them (53 lost on 2026-09-02, restored by
+        # fix_gt_bans_2026-09-02.py). A ban that has been marked again in the
+        # score is a GT point now and is not carried.
+        prior_part = next((p for p in (prior or {}).get('per_part', [])
+                           if p['index'] == i), {})
+        for x in prior_part.get('removed_points', []):
+            q = float(x['time_quarter_notes'])
+            if any(abs(q - m) <= TOL for m in marks):
+                log.append(f"  UNBANNED {fp['name']:<15} {disp(q)} "
+                           f"(prior ban, marked again in score)")
+                continue
+            if any(abs(q - float(r['time_quarter_notes'])) <= TOL
+                   for r in removed):
+                continue
+            removed.append(dict(x))
+            n_carried += 1
+        removed.sort(key=lambda r: float(r['time_quarter_notes']))
+
         # pair removed+added into "moved" for the report
         added_pts = [b for b in gt_b if b['status'] == 'required'
                      and not any(abs(float(x['time_quarter_notes']) -
                                      b['time_quarter_notes']) <= TOL
                                  for x in pri)]
-        rem_left = list(removed)
+        rem_left = list(removed_this_run)
         for a in added_pts:
             near = next((x for x in rem_left
                          if abs(float(x['time_quarter_notes']) -
@@ -245,7 +266,8 @@ def main():
 
     log.append("=" * 64)
     log.append(f"marks in score: {n_marks}  (inherited status: {n_inherit}, "
-               f"new->required: {n_added}, prior points removed: {n_removed})")
+               f"new->required: {n_added}, prior points removed: {n_removed}, "
+               f"prior bans carried: {n_carried})")
     text = "\n".join(log)
     print(text)
     if args.report:
