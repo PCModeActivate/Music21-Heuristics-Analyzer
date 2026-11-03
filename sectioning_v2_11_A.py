@@ -18,6 +18,14 @@ identical to sectioning_v2_10_F1c.py.
                           onsets in [start, end), drops the entry instant
                           across an all-rest gap, and ranks neighbours by the
                           score at the evidence (Failure mechanism 3).
+  --f1_printed_breath_weight W
+                          F1 event for breath marks already printed in the
+                          input score, at the marked note's release; exempt
+                          from slur deferral. Default 0.0.
+  --endpoint_release      D1 step 2: LBDM, Long, Gap and fermata bumps
+                          projected at the note release instead of its
+                          final-segment onset; E0b case 2 kept for entry
+                          onsets only (E0c), disabled at seams.
 
 -----------------------------------------------------------------------------
 Earlier history follows.
@@ -779,7 +787,7 @@ def project_lbdm_to_grid(notes_list, sigma, num_frames, division,
     for k, note in enumerate(notes_list):
         if k >= len(sigma):
             break
-        off = float(note.get('boundary_offset', note['offset']))
+        off = _endpoint_pos(note)
         idx = int(round(off * division))
         if 0 <= idx < num_frames:
             grid[idx] = max(grid[idx], sigma[k])
@@ -1713,7 +1721,7 @@ def build_long_note_arrival_grid(notes_list, num_frames, division,
         if dur < min_duration_qn:
             continue
         val = min((dur - min_duration_qn) / denom, 1.0)
-        off = float(note.get('boundary_offset', note['offset']))
+        off = _endpoint_pos(note)
         idx = int(round(off * division))
         if 0 <= idx < num_frames:
             grid[idx] = max(grid[idx], val)
@@ -1745,7 +1753,7 @@ def build_following_gap_grid(notes_list, num_frames, division,
         if gap <= 0:
             continue
         val = min(gap / max(full_gap_qn, 1e-6), 1.0)
-        off = float(note.get('boundary_offset', note['offset']))
+        off = _endpoint_pos(note)
         idx = int(round(off * division))
         if 0 <= idx < num_frames:
             grid[idx] = max(grid[idx], val)
@@ -2098,11 +2106,17 @@ def release_anchor_boundaries(bdys, part_notes, long_grid, gap_grid,
         k_on = np.where(np.abs(onsets - bt) <= eps)[0]
         if k_in.size:
             new_bt, reason = float(rels[k_in[0]]), 'mid_note'
-        elif k_on.size:
+        elif k_on.size and (not _ENDPOINT_RELEASE or not at_rel):
             # E0c: applies at note-to-note seams AND entry onsets --
             # per GT v2, the breath follows the note the evidence
             # describes, even when it enters from silence.
-            f = min(max(int(round(bt * division)), 0), T - 1)
+            # v2.11-A endpoint_release: seams are no longer shifted (their
+            # evidence is already at the release, and Long/Gap at a seam
+            # describe the NEXT note). Entry onsets still move to the
+            # entering note's release (E0c), reading that note's evidence
+            # where it is now projected: at its release.
+            _f_at = float(rels[k_on[0]]) if _ENDPOINT_RELEASE else bt
+            f = min(max(int(round(_f_at * division)), 0), T - 1)
             ev = max(float(long_grid[f]), float(gap_grid[f]))
             if ev > evidence_min:
                 _cand = float(rels[k_on[0]])
@@ -2302,6 +2316,11 @@ _F1_EXPRESSIVE = {
     'dim_end_weight': 0.0,
     'cresc_end_weight': 0.0,
     'text_start_weight': 0.0,
+    # v2.11-A: a breath mark printed in the input score, anchored at the
+    # release of the marked note (tie chain). The composer's own breath is
+    # the strongest evidence a score can carry; Liz prints 3 (Oboe m.40,
+    # m.41, m.93), all GT. Exempt from slur deferral: authoritative.
+    'printed_breath_weight': 0.0,
 }
 
 # F1b (2026-08-07): corrections to the F1 channel. See the patch
@@ -2361,6 +2380,28 @@ _TIE_OPEN_START = False
 #   4. the weaker-neighbour comparison uses the selection score where the
 #      evidence was (the E0b source), not at the anchored release.
 _FILTER_AFTER_ANCHOR = False
+
+# v2.11-A (D1 step 2): endpoint-typed note channels projected at the RELEASE.
+# LBDM (interval k -> k+1), Long (note k is long) and Gap (silence after k)
+# all describe how note k ENDS, but were projected at boundary_offset -- the
+# onset of k's final segment (ALGORITHM.md 7, the E0 defect, fixed downstream
+# by E0b case 2 but never at source). Measured on F3 at 213 GT breaths whose
+# releasing note is >= 1 qn: LBDM 87%, Long 85%, Gap 94% higher at the onset
+# than at the release, while chroma/rhythm novelty and the release-projected
+# slur bump peak at the release. The misplacement also causes the late
+# landings: at a correct boundary g, Long/Gap at frame g describe the NEXT
+# note, and E0b case 2 pushes the breath past it. With this flag the three
+# grids are projected at the note's release (offset + full chain duration),
+# and E0b case 2 is disabled (nothing left for it to correct); case 1
+# (mid-note -> release) is kept.
+_ENDPOINT_RELEASE = False
+
+
+def _endpoint_pos(note):
+    """Where an endpoint-typed note channel is projected."""
+    if _ENDPOINT_RELEASE:
+        return float(note['offset']) + float(note.get('duration', 0.0))
+    return float(note.get('boundary_offset', note['offset']))
 
 _F1_DIM_RE = re.compile(r'^(dim|decresc|dimin)', re.I)
 _F1_CRESC_RE = re.compile(r'^cresc', re.I)
@@ -2425,6 +2466,11 @@ def _f1_extract_part_events(part):
            ('mordent', getattr(m21.expressions, 'Mordent', None)),
            ('turn', getattr(m21.expressions, 'Turn', None)))
     for n in notes:
+        if any(isinstance(a, m21.articulations.BreathMark)
+               for a in getattr(n, 'articulations', [])):
+            ev.append(dict(kind='printed_breath',
+                           raw_qn=float(n.offset), anchor_qn=_rel(n),
+                           detail='breath mark in the input score'))
         for e in n.expressions:
             if isinstance(e, m21.expressions.Fermata):
                 ev.append(dict(kind='fermata_release',
@@ -2535,7 +2581,7 @@ def _f1_extract_part_events(part):
                 spans.append((float(f_off), float(rel)))
         for e in ev:
             a = e.get('anchor_qn')
-            if a is None:
+            if a is None or e.get('kind') == 'printed_breath':
                 continue
             a = float(a)
             covering = [rel for s, rel in spans if s < a - 1e-6
@@ -2556,7 +2602,8 @@ def _f1_build_release_grids(parts, is_tacet, T, division):
     wmap = {'fermata_release': _F1_EXPRESSIVE['fermata_release_weight'],
             'dim_end': _F1_EXPRESSIVE['dim_end_weight'],
             'cresc_end': _F1_EXPRESSIVE['cresc_end_weight'],
-            'text_start': _F1_EXPRESSIVE['text_start_weight']}
+            'text_start': _F1_EXPRESSIVE['text_start_weight'],
+            'printed_breath': _F1_EXPRESSIVE['printed_breath_weight']}
     grids, records = [], []
     for i, part in enumerate(parts):
         g = np.zeros(T, dtype=float)
@@ -3057,8 +3104,18 @@ def run_sectioning(input_path, output_dir='./output',
         struct_offsets, event_kinds = extract_structural_event_offsets(
             part, score=score
         )
+        _proj_offsets = struct_offsets
+        if _ENDPOINT_RELEASE:
+            # D1: a fermata is endpoint-typed -- project its bump at the
+            # release of the note (tie chain) carrying it. Change-typed
+            # events (dynamic, key, time, tempo) stay at the onset. The
+            # stored offsets are unchanged (target resolution reads them).
+            _flat = sorted(part.flatten().notes, key=lambda n: float(n.offset))
+            _proj_offsets = [
+                _slur_chain_release(float(o), _flat) if k == 'fermata' else o
+                for o, k in zip(struct_offsets, event_kinds)]
         struct_bumps = project_event_bumps(
-            struct_offsets, T, division, sigma_qn=structural_sigma_qn,
+            _proj_offsets, T, division, sigma_qn=structural_sigma_qn,
             event_kinds=event_kinds, event_weights=structural_event_weights
         )
         structural_info.append({
@@ -3496,6 +3553,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1_dim_end_weight': _F1_EXPRESSIVE['dim_end_weight'],
             'f1_cresc_end_weight': _F1_EXPRESSIVE['cresc_end_weight'],
             'f1_text_start_weight': _F1_EXPRESSIVE['text_start_weight'],
+            'f1_printed_breath_weight': _F1_EXPRESSIVE['printed_breath_weight'],
             'f1b_slur_deferral': _F1B['slur_deferral'],
             'f1b_seam_condition': _F1B['seam_condition'],
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
@@ -3503,6 +3561,7 @@ def run_sectioning(input_path, output_dir='./output',
             'peak_grouping': _PEAK_GROUPING,
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
+            'endpoint_release': bool(_ENDPOINT_RELEASE),
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3563,6 +3622,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1_dim_end_weight': _F1_EXPRESSIVE['dim_end_weight'],
             'f1_cresc_end_weight': _F1_EXPRESSIVE['cresc_end_weight'],
             'f1_text_start_weight': _F1_EXPRESSIVE['text_start_weight'],
+            'f1_printed_breath_weight': _F1_EXPRESSIVE['printed_breath_weight'],
             'f1b_slur_deferral': _F1B['slur_deferral'],
             'f1b_seam_condition': _F1B['seam_condition'],
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
@@ -3570,6 +3630,7 @@ def run_sectioning(input_path, output_dir='./output',
             'peak_grouping': _PEAK_GROUPING,
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
+            'endpoint_release': bool(_ENDPOINT_RELEASE),
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4233,6 +4294,9 @@ def main():
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
+    parser.add_argument('--endpoint_release', action='store_true',
+                        help='v2.11-A (D1): project LBDM, Long and Gap at the '
+                             'note release and disable E0b case 2. Default off.')
     parser.add_argument('--filter_after_anchor', action='store_true',
                         help='v2.11-A: run the short-phrase filter after E0b '
                              'release anchoring, in release coordinates. '
@@ -4293,6 +4357,10 @@ def main():
                              "are rejected.")
     parser.add_argument('--tacet_threshold', type=float, default=0.05)
     parser.add_argument('--breath_color', default='#d62728')
+    parser.add_argument('--f1_printed_breath_weight', type=float, default=0.0,
+                        help='v2.11-A: F1 weight for breath marks printed in '
+                             'the input score (anchored at the marked note '
+                             'release). Default 0.0.')
     parser.add_argument('--f1_fermata_weight', type=float, default=0.0,
                         help='F1 fermata chain-release evidence weight '
                              '(proposed 1.0; >=0.30 fires alone)')
@@ -4323,6 +4391,7 @@ def main():
     )
     _F1_EXPRESSIVE.update(
         fermata_release_weight=args.f1_fermata_weight,
+        printed_breath_weight=args.f1_printed_breath_weight,
         dim_end_weight=args.f1_dim_end_weight,
         cresc_end_weight=args.f1_cresc_end_weight,
         text_start_weight=args.f1_text_start_weight,
@@ -4339,6 +4408,9 @@ def main():
 
     global _FILTER_AFTER_ANCHOR
     _FILTER_AFTER_ANCHOR = bool(args.filter_after_anchor)
+
+    global _ENDPOINT_RELEASE
+    _ENDPOINT_RELEASE = bool(args.endpoint_release)
 
     run_sectioning(
         args.input,

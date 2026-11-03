@@ -1434,6 +1434,58 @@ its downbeat (m.54 b2.5, m.55 b4.5, m.75 b3.75) and accompaniment breaths
 after a long note with no phrase end (Euph m.9, m.15, m.63) -- both evidence
 typing problems (D1).
 
+### (6) `--endpoint_release` — D1 step 2 (2026-11-03)
+
+**Typing measured, not assumed.** At the 213 GT breaths whose releasing note is
+>= 1 qn (F3 run), each channel's value at the note's onset vs its release:
+
+| Channel | Higher at onset | Placement |
+|---|---|---|
+| chroma novelty / rhythm novelty | 25% / 20% | release (correct) |
+| SlurEnd (`--slur_end_release`) | 11% | release (correct) |
+| **LBDM / Long / Gap** | **87% / 85% / 94%** | **onset — wrong** |
+| Struct | 66% | mixed (dynamics = change, fermata = endpoint) |
+| Cross | 40% | mixed (borrowed) |
+
+LBDM, Long and Gap describe how a note *ends* but were projected at its final
+segment's onset: the E0 defect, compensated downstream by E0b case 2 but never
+fixed at source. It is also the **mechanism of the late landings** (16c(4)):
+at a correct boundary g, Long/Gap at frame g describe the *next* note, so case
+2 pushes the breath past it.
+
+The flag projects LBDM, Long, Gap **and fermata structural bumps** at the
+note's (chain) release; E0b case 2 is kept for **entry onsets only** (E0c),
+reading the entering note's evidence at its release, and disabled at seams.
+Case 1 (mid-note) is unchanged.
+
+| Run (C1 flags) | Exact | Extras | Audit P/F | Objectionable (missed / banned / objected) |
+|---|---|---|---|---|
+| F3 | 214 | 61 | 151/39 | 55 (31 / 8 / 16) |
+| **E3** = F3 + `--endpoint_release` | 213 | 63 | **153/37** | **45** (33 / 4 / 8) |
+| F2 + `--endpoint_release` | 192 | 60 | 141/49 | 54 (43 / 6 / 5) |
+
+It pays off with NMS; without it (vs F2) it costs 15 exact. **E3's 45 is a
+lower bound:** it drops 30 of F3's conflicts (8 objected) and adds 31 that
+nobody has reviewed — `review/E3_endpoint_vs_F3.md`. At F3's objection rate
+(12/33) those would add ~11, i.e. level with F3. Firm gains: banned hits 8 → 4.
+
+### (7) `--f1_printed_breath_weight` (2026-11-03)
+
+The pipeline never read breath marks already printed in the input score. Liz
+prints 3 (Oboe m.40, m.41, m.93; qn 159, 163, 379), all GT. New F1 kind
+`printed_breath` at the marked note's release, exempt from slur deferral.
+At weight 1.0 it changes nothing on Liz: F3 already has all three, and in E3
+Oboe 159 loses NMS to 163 (Sel 0.758 vs 0.812, 4 qn apart). A weight makes a
+printed breath likely, not certain; whether the composer's marks should bypass
+suppression is Robert's call.
+
+### NMS radius: inclusive 4.0 vs 3.9
+
+`|p - c| <= 4 qn` suppresses breaths exactly one bar apart; GT has 31 such
+same-part gaps (and only 4 under 3.9). Radius 3.9 qn: F3 exact 214 → 227 but
+extras 61 → 87; E3 213 → 220, extras 63 → 90 — a breath nearly every bar.
+Kept at 4.0.
+
 ### Tools added
 
 | Tool | Purpose |
@@ -1443,6 +1495,7 @@ typing problems (D1).
 | `score_run.py RUN ...` | Exact, extras, audit, unison, FAIL causes on one line |
 | `review_list.py BASE NEW` | New conflicts with GT relative to a base run, as a fill-in table |
 | `history_check.py TABLE.md` | What every GT and audit file ever recorded at a set of positions |
+| `review/objections_2026-11-03.json` | Robert's objectionable set, read by `score_run.py` |
 
 ---
 

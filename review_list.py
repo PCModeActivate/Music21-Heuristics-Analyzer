@@ -43,6 +43,27 @@ def rest_after(run_dir, i, t):
     return (min(nxt) - t) if nxt else None
 
 
+def comma_on(run_dir, i, t):
+    """'m.M bB PITCH' of the note releasing at t (the note carrying the
+    comma), from result.pkl's merged notes and measure_offsets."""
+    try:
+        r = pickle.load(open(os.path.join(run_dir, 'result.pkl'), 'rb'))
+    except Exception:
+        return '?'
+    mo = [(float(o), m) for o, m in r.get('measure_offsets', [])]
+    cands = [n for n in r['notes_per_part'][i]
+             if abs(n['offset'] + n['duration'] - t) <= 0.02]
+    if not cands or not mo:
+        return '(no note releases here)'
+    n = cands[0]
+    on = float(n['offset'])
+    base, num = max((x for x in mo if x[0] <= on + 1e-6), key=lambda x: x[0])
+    names = 'C C# D E- E F F# G G# A B- B'.split()
+    p = n.get('pitch')
+    pitch = ('%s%d' % (names[int(p) % 12], int(p) // 12 - 1)) if isinstance(p, (int, float)) else str(p)
+    return 'm.%d b%g %s' % (num, round(on - base + 1, 3), pitch)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('base_run')
@@ -59,9 +80,11 @@ def main():
     print('# %s\n' % (a.title or 'Review: unreviewed breaths in %s' % a.new_run))
     print('Base: `%s`  \nNew: `%s`\n' % (a.base_run, a.new_run))
     print('Listed: boundaries in the new run that are not GT, not banned, and not in the base run. '
-          'The comma sits after the note releasing at that instant. Fill in **ok** or **no**.\n')
-    print('| part | instrument | position | qn | rest after (qn) | ok / no |')
-    print('|---|---|---|---|---|---|')
+          '"position" is the boundary instant (m.N b1 = after the last note of m.N-1); '
+          '"comma on note" is the note carrying the comma in the rendered score. '
+          'Mark only the objectionable ones **no**; the rest pass.\n')
+    print('| part | instrument | position | qn | rest after (qn) | comma on note | ok / no |')
+    print('|---|---|---|---|---|---|---|')
     n = 0
     for i in sorted(new):
         p = new[i]
@@ -73,9 +96,9 @@ def main():
                 continue
             ra = rest_after(a.new_run, i, t)
             n += 1
-            print('| %d | %s | m.%s b%s | %.3f | %s | |' % (
+            print('| %d | %s | m.%s b%s | %.3f | %s | %s | |' % (
                 i, p['name'], x['measure'], x['beat'], t,
-                '-' if ra is None else '%.2f' % ra))
+                '-' if ra is None else '%.2f' % ra, comma_on(a.new_run, i, t)))
     print('\n%d positions.' % n)
 
 
