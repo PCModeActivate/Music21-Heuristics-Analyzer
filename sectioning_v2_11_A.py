@@ -10,6 +10,10 @@ identical to sectioning_v2_10_F1c.py.
                           with non-maximum suppression. On C1, 30 of 51
                           required misses were peaks lost to a chained group,
                           28 of which pass the acceptance gate on their own.
+  --tie_open_start        tie masks (natural and tie-like) and validation
+                          allow the chain's first onset: a breath BEFORE a
+                          tied note. Fixes the hard veto at ASax 172 and
+                          Oboe 382 and three inside_natural_tie_span rejects.
 
 -----------------------------------------------------------------------------
 Earlier history follows.
@@ -980,8 +984,9 @@ def extract_slur_indicators(part, num_frames, division,
             # Tie-like spans are one sustained musical event.  Protect
             # [start, end): no breaths after the beginning/interior
             # segments, but a breath after the final note is allowed.
-            if end_idx > start_idx:
-                in_tie_like[start_idx:end_idx] = 1.0
+            lo = start_idx + (1 if _TIE_OPEN_START else 0)
+            if end_idx > lo:
+                in_tie_like[lo:end_idx] = 1.0
             continue
 
         n_phrase_slurs += 1
@@ -1137,6 +1142,14 @@ def extract_tuplet_indicators(part, num_frames, division):
 
 
 
+def _tie_starts_before(start, bt):
+    """Left edge of a tie span for validation: closed (legacy) or open
+    under _TIE_OPEN_START."""
+    if _TIE_OPEN_START:
+        return start + 0.01 < bt
+    return start - 0.01 <= bt
+
+
 def extract_natural_tie_indicators(part, num_frames, division):
     """
     Extract hard no-breath spans for ordinary MusicXML natural ties.
@@ -1174,8 +1187,9 @@ def extract_natural_tie_indicators(part, num_frames, division):
                 final_off = off
                 start_idx = max(int(round(active_start * division)), 0)
                 end_idx = min(int(round(final_off * division)), num_frames - 1)
-                if end_idx > start_idx:
-                    in_tie[start_idx:end_idx] = 1.0
+                lo = start_idx + (1 if _TIE_OPEN_START else 0)
+                if end_idx > lo:
+                    in_tie[lo:end_idx] = 1.0
                 tie_spans.append((active_start, final_off))
             active_start = None
             last_seen_offset = None
@@ -1888,9 +1902,9 @@ def resolve_breath_target_for_part(part, boundary_time, slur_info,
         'boundary_lies_in_rest': False,
         'rest_offset': None,
         'rest_duration': None,
-        'inside_tie_like_span': any(start - 0.01 <= bt < end - 0.01
+        'inside_tie_like_span': any(_tie_starts_before(start, bt) and bt < end - 0.01
                                     for start, end in tie_like_spans),
-        'inside_natural_tie_span': any(start - 0.01 <= bt < end - 0.01
+        'inside_natural_tie_span': any(_tie_starts_before(start, bt) and bt < end - 0.01
                                        for start, end in natural_tie_spans),
         'target_has_outgoing_tie': False,
         'valid': True,
@@ -2299,6 +2313,17 @@ _SLUR_END_RELEASE = False
 #   already-accepted boundary lies within peak_distance. Minimum spacing is
 #   unchanged; chains no longer collapse.
 _PEAK_GROUPING = 'transitive'
+
+# v2.11-A: tie masks open at the chain start. A tie (natural, or a same-pitch
+# "tie-like" slur) forbids breaths that split the sustained note. The first
+# onset of the chain is NOT such a point: it is the release of the PREVIOUS
+# note, and a breath there sits before the tie (GT: Oboe m.93 b15 before the
+# tied D6; ASax m.43 end before the tied C#). Legacy masks and validation
+# covered [start, final_onset), hard-vetoing that instant. With this flag the
+# forbidden region is (start, final_onset). The right edge is unchanged: the
+# final segment's onset carries the chain's evidence, which E0b moves to the
+# chain release.
+_TIE_OPEN_START = False
 
 _F1_DIM_RE = re.compile(r'^(dim|decresc|dimin)', re.I)
 _F1_CRESC_RE = re.compile(r'^cresc', re.I)
@@ -3407,6 +3432,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
+            'tie_open_start': bool(_TIE_OPEN_START),
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3472,6 +3498,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
+            'tie_open_start': bool(_TIE_OPEN_START),
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4135,6 +4162,10 @@ def main():
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
+    parser.add_argument('--tie_open_start', action='store_true',
+                        help='v2.11-A: allow a breath at the first onset of '
+                             'a tie chain (natural or tie-like), i.e. before '
+                             'the tied note. Default off.')
     parser.add_argument('--slur_end_release', action='store_true',
                         help='F1c: project the slur endpoint bump at the last '
                              'slurred note tie-chain release instead of its '
@@ -4227,6 +4258,9 @@ def main():
 
     global _PEAK_GROUPING
     _PEAK_GROUPING = args.peak_grouping
+
+    global _TIE_OPEN_START
+    _TIE_OPEN_START = bool(args.tie_open_start)
 
     run_sectioning(
         args.input,
