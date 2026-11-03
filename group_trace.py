@@ -3,6 +3,7 @@
 group_trace.py -- replay detect_boundaries' transitive peak grouping from a
 result.pkl, offline, with no pipeline change.
 
+Handles parameters['peak_grouping'] in {transitive, nms} (v2.11-A).
 Uses the exact arrays the pipeline stored in per_part_candidate_diagnostics
 (candidate_signal, selection_score, acceptance_score, forbidden_mask) and the
 parameters block (candidate_height, selection_accept_height,
@@ -27,6 +28,28 @@ def load(run_dir):
         return pickle.load(f)
 
 
+def nms_groups(peaks, sel, acc, dist, acc_h):
+    """Mirror of detect_boundaries' 'nms' mode (v2.11-A), expressed as groups:
+    each accepted peak heads a group holding the peaks it suppressed; a peak
+    failing the gate is its own unaccepted group. Returns (members, best,
+    accepted) triples."""
+    order = sorted(peaks, key=lambda k: (-float(sel[k]), k))
+    chosen, owner, rejected = [], {}, []
+    for p in order:
+        if acc[p] < acc_h:
+            rejected.append(p)
+            continue
+        sup = next((c for c in chosen if abs(p - c) <= dist), None)
+        if sup is None:
+            chosen.append(p)
+            owner[p] = [p]
+        else:
+            owner[sup].append(p)
+    out = [(sorted(owner[c]), c, True) for c in chosen]
+    out += [([p], p, False) for p in rejected]
+    return sorted(out, key=lambda t: t[0][0])
+
+
 def groups_for_part(r, i):
     """Return list of groups; each group is a list of dicts, winner flagged."""
     p = r['parameters']
@@ -39,6 +62,15 @@ def groups_for_part(r, i):
     peaks, _ = find_peaks(cand, height=p['candidate_height'])
     peaks = [int(x) for x in peaks if forb[x] <= 0]
     dist = p['peak_distance_frames']
+    if p.get('peak_grouping', 'transitive') == 'nms':
+        res = []
+        for members, best, accepted in nms_groups(
+                peaks, sel, acc, dist, p['selection_accept_height']):
+            res.append([{'qn': float(tg[k]), 'cand': float(cand[k]),
+                         'sel': float(sel[k]), 'acc': float(acc[k]),
+                         'winner': k == best, 'accepted': accepted and k == best}
+                        for k in members])
+        return res
     out, g = [], []
     for x in peaks:
         if g and x - g[-1] > dist:

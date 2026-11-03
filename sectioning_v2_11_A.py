@@ -1,5 +1,19 @@
 #!/usr/bin/env python
 """
+sectioning_v2_11_A.py
+
+v2.11-A (2026-11-03): structural fixes found by fail_trace.py on C1.
+Every change is behind a flag, default off; with no new flags the output is
+identical to sectioning_v2_10_F1c.py.
+
+  --peak_grouping nms     replace transitive grouping (Failure mechanism 2)
+                          with non-maximum suppression. On C1, 30 of 51
+                          required misses were peaks lost to a chained group,
+                          28 of which pass the acceptance gate on their own.
+
+-----------------------------------------------------------------------------
+Earlier history follows.
+
 sectioning_v2_10_E0c.py
 
 Changes from v2.10-E0b-patch -- E0c (2026-07-15): 
@@ -1743,6 +1757,19 @@ def detect_boundaries(B, time_grid, peak_height=0.3, peak_distance_frames=20,
     if len(peaks) == 0:
         return np.array([])
 
+    if _PEAK_GROUPING == 'nms':
+        order = sorted((int(p) for p in peaks),
+                       key=lambda idx: (-float(score[idx]), idx))
+        chosen = []
+        for p in order:
+            if accept[p] < acceptance_height:
+                continue
+            if any(abs(p - c) <= peak_distance_frames for c in chosen):
+                continue
+            chosen.append(p)
+        chosen.sort()
+        return time_grid[np.array(chosen, dtype=int)] if chosen else np.array([])
+
     chosen = []
     group = [int(peaks[0])]
     for p in peaks[1:]:
@@ -2261,6 +2288,17 @@ _F1_ANCHOR_SETS = {}
 # per the §1 default-off invariant. Module-level for the same reason
 # _REST_SEAM_POLICY and _F1_ANCHOR_SETS are.
 _SLUR_END_RELEASE = False
+
+# v2.11-A: peak grouping mode for detect_boundaries.
+#   'transitive' (default, all versions through F1c): a peak joins the current
+#   group iff it is within peak_distance of the group's LAST peak, so a chain
+#   of close peaks collapses to one winner however long it runs (ALGORITHM.md
+#   Failure mechanism 2; up to 29 qn on Liz).
+#   'nms': non-maximum suppression. Peaks are visited by selection score,
+#   best first; a peak is accepted iff it passes the acceptance gate and no
+#   already-accepted boundary lies within peak_distance. Minimum spacing is
+#   unchanged; chains no longer collapse.
+_PEAK_GROUPING = 'transitive'
 
 _F1_DIM_RE = re.compile(r'^(dim|decresc|dimin)', re.I)
 _F1_CRESC_RE = re.compile(r'^cresc', re.I)
@@ -3368,6 +3406,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1b_seam_condition': _F1B['seam_condition'],
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
             'slur_end_release': bool(_SLUR_END_RELEASE),
+            'peak_grouping': _PEAK_GROUPING,
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3432,6 +3471,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1b_seam_condition': _F1B['seam_condition'],
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
             'slur_end_release': bool(_SLUR_END_RELEASE),
+            'peak_grouping': _PEAK_GROUPING,
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4089,6 +4129,12 @@ def main():
     parser.add_argument('--selection_tuplet_penalty', type=float, default=0.45)
     parser.add_argument('--note_candidate_weight', type=float, default=0.65)
     parser.add_argument('--selection_accept_height', type=float, default=0.30)
+    parser.add_argument('--peak_grouping', choices=['transitive', 'nms'],
+                        default='transitive',
+                        help='v2.11-A: candidate peak grouping. transitive = '
+                             'legacy chained groups (FM2); nms = non-maximum '
+                             'suppression by selection score. Default '
+                             'transitive.')
     parser.add_argument('--slur_end_release', action='store_true',
                         help='F1c: project the slur endpoint bump at the last '
                              'slurred note tie-chain release instead of its '
@@ -4178,6 +4224,9 @@ def main():
 
     global _SLUR_END_RELEASE
     _SLUR_END_RELEASE = bool(args.slur_end_release)
+
+    global _PEAK_GROUPING
+    _PEAK_GROUPING = args.peak_grouping
 
     run_sectioning(
         args.input,

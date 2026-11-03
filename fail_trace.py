@@ -63,6 +63,28 @@ def load(run_dir):
     return r
 
 
+def nms_groups(peaks, sel, acc, dist, acc_h):
+    """Mirror of detect_boundaries' 'nms' mode (v2.11-A), expressed as groups:
+    each accepted peak heads a group holding the peaks it suppressed; a peak
+    failing the gate is its own unaccepted group. Returns (members, best,
+    accepted) triples."""
+    order = sorted(peaks, key=lambda k: (-float(sel[k]), k))
+    chosen, owner, rejected = [], {}, []
+    for p in order:
+        if acc[p] < acc_h:
+            rejected.append(p)
+            continue
+        sup = next((c for c in chosen if abs(p - c) <= dist), None)
+        if sup is None:
+            chosen.append(p)
+            owner[p] = [p]
+        else:
+            owner[sup].append(p)
+    out = [(sorted(owner[c]), c, True) for c in chosen]
+    out += [([p], p, False) for p in rejected]
+    return sorted(out, key=lambda t: t[0][0])
+
+
 def part_groups(r, i):
     p = r['parameters']
     d = r['per_part_candidate_diagnostics'][i]
@@ -70,6 +92,9 @@ def part_groups(r, i):
     acc, forb = d['acceptance_score'], d['forbidden_mask']
     peaks, _ = find_peaks(cand, height=p['candidate_height'])
     peaks = [int(x) for x in peaks if forb[x] <= 0]
+    if p.get('peak_grouping', 'transitive') == 'nms':
+        return nms_groups(peaks, sel, acc, p['peak_distance_frames'],
+                          p['selection_accept_height'])
     groups, g = [], []
     for x in peaks:
         if g and x - g[-1] > p['peak_distance_frames']:
