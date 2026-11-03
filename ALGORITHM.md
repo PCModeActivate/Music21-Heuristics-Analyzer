@@ -1,11 +1,12 @@
 # Sectioning: an explainable algorithm for phrase/section boundary detection in polyphonic symbolic music
 
-**Pipeline version:** `sectioning_v2_10_F1b.py` (+ `patch_F1_expressive_release.py`, `patch_F1_explain.py`, `patch_F1b_release_corrections.py`)
-**Reference run:** B3 — `--f1_fermata_weight 1.0 --f1_dim_end_weight 0.6 --rest_seam_policy seam`, all three F1b corrections active
-**Reference output:** `output_v2_10_F1b/liz_seam_B3_all`
+**Pipeline version:** `sectioning_v2_11_A.py` (F1c + four v2.11-A flags, all default off; with no new flags it is identical to `sectioning_v2_10_F1c.py`). Validated reference kept untouched: `sectioning_v2_10_F1b.py`.
+**Reference runs:** B3 — `--f1_fermata_weight 1.0 --f1_dim_end_weight 0.6 --rest_seam_policy seam`; C1 — B3 + `--slur_end_release`. v2.11-A candidates in §16c.
+**Reference outputs:** `output_v2_10_F1b/liz_seam_B3_all`, `output_v2_10_F1c/liz_seam_C1_slur_release` (regenerable; not in git)
+**Input:** `Liz_and_the_Blue_Bird_III-1.2_colored.mxl` (sha256 `2f4090f999e36d64…`), music21 10.5.2 reproduces every number here
 **Test score:** *Liz and the Blue Bird III*, 10 parts, 94 measures, 390 qn
 **Held out:** Dvořák 9/iv — untouched
-**Last revised:** 2026-08-19 — F1b shipped and validated; §15 scoreboard reconciled
+**Last revised:** 2026-11-03 — F1c(a) measured (PENDING blocks filled); v2.11-A structural fixes (§16c); two experiments rejected and recorded
 
 > All mathematics below is written in plain text inside code blocks. No LaTeX,
 > no math-renderer dependency: it reads identically in GitHub, a plain editor,
@@ -28,7 +29,8 @@ track **features**. They do not correspond. This table is the roadmap.
 | **E** | Conditional ensemble alignment (snap arbitration + shape veto) | Not started |
 | **E1** | Cross-support attribution (which part lent evidence, at what similarity) | **Shipped** in `v2_10_D` |
 | **F** | Gesture endpoint targeting | **F1 and F1b shipped and validated** (§11, §16). F1b(d) lexicon completion outstanding |
-| **F1c** | Slur edge semantics — three stages (§16b) | **(a)** endpoint bump at chain release: patched, validation PENDING (2026-09-02). **(b)** mask 0 at slur start, **(c)** mask to chain release: specified |
+| **F1c** | Slur edge semantics — three stages (§16b) | **(a)** endpoint bump at chain release: **measured** (C1: audit 128/62, exact 198/262), `--slur_end_release` default off pending Robert's call. **(b)** mask 0 at slur start: **tried, rejected** 2026-11-03 (§16c). **(c)** mask to chain release: specified, not built |
+| **v2.11-A** | Structural fixes from `fail_trace.py` (§16c) | `--peak_grouping nms` (FM2), `--tie_open_start`, `--filter_after_anchor` (FM3): **shipped default off**, measured; defaults await the review lists in `review/` |
 | **G0** | One-note wedge spans the note's duration | **Done** |
 | **G1/G2** | Direction-text lexicon, Line-spanner association, unclassified-text report, rehearsal marks | **Partly absorbed by F1**; report + rehearsal marks outstanding (§17) |
 | **H** | Ornament continuation spans (trill / tremolo / glissando) | Not started, probe first, default-off (§20) |
@@ -36,7 +38,8 @@ track **features**. They do not correspond. This table is the roadmap.
 | — | Repetition-mask retrial (instrumented) | Authorised, default 0.0 (§21) |
 | — | Breathability limit (physical seconds) | Not started (§19) |
 | — | Trumpet-48 trace (every drop must log) | **Resolved 2026-09-02** — `boundary_target_info[6][0]` shows qn 48 resolving cleanly (`fallback_previous_note`, not in a rest) and the audit passes it. The original violation, whatever it was, is not reproducible on B3 |
-| — | Short-phrase removal records name no endpoint | Open provenance gap (§14, §15b) |
+| — | Short-phrase removal records name no endpoint | **Closed** — records carry `segment_start_qn`, `segment_end_qn`, `removed_side` (verified in B3 and C1 pickles, 2026-11-03) |
+| — | `gt_from_score.py` drops prior bans on recompile | **Fixed** 2026-11-03 (`89c3551`); recompiling against the 09-02 GT reproduces it exactly |
 
 Sequencing constraint: **F must stabilise, then E.** Dvořák stays sealed
 until Liz is stable through both.
@@ -635,6 +638,13 @@ h_cand = 0.22       h_accept = 0.30       d = floor(2.5 · D) = 20 frames
 > A chain of peaks each within 2.5 qn of the next collapses to a single winner
 > however long the chain runs. Where the ground truth holds two legitimate
 > breaths inside 2.5 qn, at most one can survive. Known open defect.
+>
+> **Measured 2026-11-03 — the largest single cause of missed breaths.** The
+> two-breaths-within-2.5-qn case is rare (2 GT pairs on Liz). The chaining is
+> not: groups run up to 29 qn (Harp-up 119.6–148.6, 17 peaks; Fl1 9.9–32.9,
+> 14 peaks). On C1, `fail_trace.py` attributes **30 of 51 required misses** to
+> a peak lost to its group, and 28 of those 30 pass the acceptance gate on
+> their own; 7 of F1c(a)'s 11 losses are the same. Repair: §16c(1).
 
 ---
 
@@ -768,6 +778,12 @@ Rests never count as material. This is not "quarter note bad."
 >   2. run anchoring **before** the filter;
 >   3. never remove the boundary that *opens* an all-rest span.
 > Total value: 2 exact points. Priority accordingly low.
+>
+> **Priority corrected 2026-11-03.** Every fix that moves evidence to the
+> release (F1c(a), and anything after it) makes more boundaries reach the
+> filter already anchored, where the `(start, end]` onset count misreads them.
+> F1c(a)'s one required loss (Harp-up m.82 end) is exactly this. Repaired in
+> §16c(3): 6 FILTER misses → 0, +8 GT, −1 GT.
 
 > **Stage order is the reverse of §22's summary.** `postprocess_short_phrases`
 > is called at line ~3162, `release_anchor_boundaries` at ~3182. The filter
@@ -842,8 +858,8 @@ denominator sit unnoticed.
 
 | Metric | Instrument | Denominator | Covers |
 |---|---|---|---|
-| Exact-match scoreboard | `boundaries_diff.py gt_boundaries_v2.json <run>/…` | 263 | required + kept |
-| Hard-violation audit | `audit_check.py --audit audit_cases_gt_v2_2026-07-19.json` | 189 | required + banned only |
+| Exact-match scoreboard | `score_run.py <run>` (or `boundaries_diff.py gt_boundaries_v2.json <run>/boundaries.json`) | 262 (263 before 2026-09-02) | required + kept |
+| Hard-violation audit | `audit_check.py <run>/boundaries.json --audit audit_cases_gt_v2_2026-09-02.json --musicxml gt_rendered.musicxml` | 190 (189 on the superseded 07-19 file) | required + banned only |
 
 Kept points are **not encoded in the audit file**, so audit-invisible changes
 are routine and are not evidence of no effect. The Oboe m.93 b9/b12 pair and
@@ -878,7 +894,7 @@ Evaluation discipline:
 
 - `boundaries_diff.py` — run-to-run drift with parameter checking. GT first:
   `REMOVED` = pipeline miss, `ADDED` = pipeline extra.
-- `audit_check.py --audit audit_cases_gt_v2_2026-07-19.json` — hard-violation
+- `audit_check.py --audit audit_cases_gt_v2_2026-09-02.json` — hard-violation
   scoring; exit code is the metric.
 - `annotation_check.py` — rendered score versus `boundaries.json`.
 - `score_geometry_check.py` — measure durations against their time signatures,
@@ -900,11 +916,17 @@ Evaluation discipline:
 > six were gains and both anomalies were traced to root cause in-session. That
 > was a judgement call, logged here so it does not become silent precedent.
 
-> **PENDING (2026-09-02).** The exact-match figures above are stated against a
-> 263-point GT. The Oboe m.86 b4.75 correction takes GT to 262 and moves that
-> point into `removed_points`; the run currently sits on it, so expect
-> 195/263 → 194/262 and audit 82 → 83 FAIL *before* F1c(a) lands. Re-baseline
-> `liz_seam_B3_all` against the regenerated GT and replace these numbers.
+> **Re-baselined 2026-11-03** (was PENDING 2026-09-02). GT is 262 points
+> (Oboe m.86 b4.75 removed and banned; 54 bans), audit file
+> `audit_cases_gt_v2_2026-09-02.json` (190 points; supersedes the 07-19 file
+> and the 189 figure above). Measured, music21 10.5.2:
+>
+> | Run | Exact | Extras | Boundaries | Audit PASS/FAIL | Unison viol. |
+> |---|---|---|---|---|---|
+> | B3 `liz_seam_B3_all` | 194/262 | 49 | 243 | 107/83 | 3 |
+> | C1 `liz_seam_C1_slur_release` | 198/262 | 40 | 238 | 128/62 | 3 |
+>
+> `python score_run.py RUN_DIR ...` prints this line for any run.
 
 ---
 
@@ -985,6 +1007,11 @@ before it reports anything.
 `explain.py` imports the pipeline module by name. After F1b it still imported
 `sectioning_v2_10_F1`. Second occurrence. Consider a `CURRENT_PIPELINE`
 indirection rather than editing the import each version.
+
+**Resolved 2026-11-03** (`3d6d68a`): `explain.py` resolves `CURRENT_PIPELINE`
+(default `sectioning_v2_10_F1c`; override with the `SECTIONING_PIPELINE`
+environment variable). Also fixed: `--cross` was silently ignored with
+`--time`. Set `SECTIONING_PIPELINE=sectioning_v2_11_A` for v2.11-A runs.
 
 ### Non-copy-pasteable commands are a real cost
 
@@ -1136,8 +1163,8 @@ following the F1b precedent where (a)(b)(c) shipped together and (d) trailed.
 
 | Stage | Change | Status |
 |---|---|---|
-| **(a)** | endpoint bump at the chain release | patched, validation PENDING (2026-09-02) |
-| **(b)** | mask 0 at slur start (was "F1c-left") | specified below |
+| **(a)** | endpoint bump at the chain release | measured 2026-11-03: band exceeded, net positive; default off pending decision |
+| **(b)** | mask 0 at slur start (was "F1c-left") | tried 2026-11-03 (generalised to hairpin and tuplet), **rejected** — §16c |
 | **(c)** | mask extends to chain release (was "F1c-right") | specified; re-probe after (a) |
 
 ---
@@ -1154,7 +1181,7 @@ The same patch adds `phrase_spans` unconditionally (§15b). That half is
 diagnostics-only, so the control run must be identical to `liz_seam_B3_all`
 apart from the new serialized key.
 
-**PENDING (2026-09-02) — pre-registered band, from `slur_release_probe.py`:**
+**Pre-registered band (2026-09-02), from `slur_release_probe.py`:**
 
 ```
 boundaries at a slur last-note onset   13   (undercount: zip truncation)
@@ -1171,7 +1198,32 @@ also clear `gtv2_ensemble_seam_m80_end`.
     expected  +6 required, +6 banned = ~12 audit points; +5 exact
     materially outside this band -> STOP
 
-Replace this block with the measured C1 result.
+**Measured (C1, 2026-11-02; reproduced 2026-11-03).** Band **exceeded**: 41
+changes against 13 predicted (10 moved, 18 removed, 13 added); audit +21
+(107/83 → 128/62), exact +4 (194 → 198/262). C0 (flag off) is identical to B3:
+the `phrase_spans` half is behaviour-neutral. 15 GT gains, 11 losses (10 kept,
+1 required). The run stopped as the protocol requires: the flag ships default
+off.
+
+Root causes of the 11 losses (`fail_trace.py`): 7 lost to a transitive group
+(FM2), 3 removed by the short-phrase filter (FM3), 1 shifted away by E0b.
+The required loss, **Harp-up m.82 end**, is neither of the hypotheses in the
+handover: Fl2's relocated bump lowers Harp-up's *raw cross-support maximum*
+at qn 255 (1.033 → 0.864); per-part min-max normalisation then lifts Harp-up's
+`cross_n` everywhere by ×1.2 (0.453 → 0.541 at 328), so 328 out-ranks 326 in
+its group, and the filter removes 328 because `(328, 336]` counts the entry
+note at 336. In B3 the 326 winner survived the filter and E0b moved it to 328:
+**right by accident, the third bug-compensating-bug** (§15b). ASax 171→172
+and Oboe 382 are both the **tie mask including the chain's first onset**
+(§16c(2)); ASax 172 is additionally under a hairpin starting there.
+
+Why the probe undercounted: it modelled only boundaries *at* a last-slurred
+onset. Real collateral comes from (i) regrouping (a moved peak bridges or
+splits a chain) and (ii) **cross-part normalisation coupling** — a change in
+one part rescales another part's `cross_n` globally, here 73 qn away. No
+position-count probe can see either. Future bands should predict direct
+changes only, and classify every change after the run as direct or
+collateral with `fail_trace.py` / `group_trace.py`.
 
 ---
 
@@ -1229,6 +1281,8 @@ say 0.
 - **(b)** — mask 0 at slur start. *Permissive*: only unmasks instants
   currently penalised. Can add boundaries, cannot remove any. Recovers Cl2
   m.18 end, the eighth audit flip.
+  **Falsified 2026-11-03:** under grouping, an unmasked peak can out-rank and
+  remove an existing boundary. Measured −13 GT / +5 GT (§16c, rejected).
 - **(c)** — extend to chain release. *Restrictive*: newly masks the last
   slurred note's onset **and its entire interior**. Can silently kill
   boundaries that currently pass, including GT ones.
@@ -1249,6 +1303,115 @@ Two counts off the B3 pickle, so each ships a real pre-registered band:
 1. B3 boundaries sitting exactly at a slur start — F1c-left's upside.
 2. B3 boundaries in `[last_slurred_onset, chain_release)` — F1c-right's blast
    radius, and how many are GT points.
+
+---
+
+## 16c. v2.11-A — structural fixes found by attribution (2026-11-03)
+
+`fail_trace.py` labels every audit FAIL with the first stage that lost it.
+On C1 (62 FAILs): **GROUP_LOST 30**, BANNED_HIT 11, FILTER 6, WEAK 5,
+VALIDATION 3 (all `inside_natural_tie_span`), SHIFTED_AWAY 2, GATE 2,
+NOT_SHIFTED 2, NEAR_MISS 1. That ranking, not the old queue, set the order
+below. Priority is by *mistake class a musician would reject*, fixed at the
+cause; exact-match points are a consequence, not the target.
+
+All flags live in `sectioning_v2_11_A.py`, default off. The control (C1 flags,
+no new flag) is identical to C1 (238 unchanged), and `group_trace.py --verify`
+passes in 10/10 parts for every run below. All runs use C1's flags.
+
+| Run | Added flags | Exact | Extras | Boundaries | Audit P/F | Unison |
+|---|---|---|---|---|---|---|
+| C1 | — | 198 | 40 | 238 | 128/62 | 3 |
+| T1 | `--tie_open_start` | 201 | 40 | 241 | 131/59 | 3 |
+| F1 | `--filter_after_anchor` | 204 | 46 | 250 | 133/57 | 2 |
+| F2 | both | **207** | 46 | 253 | 136/54 | 2 |
+| A1 | `--peak_grouping nms` (d = 2.5) | 224 | 102 | 326 | 144/46 | 2 |
+| A1 | `--peak_grouping nms --peak_distance_qn 4.0` | 203 | 58 | 261 | 141/49 | 3 |
+| F3 | F2 + nms d = 4.0 | **214** | 61 | 275 | **151/39** | 2 |
+
+Precision / recall: C1 83% / 76%; F2 82% / 79%; F3 78% / 82%.
+
+### (1) `--peak_grouping nms` — Failure mechanism 2
+
+Non-maximum suppression: visit peaks by `Sel`, best first; accept a peak iff
+`Acc >= 0.30` and no accepted boundary lies within `peak_distance`. Chains no
+longer collapse; minimum spacing is preserved.
+
+At the legacy 2.5 qn it over-segments: +26 exact but +62 extras, and F-measure
+*falls* (0.79 → 0.76). No local feature separates the new GT hits from the new
+extras (both are mostly long notes released attacca); **spacing** does. GT has
+only 4 of 252 same-part gaps under 4 qn; NMS at 2.5 qn produces 36. At 4 qn
+(≈ 3.7 s at Liz's tempo — one bar, one breath) the extras split into 9 on
+banned spots (C1: 11), 1 misplaced, and **48 at positions no GT pass has
+reviewed** (C1: 29). The radius is a fit to one piece, so it must be checked
+on Dvořák before it becomes a default, and expressed in seconds if it holds
+(cf. the breathability limit, §19).
+
+### (2) `--tie_open_start`
+
+The natural-tie mask, the tie-like mask and validation covered
+`[chain start, final onset)`. The chain's first onset is the previous note's
+release — a breath *before* the tied note. Now `(start, final onset)`. T1 vs
+C1: 238 unchanged, **+3 required, 0 lost, 0 extras** (Cl2 m.60 end, Euph m.74
+end, m.76 end). The two motivating cases stay blocked by other defects: ASax
+172 by a hairpin starting there; Oboe 382 by grouping plus **discretisation**
+— D = 8 frames per qn cannot represent the 0.2 qn quintuplets of m.93, so the
+evidence lands at 381.75 and anchors to the banned 381.8.
+
+### (3) `--filter_after_anchor` — Failure mechanism 3
+
+Anchoring runs before the filter; segments count onsets in `[start, end)`;
+across an all-rest segment the closing entry instant is removed (E0c); the
+weaker-neighbour test uses `Sel` at the E0b *source*. F1 vs C1: **+8 GT**
+(required Harp-up m.82 end, Harp-low m.7 b3.5 and m.34 b3, Fl2 m.94 end —
+which clears the final-chord unison violation), **−1 GT** (ASax 232: the
+filter now sees the eighth-note fragment between 232 and 232.5 and keeps
+232.5 on `Sel`; 232.5 is the pickup split of §18, inflated by wrong-type
+cross-support). FILTER causes 6 → 0.
+
+### (4) Late landings — E0b seam shift (open)
+
+In F3, 8 of 39 FAILs are E0b `seam_arrival_evidence` moving a correct
+boundary one note late (Oboe and Trumpet m.82 end → m.83 b2, Harp-up m.80 end
+→ m.81 b2, Euph 232 → 236, Harp-low 180 → 183). Pattern in three: a long note
+ends, one short note carrying a **new dynamic** follows, then a rest; GT
+breathes before the short note. E0b reads the gap after that note as "this
+note ends the phrase".
+
+**Rejected 2026-11-03: hold the seam at a dynamic/key/time change.** 14 holds:
+4 right (Ob 328, Harp-up 320, Euph 108, Cl2 56), **7 wrong**, 3 between two GT
+points. The wrong ones include four parts at m.93 b1 (368 → 370), against the
+m.93 ruling: a dynamic on a note does not mean a new phrase starts there.
+Reverted, not shipped. The real discriminator is which evidence *created* the
+peak — onset-typed vs release-typed — i.e. D1.
+
+### (5) Rejected 2026-11-03: `--continuation_open_start` (F1c(b), generalised)
+
+Slur, hairpin and tuplet masks with the start frame unmasked. Alone: −13 GT,
++5 GT, extras +15 (exact 198 → 190). With F3: exact 214 → 207, extras 61 → 82.
+Newly unmasked slur starts (often a pickup 1.5–2 qn after the breath) out-rank
+the real breath in its group: Fl1/Oboe 148 → 149.5, Oboe 140 → 141.5, Cl1
+208 → 210. Reverted. The ruling ("a breath at a slur start is allowed") still
+stands; what fails is *rewarding* the start with an unpenalised peak. Revisit
+after D1, where the start edge can carry change-typed evidence without
+competing as an endpoint.
+
+### Review lists — what only Robert can decide
+
+`review_list.py BASE NEW` lists the breaths a run adds that are not GT, not
+banned and not in the base run: positions no GT pass has seen, invisible to
+both metrics. `review/v2_11_A_candidate_vs_C1.md` holds the 33 for F3. Marking
+them ok/no decides whether NMS d = 4 becomes a default; the ok ones become kept
+GT, the no ones become bans.
+
+### Tools added
+
+| Tool | Purpose |
+|---|---|
+| `group_trace.py RUN [PART QN] [--vs RUN2] [--verify]` | Offline replay of peak grouping (both modes) from `result.pkl`; `--verify` proves the replay equals the pipeline |
+| `fail_trace.py RUN FAILS.txt` | Attributes each audit FAIL to its stage |
+| `score_run.py RUN ...` | Exact, extras, audit, unison, FAIL causes on one line |
+| `review_list.py BASE NEW` | Unreviewed new breaths, as a fill-in table |
 
 ---
 
@@ -1462,20 +1625,24 @@ For each part independently:
     pick peaks, group transitively within 2.5 qn,
     winner-take-all by Sel, accept on Acc >= 0.30
 
-11  filter degenerate segments            <- line ~3162, runs FIRST
+11  filter degenerate segments            <- runs FIRST (legacy order);
+                                              --filter_after_anchor swaps
+                                              11 and 12 (v2.11-A, §16c(3))
 12  re-anchor onset-landed boundaries to note releases (one step, gated)
-                                           <- line ~3182
 13  validate rests and outgoing ties; resolve breath targets
 13  emit commas at the note releasing at each boundary,
     plus a full record of every decision
 ```
 
-**Where the current work sits.** Step 8 is F1 at B3 weights, with anchors
-deferred out of slur interiors and folded into the multiplier at step 9. Step 11
-is repaired (F1b-b). Step 6 carries the slur-mask edge defect (F1c, §16b).
-Step 10 has a known transitive-grouping defect. Step 12 has a known all-rest
-defect. F1c is next, then D1 and E; G1/G2 and H are cheap and unstarted; F must
-stabilise before E lands.
+**Where the current work sits (2026-11-03).** v2.11-A ships opt-in repairs for
+step 10 (transitive grouping, `--peak_grouping nms`), step 6's tie masks
+(`--tie_open_start`) and the 11/12 ordering (`--filter_after_anchor`); defaults
+await Robert's review of `review/v2_11_A_candidate_vs_C1.md`. The dominant
+remaining defect class is **evidence typing** (D1): onset-typed vs
+release-typed evidence decides whether E0b should move a boundary (late
+landings, §16c(4)) and whether borrowed cross-support is relevant (ASax
+232.5). Two shortcuts around D1 were tried and rejected (§16c). Next: D1, then
+E; G1/G2 and H remain cheap and unstarted.
 
 ---
 
@@ -1511,8 +1678,8 @@ qn 26.5 and 134.0; `explain` refuted that — evidence there is strong
 
 **GT correction, Oboe m.86 b4.75 (qn 343.75).** GT placed a breath at the
 onset of a slur's last note, contradicting the §23 ruling. Robert's call: the
-mark is a mistake, being removed from `gt_rendered.musicxml`. Consequences are
-tracked in the PENDING block in §15.
+mark is a mistake, removed from `gt_rendered.musicxml` (commit `f278d9f`).
+Re-baselined in §15. Ruling recorded in §23.
 
 **Remaining unison violations.** `gtv2_ensemble_seam_m80_end` (Fl1 absent, Fl2
 at 319.75) and `gtv2_unison_final_chord_release` (Fl2 absent at qn 390). Both
@@ -1562,5 +1729,8 @@ re-litigate.** Robert holds all musical authority; these are his calls.
   own section.
 - **Euphonium m.89 end → m.90 end**: Robert's manual GT edit, intentional.
 - **Oboe m.93 b14.8 stays banned.** 0.2 qn off is wrong and wrong.
+- **Oboe m.86 b4.75 (qn 343.75) is not a breath** (2026-09-02). The GT mark sat
+  at the onset of a slur's last note, which the slur rulings forbid; removed
+  from the score and banned.
 - GT v2 supersedes all per-case rulings in the deprecated audit file.
 - The **hand-corrected score is the authority**, not any compiled artifact.
