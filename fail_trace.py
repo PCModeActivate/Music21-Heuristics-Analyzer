@@ -157,8 +157,11 @@ def trace_required(r, i, g):
                 gate_detail = 'won group, acc %.3f < gate' % d['acceptance_score'][best]
                 continue
             q = round(float(tg[best]), 4)
-            if q in removed:
-                x = removed[q]
+            after = r['parameters'].get('filter_after_anchor')
+            s0 = shifts.get(q)
+            fkey = round(s0['to'], 4) if (after and s0) else q
+            if fkey in removed:
+                x = removed[fkey]
                 return 'FILTER', ('winner %.3f removed (segment %.3f..%.3f, %s side, %d notes, %.2fs sounding)'
                                   % (q, x['segment_start_qn'], x['segment_end_qn'],
                                      x['removed_side'], x['note_count'], x['sounding_seconds']))

@@ -14,6 +14,10 @@ identical to sectioning_v2_10_F1c.py.
                           allow the chain's first onset: a breath BEFORE a
                           tied note. Fixes the hard veto at ASax 172 and
                           Oboe 382 and three inside_natural_tie_span rejects.
+  --filter_after_anchor   short-phrase filter runs after E0b anchoring, counts
+                          onsets in [start, end), drops the entry instant
+                          across an all-rest gap, and ranks neighbours by the
+                          score at the evidence (Failure mechanism 3).
 
 -----------------------------------------------------------------------------
 Earlier history follows.
@@ -1475,8 +1479,13 @@ def count_note_events_between(notes_list, start_qn, end_qn):
     )
 
 
-def compute_phrase_material(notes_list, start_qn, end_qn, tempo_segments):
+def compute_phrase_material(notes_list, start_qn, end_qn, tempo_segments,
+                            release_coords=False):
     """
+    release_coords (v2.11-A): count onsets in [start, end) instead of
+    (start, end] -- boundaries are note releases, so a note starting at the
+    segment's closing boundary belongs to the next segment.
+
     Compute phrase material between two boundary times, excluding rests.
 
     The segment is (start_qn, end_qn].  note_count counts note onsets in the
@@ -1501,7 +1510,10 @@ def compute_phrase_material(notes_list, start_qn, end_qn, tempo_segments):
     for note in notes_list:
         off = float(note.get('offset', 0.0))
         dur = float(note.get('duration', 0.0))
-        if start_qn + eps < off <= end_qn + eps:
+        if release_coords:
+            if start_qn - eps <= off < end_qn - eps:
+                note_count += 1
+        elif start_qn + eps < off <= end_qn + eps:
             note_count += 1
         note_start = max(start_qn, off)
         note_end = min(end_qn, off + dur)
@@ -1522,7 +1534,9 @@ def postprocess_short_phrases(boundaries, notes_list, selection_score,
                               division, tempo_segments,
                               min_phrase_seconds=1.25,
                               max_phrase_notes=1,
-                              start_time_qn=0.0):
+                              start_time_qn=0.0,
+                              release_coords=False,
+                              score_fn=None):
     """
     Conservatively remove tiny phrase fragments using sounding material.
 
@@ -1545,11 +1559,19 @@ def postprocess_short_phrases(boundaries, notes_list, selection_score,
         changed = False
         prev = float(start_time_qn)
         for idx, cur in enumerate(list(bdys)):
-            material = compute_phrase_material(notes_list, prev, cur, tempo_segments)
+            material = compute_phrase_material(notes_list, prev, cur, tempo_segments,
+                                               release_coords=release_coords)
             if (material['sounding_seconds'] < min_phrase_seconds and
                     material['note_count'] <= max_phrase_notes):
                 if idx == 0:
                     remove_idx = idx
+                elif release_coords and material['sounding_qn'] <= 0.0:
+                    # all-rest segment: keep the phrase end that opens it,
+                    # drop the entry instant that closes it
+                    remove_idx = idx
+                elif score_fn is not None:
+                    remove_idx = (idx - 1 if score_fn(bdys[idx - 1]) < score_fn(cur)
+                                  else idx)
                 else:
                     prev_boundary = bdys[idx - 1]
                     prev_i = min(max(int(round(prev_boundary * division)), 0), len(selection_score) - 1)
@@ -2324,6 +2346,21 @@ _PEAK_GROUPING = 'transitive'
 # final segment's onset carries the chain's evidence, which E0b moves to the
 # chain release.
 _TIE_OPEN_START = False
+
+# v2.11-A: short-phrase filter after release anchoring (Failure mechanism 3).
+# Legacy order is detect -> filter -> E0b anchor -> validate, so the filter
+# measures segments between UNANCHORED boundaries (systematically early) and
+# counts onsets in (start, end] -- consistent only in onset coordinates. A
+# boundary that already sits at a release (e.g. Harp-up 328 in C1) then has
+# the entry note at the next boundary counted inside its segment, and is
+# removed. With this flag:
+#   1. E0b anchoring runs BEFORE the filter;
+#   2. segments count onsets in [start, end) -- release coordinates;
+#   3. across an all-rest segment (no sounding material) the CLOSING boundary
+#      (an entry instant, E0c: no comma at entry instants) is the one removed;
+#   4. the weaker-neighbour comparison uses the selection score where the
+#      evidence was (the E0b source), not at the anchored release.
+_FILTER_AFTER_ANCHOR = False
 
 _F1_DIM_RE = re.compile(r'^(dim|decresc|dimin)', re.I)
 _F1_CRESC_RE = re.compile(r'^cresc', re.I)
@@ -3286,7 +3323,7 @@ def run_sectioning(input_path, output_dir='./output',
             acceptance_score=acceptance_score,
             acceptance_height=selection_accept_height,
         )
-        if short_phrase_filter:
+        if short_phrase_filter and not _FILTER_AFTER_ANCHOR:
             bdys, removed_short = postprocess_short_phrases(
                 bdys, notes_per_part[i], selection_score, division,
                 tempo_segments,
@@ -3316,6 +3353,29 @@ def run_sectioning(input_path, output_dir='./output',
             score_end_qn=_e0b_score_end,
             f1_anchors=_F1_ANCHOR_SETS.get(i))
         e0b_shift_info.append(_e0b_shifts)
+        if short_phrase_filter and _FILTER_AFTER_ANCHOR:
+            _src = {}
+            for _s in _e0b_shifts:
+                if _s['reason'] == 'merged_duplicate':
+                    continue
+                _src.setdefault(round(float(_s['to']), 6), []).append(
+                    float(_s['from']))
+
+            def _score_at(b, _src=_src, _sel=selection_score):
+                pts = [float(b)] + _src.get(round(float(b), 6), [])
+                return max(float(_sel[min(max(int(round(c * division)), 0),
+                                          len(_sel) - 1)]) for c in pts)
+
+            bdys, removed_short = postprocess_short_phrases(
+                bdys, notes_per_part[i], selection_score, division,
+                tempo_segments,
+                min_phrase_seconds=min_phrase_seconds,
+                max_phrase_notes=max_phrase_notes,
+                release_coords=True,
+                score_fn=_score_at,
+            )
+            for _rec in removed_short:
+                _rec['stage_order'] = 'after_anchor'
         bdys, target_records = validate_boundaries_for_part(
             parts[i], bdys, slur_info[i], structural_info[i], natural_tie_info[i],
             reject_rest_boundaries=reject_rest_boundaries,
@@ -3433,6 +3493,7 @@ def run_sectioning(input_path, output_dir='./output',
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
             'tie_open_start': bool(_TIE_OPEN_START),
+            'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3499,6 +3560,7 @@ def run_sectioning(input_path, output_dir='./output',
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
             'tie_open_start': bool(_TIE_OPEN_START),
+            'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4162,6 +4224,10 @@ def main():
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
+    parser.add_argument('--filter_after_anchor', action='store_true',
+                        help='v2.11-A: run the short-phrase filter after E0b '
+                             'release anchoring, in release coordinates. '
+                             'Default off.')
     parser.add_argument('--tie_open_start', action='store_true',
                         help='v2.11-A: allow a breath at the first onset of '
                              'a tie chain (natural or tie-like), i.e. before '
@@ -4261,6 +4327,9 @@ def main():
 
     global _TIE_OPEN_START
     _TIE_OPEN_START = bool(args.tie_open_start)
+
+    global _FILTER_AFTER_ANCHOR
+    _FILTER_AFTER_ANCHOR = bool(args.filter_after_anchor)
 
     run_sectioning(
         args.input,

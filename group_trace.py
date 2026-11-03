@@ -107,16 +107,22 @@ def verify(r):
         w = winners(r, i)
         removed = {round(x['time_quarter_notes'], 4)
                    for x in r['short_phrase_filter_info'][i]}
-        pre = [b for b in w if round(b, 4) not in removed]
         shifts = {round(s['from'], 4): s['to'] for s in e0b[e_idx]}
         e_idx += 1
-        post = sorted({round(shifts.get(round(b, 4), b), 4) for b in pre})
+        if r['parameters'].get('filter_after_anchor'):
+            # v2.11-A order: anchor, then filter (removal times are anchored)
+            anchored = {round(shifts.get(round(b, 4), b), 4) for b in w}
+            pre = w
+            post = sorted(b for b in anchored if b not in removed)
+        else:
+            pre = [b for b in w if round(b, 4) not in removed]
+            post = sorted({round(shifts.get(round(b, 4), b), 4) for b in pre})
         seen = sorted({round(t['boundary_time'], 4)
                        for t in r['boundary_target_info'][i]})
         match = post == seen
         ok &= match
         print('part %2d %-20s winners %3d  removed %2d  -> %3d   validated %3d  %s'
-              % (i, r['part_names'][i][:20], len(w), len(w) - len(pre),
+              % (i, r['part_names'][i][:20], len(w), len(removed),
                  len(post), len(seen), 'OK' if match else 'MISMATCH'))
         if not match:
             print('    only replay:', sorted(set(post) - set(seen)))
