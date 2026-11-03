@@ -1398,11 +1398,41 @@ competing as an endpoint.
 
 ### Review lists — what only Robert can decide
 
-`review_list.py BASE NEW` lists the breaths a run adds that are not GT, not
-banned and not in the base run: positions no GT pass has seen, invisible to
-both metrics. `review/v2_11_A_candidate_vs_C1.md` holds the 33 for F3. Marking
-them ok/no decides whether NMS d = 4 becomes a default; the ok ones become kept
-GT, the no ones become bans.
+`review_list.py BASE NEW` lists the conflicts with GT a run adds relative to a
+base run. Exact-match counts them only as extras and the audit not at all, so
+whether each is objectionable needs a musician. `review/v2_11_A_candidate_vs_C1.md`
+holds the 33 for F3, with verdicts (below).
+
+### Review outcome (2026-11-03)
+
+Robert reviewed F3 on his own run (identical, 275/275). Framing, his: any
+boundary that disagrees with GT is a **conflict**; bans are warnings from an
+earlier iteration and "not banned" means little. He marked the conflicts he
+finds **objectionable**; the rest pass as acceptable. Of the 33 new conflicts,
+12 are objectionable and 21 acceptable; he also objected to 4 boundaries that
+were already in C1 (Fl1 m.85 b3, Harp-up m.54 b3, Cl2 m.71 b4, Harp-low
+m.91 b3). The set is in `review/objections_2026-11-03.json`. The 07-10
+audit's "Recommended" rulings at ASax and Harp end of m.55 are overturned.
+
+`score_run.py` now reports **objectionable = required missed + banned hit +
+objected hit**, the count a musician would reject:
+
+| Run | Objectionable | Required missed | Banned hit | Objected |
+|---|---|---|---|---|
+| B3 | 87 | 64 | 19 | 4 |
+| C1 | 66 | 51 | 11 | 4 |
+| T1 (tie) | 63 | 48 | 11 | 4 |
+| F1 (filter) | 64 | 46 | 11 | 7 |
+| F2 (tie + filter) | 61 | 43 | 11 | 7 |
+| nms d = 4.0 | 62 | 40 | 9 | 13 |
+| **F3** (F2 + nms d = 4.0) | **55** | 31 | 8 | 16 |
+
+On this measure F3 is the best configuration. The review covered F3's
+boundaries, so counts for runs with boundaries F3 lacks are lower bounds.
+Objections cluster in two patterns: breaths that split a short pickup from
+its downbeat (m.54 b2.5, m.55 b4.5, m.75 b3.75) and accompaniment breaths
+after a long note with no phrase end (Euph m.9, m.15, m.63) -- both evidence
+typing problems (D1).
 
 ### Tools added
 
@@ -1411,7 +1441,8 @@ GT, the no ones become bans.
 | `group_trace.py RUN [PART QN] [--vs RUN2] [--verify]` | Offline replay of peak grouping (both modes) from `result.pkl`; `--verify` proves the replay equals the pipeline |
 | `fail_trace.py RUN FAILS.txt` | Attributes each audit FAIL to its stage |
 | `score_run.py RUN ...` | Exact, extras, audit, unison, FAIL causes on one line |
-| `review_list.py BASE NEW` | Unreviewed new breaths, as a fill-in table |
+| `review_list.py BASE NEW` | New conflicts with GT relative to a base run, as a fill-in table |
+| `history_check.py TABLE.md` | What every GT and audit file ever recorded at a set of positions |
 
 ---
 

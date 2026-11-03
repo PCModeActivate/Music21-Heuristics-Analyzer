@@ -3,7 +3,7 @@
 Base: `output_v2_10_F1c/liz_seam_C1_slur_release`  
 New: `output_v2_11_A/liz_F3_filter_tie_nms4`
 
-Listed: boundaries in the new run that are not GT, not banned, and not in the base run. The comma sits after the note releasing at that instant. Fill in **ok** or **no**. "Earlier record" comes from `history_check.py` over every GT and audit file; per ALGORITHM.md 23 the 2026-07-10 audit rulings are superseded by GT v2, so they are evidence, not decisions. Where each comma is drawn: `v2_11_A_candidate_vs_C1_where.md` (same row order).
+Listed: boundaries in the new run that are not GT, not banned, and not in the base run, i.e. **new conflicts with GT**. The comma sits after the note releasing at that instant. Fill in **ok** or **no**. "Earlier record" comes from `history_check.py` over every GT and audit file; per ALGORITHM.md 23 the 2026-07-10 audit rulings are superseded by GT v2, so they are evidence, not decisions. Where each comma is drawn: `v2_11_A_candidate_vs_C1_where.md` (same row order).
 
 | part | instrument | position | qn | rest after (qn) | earlier record | ok / no |
 |---|---|---|---|---|---|---|
@@ -29,7 +29,7 @@ Listed: boundaries in the new run that are not GT, not banned, and not in the ba
 | 7 | Euphonium | m.55 b1.0 | 216.000 | 0.00 | context: reference boundary (audit v2 LIZV2-021) | no |
 | 7 | Euphonium | m.58 b1.0 | 228.000 | 0.00 | context: reference boundary (audit v2 LIZV2-022) | ok (soft: "more understandable") |
 | 7 | Euphonium | m.63 b4.0 | 251.000 | 0.00 |  | no |
-| 7 | Euphonium | m.67 b3.0 | 266.000 | 0.00 |  | no: should be m.66 end |
+| 7 | Euphonium | m.67 b3.0 | 266.000 | 0.00 |  | ok ("67 is understandable"; corrected 2026-11-03) |
 | 7 | Euphonium | m.71 b4.0 | 283.000 | 0.00 |  | no |
 | 7 | Euphonium | m.73 b1.0 | 288.000 | 0.00 |  | ok (not objected to) |
 | 8 | Harp | m.24 b1.0 | 92.000 | 0.00 |  | ok (not objected to) |
@@ -45,9 +45,12 @@ Listed: boundaries in the new run that are not GT, not banned, and not in the ba
 
 ## Reviewer verdicts, 2026-11-03 (Robert)
 
-Reviewed on his own F3 run (boundaries identical to ours: 275/275). Rows he
-did not mention are recorded as ok: he reviewed for what is genuinely wrong
-("some here could be justifiable").
+Reviewed on his own F3 run (boundaries identical to ours: 275/275). Every
+listed row conflicts with GT; he marked the ones he finds objectionable and
+lets the rest pass as acceptable. "Not banned" carries no weight: bans are
+warnings from an earlier iteration, and any disagreement with GT is a
+conflict. The objectionable set is machine-readable in
+`review/objections_2026-11-03.json` and scored by `score_run.py`.
 
 Outside the 33, on boundaries already present in C1:
 
@@ -59,11 +62,5 @@ Outside the 33, on boundaries already present in C1:
 | Harp lower (9) | A-flat3+C4, m.91 b1 | m.91 b3 | 362.000 | no |
 | Alto Saxophone (5) | F#5, m.54 b2.5 | m.54 b3 | 214.000 | no (already banned in GT v2) |
 
-Missing breath:
-
-| part | breath instant | qn | verdict |
-|---|---|---|---|
-| Euphonium (7) | end of m.66 | 264.000 | required (in place of m.67 b3) |
-
-Totals for the 33: 13 no, 20 ok. Note that the 2026-07-10 audit's
+Totals for the 33: 12 objectionable, 21 acceptable (#23 corrected from no to ok). Note that the 2026-07-10 audit's
 "Recommended" rulings at ASax and Harp end of m.55 are overturned here.

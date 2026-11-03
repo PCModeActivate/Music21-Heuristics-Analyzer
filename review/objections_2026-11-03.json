@@ -1,0 +1,136 @@
+{
+ "reviewer": "Robert",
+ "date": "2026-11-03",
+ "run_reviewed": "output_v2_11_A/liz_F3_filter_tie_nms4",
+ "meaning": "Breath positions the reviewer finds objectionable. Not GT bans: a position absent from GT is already a conflict; these are the conflicts judged clearly wrong. Unlisted conflicts were judged acceptable to pass.",
+ "objections": [
+  {
+   "part": 0,
+   "qn": 338.0,
+   "instrument": "Flute 1",
+   "instant": "m.85 b3",
+   "source": "reviewer remark outside the 33 (boundary already in C1)",
+   "note": "no"
+  },
+  {
+   "part": 0,
+   "qn": 348.0,
+   "instrument": "Flute 1",
+   "instant": "m.88 b1.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 5",
+   "note": "no"
+  },
+  {
+   "part": 1,
+   "qn": 299.0,
+   "instrument": "Flute",
+   "instant": "m.75 b4.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 6",
+   "note": "no"
+  },
+  {
+   "part": 4,
+   "qn": 176.0,
+   "instrument": "B♭ Clarinet",
+   "instant": "m.45 b1.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 10",
+   "note": "no (soft: \"understandable somewhat\")"
+  },
+  {
+   "part": 4,
+   "qn": 283.0,
+   "instrument": "B♭ Clarinet",
+   "instant": "m.71 b4",
+   "source": "reviewer remark outside the 33 (boundary already in C1)",
+   "note": "no"
+  },
+  {
+   "part": 4,
+   "qn": 299.0,
+   "instrument": "B♭ Clarinet",
+   "instant": "m.75 b4.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 12",
+   "note": "no"
+  },
+  {
+   "part": 5,
+   "qn": 220.0,
+   "instrument": "Alto Saxophone",
+   "instant": "m.56 b1.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 13",
+   "note": "no"
+  },
+  {
+   "part": 6,
+   "qn": 214.0,
+   "instrument": "Trumpet in B♭ 1",
+   "instant": "m.54 b3.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 16",
+   "note": "no"
+  },
+  {
+   "part": 7,
+   "qn": 34.0,
+   "instrument": "Euphonium",
+   "instant": "m.9 b3.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 18",
+   "note": "no"
+  },
+  {
+   "part": 7,
+   "qn": 60.0,
+   "instrument": "Euphonium",
+   "instant": "m.16 b1.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 19",
+   "note": "no"
+  },
+  {
+   "part": 7,
+   "qn": 216.0,
+   "instrument": "Euphonium",
+   "instant": "m.55 b1.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 20",
+   "note": "no"
+  },
+  {
+   "part": 7,
+   "qn": 251.0,
+   "instrument": "Euphonium",
+   "instant": "m.63 b4.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 22",
+   "note": "no"
+  },
+  {
+   "part": 7,
+   "qn": 283.0,
+   "instrument": "Euphonium",
+   "instant": "m.71 b4.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 24",
+   "note": "no"
+  },
+  {
+   "part": 8,
+   "qn": 214.0,
+   "instrument": "Harp (upper)",
+   "instant": "m.54 b3",
+   "source": "reviewer remark outside the 33 (boundary already in C1)",
+   "note": "no"
+  },
+  {
+   "part": 8,
+   "qn": 220.0,
+   "instrument": "Harp",
+   "instant": "m.56 b1.0",
+   "source": "review/v2_11_A_candidate_vs_C1.md row 30",
+   "note": "no"
+  },
+  {
+   "part": 9,
+   "qn": 362.0,
+   "instrument": "Harp (lower)",
+   "instant": "m.91 b3",
+   "source": "reviewer remark outside the 33 (boundary already in C1)",
+   "note": "no"
+  }
+ ]
+}
