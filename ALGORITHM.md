@@ -1486,6 +1486,34 @@ same-part gaps (and only 4 under 3.9). Radius 3.9 qn: F3 exact 214 → 227 but
 extras 61 → 87; E3 213 → 220, extras 63 → 90 — a breath nearly every bar.
 Kept at 4.0.
 
+### (8) `--peak_grouping soft` — penalise, never ban (2026-11-03)
+
+Robert's question: does GT itself obey a 4 qn spacing? **No: 35 same-part
+pairs are <= 4 qn apart** (31 exactly one bar, 4 under), clustered where the
+music breathes every bar (m.40-43 and m.58-60, fermatas and rit.). Hard NMS
+at 4 qn can find only one of each pair (F3 finds both in 7/35), and it breaks
+§1's own invariant. Soft grouping instead scales each remaining peak's `Sel`
+and `Acc` by `(distance / radius) ** p` after every acceptance; a peak is
+kept if its penalised `Acc` still clears the gate.
+
+All with C1 flags + `--filter_after_anchor --tie_open_start --endpoint_release`:
+
+| Grouping | Exact | Extras | Total | Audit P/F | Unison | Objectionable* | close GT pairs found | unreviewed vs F3 |
+|---|---|---|---|---|---|---|---|---|
+| hard NMS 4 (= E3) | 213 | 63 | 276 | 153/37 | 2 | 45 | 9/35 | 32 |
+| soft r 4, p 1 | 229 | 126 | 355 | 156/34 | 2 | 46 | | |
+| soft r 4, p 2 | 226 | 116 | 342 | 155/35 | 2 | 47 | | |
+| soft r 6, p 1 | 218 | 81 | 299 | 154/36 | 1 | 43 | 15/35 | 47 |
+| **soft r 6, p 2** | 208 | **56** | 264 | **154/36** | **1** | **41** | 6/35 | 25 |
+| soft r 8, p 1 | 210 | 60 | 270 | 152/38 | 1 | 43 | | |
+| soft r 8, p 2 | 201 | 51 | 252 | 152/38 | 1 | 43 | | |
+
+*Lower bounds where a run has conflicts F3 does not (unreviewed). No setting
+dominates: soft r 6 p 2 has the fewest conflicts and best audit but recovers
+fewer close pairs; r 6 p 1 recovers more but adds conflicts. The close pairs
+need local evidence (fermata/rit. passages), not a better uniform spacing
+rule. Review sheet for r 6 p 2: `review/S_d6_p2_vs_F3.md`.
+
 ### Tools added
 
 | Tool | Purpose |

@@ -85,6 +85,39 @@ def nms_groups(peaks, sel, acc, dist, acc_h):
     return sorted(out, key=lambda t: t[0][0])
 
 
+def soft_groups(peaks, sel, acc, dist, acc_h, power):
+    """Mirror of detect_boundaries' 'soft' mode (v2.11-A). Each accepted peak
+    heads a group holding the not-accepted peaks nearest to it; peaks that
+    never clear the gate after penalties are reported in those groups."""
+    cand = list(peaks)
+    fac = {p: 1.0 for p in cand}
+    chosen = []
+    while True:
+        alive = [p for p in cand if p not in chosen and acc[p] * fac[p] >= acc_h]
+        if not alive:
+            break
+        p = max(alive, key=lambda k: (float(sel[k]) * fac[k], -k))
+        chosen.append(p)
+        for q in cand:
+            if q not in chosen and abs(q - p) < dist:
+                fac[q] *= (abs(q - p) / float(dist)) ** power
+    if not chosen:
+        return [([p], p, False) for p in cand]
+    owner = {c: [c] for c in chosen}
+    lone = []
+    for q in cand:
+        if q in owner:
+            continue
+        near = min(chosen, key=lambda c: abs(c - q))
+        if abs(near - q) < dist:
+            owner[near].append(q)
+        else:
+            lone.append(q)
+    out = [(sorted(v), c, True) for c, v in owner.items()]
+    out += [([q], q, False) for q in lone]
+    return sorted(out, key=lambda t: t[0][0])
+
+
 def part_groups(r, i):
     p = r['parameters']
     d = r['per_part_candidate_diagnostics'][i]
@@ -92,6 +125,9 @@ def part_groups(r, i):
     acc, forb = d['acceptance_score'], d['forbidden_mask']
     peaks, _ = find_peaks(cand, height=p['candidate_height'])
     peaks = [int(x) for x in peaks if forb[x] <= 0]
+    if p.get('peak_grouping', 'transitive') == 'soft':
+        return soft_groups(peaks, sel, acc, p['peak_distance_frames'],
+                           p['selection_accept_height'], p.get('soft_power', 1.0))
     if p.get('peak_grouping', 'transitive') == 'nms':
         return nms_groups(peaks, sel, acc, p['peak_distance_frames'],
                           p['selection_accept_height'])

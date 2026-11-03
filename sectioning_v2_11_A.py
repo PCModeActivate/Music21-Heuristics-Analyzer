@@ -6,6 +6,9 @@ v2.11-A (2026-11-03): structural fixes found by fail_trace.py on C1.
 Every change is behind a flag, default off; with no new flags the output is
 identical to sectioning_v2_10_F1c.py.
 
+  --peak_grouping soft    penalise instead of suppress: accepted breaths
+                          scale nearby peaks' scores by (d/radius)**p
+                          (--soft_power p); radius = --peak_distance_qn.
   --peak_grouping nms     replace transitive grouping (Failure mechanism 2)
                           with non-maximum suppression. On C1, 30 of 51
                           required misses were peaks lost to a chained group,
@@ -1801,6 +1804,25 @@ def detect_boundaries(B, time_grid, peak_height=0.3, peak_distance_frames=20,
     if len(peaks) == 0:
         return np.array([])
 
+    if _PEAK_GROUPING == 'soft':
+        cand = [int(p) for p in peaks]
+        fac = {p: 1.0 for p in cand}
+        chosen = []
+        while True:
+            alive = [p for p in cand if p not in chosen
+                     and accept[p] * fac[p] >= acceptance_height]
+            if not alive:
+                break
+            p = max(alive, key=lambda k: (float(score[k]) * fac[k], -k))
+            chosen.append(p)
+            for q in cand:
+                if q not in chosen:
+                    d = abs(q - p)
+                    if d < peak_distance_frames:
+                        fac[q] *= (d / float(peak_distance_frames)) ** _SOFT_POWER
+        chosen.sort()
+        return time_grid[np.array(chosen, dtype=int)] if chosen else np.array([])
+
     if _PEAK_GROUPING == 'nms':
         order = sorted((int(p) for p in peaks),
                        key=lambda idx: (-float(score[idx]), idx))
@@ -2354,6 +2376,13 @@ _SLUR_END_RELEASE = False
 #   already-accepted boundary lies within peak_distance. Minimum spacing is
 #   unchanged; chains no longer collapse.
 _PEAK_GROUPING = 'transitive'
+# v2.11-A 'soft' grouping: penalise, never ban (ALGORITHM.md 1). After each
+# acceptance, every remaining peak within peak_distance has its selection and
+# acceptance scores multiplied by (distance / peak_distance) ** _SOFT_POWER.
+# Close breaths need stronger evidence instead of being suppressed outright.
+# GT holds 35 same-part pairs <= 4 qn apart, which hard NMS at 4 qn cannot
+# both find.
+_SOFT_POWER = 1.0
 
 # v2.11-A: tie masks open at the chain start. A tie (natural, or a same-pitch
 # "tie-like" slur) forbids breaths that split the sustained note. The first
@@ -3559,6 +3588,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
+            'soft_power': _SOFT_POWER,
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
@@ -3628,6 +3658,7 @@ def run_sectioning(input_path, output_dir='./output',
             'f1b_multiplier_routing': _F1B['multiplier_routing'],
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
+            'soft_power': _SOFT_POWER,
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
@@ -4288,7 +4319,10 @@ def main():
     parser.add_argument('--selection_tuplet_penalty', type=float, default=0.45)
     parser.add_argument('--note_candidate_weight', type=float, default=0.65)
     parser.add_argument('--selection_accept_height', type=float, default=0.30)
-    parser.add_argument('--peak_grouping', choices=['transitive', 'nms'],
+    parser.add_argument('--soft_power', type=float, default=1.0,
+                        help='v2.11-A: exponent of the soft-grouping penalty '
+                             '(distance/peak_distance)**p. Default 1.0.')
+    parser.add_argument('--peak_grouping', choices=['transitive', 'nms', 'soft'],
                         default='transitive',
                         help='v2.11-A: candidate peak grouping. transitive = '
                              'legacy chained groups (FM2); nms = non-maximum '
@@ -4402,6 +4436,9 @@ def main():
 
     global _PEAK_GROUPING
     _PEAK_GROUPING = args.peak_grouping
+
+    global _SOFT_POWER
+    _SOFT_POWER = float(args.soft_power)
 
     global _TIE_OPEN_START
     _TIE_OPEN_START = bool(args.tie_open_start)
