@@ -2652,7 +2652,16 @@ def add_breath_marks_per_part(original_score, boundaries_per_part,
             # bt so the comma renders where the boundary is.
             if _ANNOT_RELEASE_RETARGET:
                 _t_off = rec.get('target_offset')
-                if _t_off is not None and abs(float(_t_off) - float(bt)) <= 1e-3:
+                _t_dur = rec.get('target_duration')
+                # v2.11-A: also when the resolver picked a note that neither
+                # starts nor releases at bt -- e.g. the first note AFTER a
+                # rest at a rest seam (Fl1 m.18 b2.5 drew its comma on the
+                # post-rest E6). A boundary is a release instant, so the
+                # note releasing at bt carries the comma whenever one exists.
+                _t_releases_here = (
+                    _t_off is not None and _t_dur is not None
+                    and abs(float(_t_off) + float(_t_dur) - float(bt)) <= 1e-3)
+                if _t_off is not None and not _t_releases_here:
                     _repl = None
                     for _rel, _n in _notes_rel:
                         if _rel > bt + 1e-3:
