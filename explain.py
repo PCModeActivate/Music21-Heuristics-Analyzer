@@ -28,7 +28,15 @@ import argparse
 # script can be run from anywhere as long as it's next to the module.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from sectioning_v2_10_F1b import load_result, explain, explain_cross_support
+import importlib
+
+# Single point of truth for which pipeline module explains results.
+# Override without editing: SECTIONING_PIPELINE=sectioning_v2_10_F1b python explain.py ...
+CURRENT_PIPELINE = os.environ.get('SECTIONING_PIPELINE', 'sectioning_v2_10_F1c')
+_pipeline = importlib.import_module(CURRENT_PIPELINE)
+load_result = _pipeline.load_result
+explain = _pipeline.explain
+explain_cross_support = _pipeline.explain_cross_support
 
 def main():
     parser = argparse.ArgumentParser(
@@ -67,11 +75,12 @@ def main():
     if args.time is not None:
         explain(result, part_idx=args.part_idx,
                 time_qn=args.time, window_qn=args.window)
+        if args.cross:
+            explain_cross_support(result, args.part_idx, time_qn=args.time)
     elif args.measure is not None:
         explain(result, part_idx=args.part_idx,
                 measure=args.measure, beat=args.beat,
                 window_qn=args.window)
-        
         if args.cross:
             explain_cross_support(result, args.part_idx,
                                   measure=args.measure, beat=args.beat)
