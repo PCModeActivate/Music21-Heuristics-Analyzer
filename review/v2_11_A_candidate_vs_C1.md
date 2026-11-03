@@ -7,38 +7,63 @@ Listed: boundaries in the new run that are not GT, not banned, and not in the ba
 
 | part | instrument | position | qn | rest after (qn) | earlier record | ok / no |
 |---|---|---|---|---|---|---|
-| 0 | Flute 1 | m.4 b3.0 | 14.000 | 0.00 |  | |
-| 0 | Flute 1 | m.16 b3.5 | 62.500 | 0.00 |  | |
-| 0 | Flute 1 | m.18 b2.5 | 69.500 | 0.50 | **renders on the wrong note** (E6 after the rest); judge the breath at m.18 b2.5 | |
-| 0 | Flute 1 | m.87 b1.0 | 344.000 | 0.00 | 2026-07-10 audit: present ("Recommended") | |
-| 0 | Flute 1 | m.88 b1.0 | 348.000 | 0.00 |  | |
-| 1 | Flute | m.75 b4.0 | 299.000 | 0.00 |  | |
-| 2 | Oboe | m.17 b1.0 | 64.000 | 0.00 |  | |
-| 3 | Clarinet in B♭  1 | m.40 b1.0 | 156.000 | 0.50 |  | |
-| 3 | Clarinet in B♭  1 | m.88 b1.0 | 348.000 | 0.00 | 2026-07-10 audit: **absent** ("Cl1 m.87-end mark not allowed") | |
-| 4 | B♭ Clarinet | m.45 b1.0 | 176.000 | 0.00 | 2026-07-10 audit: **absent** ("no m.44-end mark allowed") | |
-| 4 | B♭ Clarinet | m.73 b1.0 | 288.000 | 0.00 |  | |
-| 4 | B♭ Clarinet | m.75 b4.0 | 299.000 | 0.00 |  | |
-| 5 | Alto Saxophone | m.56 b1.0 | 220.000 | 0.50 | 2026-07-10 audit: present ("Recommended") | |
-| 5 | Alto Saxophone | m.58 b1.0 | 228.000 | 0.00 | 2026-07-10 audit: present ("Recommended") | |
-| 6 | Trumpet in B♭ 1 | m.11 b1.0 | 40.000 | 0.00 |  | |
-| 6 | Trumpet in B♭ 1 | m.54 b3.0 | 214.000 | 0.00 |  | |
-| 6 | Trumpet in B♭ 1 | m.57 b1.0 | 224.000 | 0.00 | context: "Trumpet mm.56-57 misalignment" (review 2026-07) | |
-| 7 | Euphonium | m.9 b3.0 | 34.000 | 0.00 |  | |
-| 7 | Euphonium | m.16 b1.0 | 60.000 | 0.00 | 2026-07-10 audit: **absent** ("Not allowed (existing qn 60)") | |
-| 7 | Euphonium | m.55 b1.0 | 216.000 | 0.00 | context: reference boundary (audit v2 LIZV2-021) | |
-| 7 | Euphonium | m.58 b1.0 | 228.000 | 0.00 | context: reference boundary (audit v2 LIZV2-022) | |
-| 7 | Euphonium | m.63 b4.0 | 251.000 | 0.00 |  | |
-| 7 | Euphonium | m.67 b3.0 | 266.000 | 0.00 |  | |
-| 7 | Euphonium | m.71 b4.0 | 283.000 | 0.00 |  | |
-| 7 | Euphonium | m.73 b1.0 | 288.000 | 0.00 |  | |
-| 8 | Harp | m.24 b1.0 | 92.000 | 0.00 |  | |
-| 8 | Harp | m.26 b1.0 | 100.000 | 0.00 |  | |
-| 8 | Harp | m.41 b1.0 | 160.000 | 0.00 |  | |
-| 8 | Harp | m.42 b1.0 | 164.000 | 0.00 |  | |
-| 8 | Harp | m.56 b1.0 | 220.000 | 0.50 | 2026-07-10 audit: present ("Recommended") | |
-| 8 | Harp | m.63 b1.0 | 248.000 | 1.00 |  | |
-| 8 | Harp | m.93 b1.0 | 368.000 | 18.00 |  | |
-| 9 | Harp | m.92 b3.0 | 366.000 | 20.00 |  | |
+| 0 | Flute 1 | m.4 b3.0 | 14.000 | 0.00 |  | ok (not objected to) |
+| 0 | Flute 1 | m.16 b3.5 | 62.500 | 0.00 |  | ok (not objected to) |
+| 0 | Flute 1 | m.18 b2.5 | 69.500 | 0.50 | **renders on the wrong note** (E6 after the rest); judge the breath at m.18 b2.5 | ok as position; renderer must draw it on the note before the rest |
+| 0 | Flute 1 | m.87 b1.0 | 344.000 | 0.00 | 2026-07-10 audit: present ("Recommended") | ok (not objected to) |
+| 0 | Flute 1 | m.88 b1.0 | 348.000 | 0.00 |  | no |
+| 1 | Flute | m.75 b4.0 | 299.000 | 0.00 |  | no |
+| 2 | Oboe | m.17 b1.0 | 64.000 | 0.00 |  | ok (not objected to) |
+| 3 | Clarinet in B♭  1 | m.40 b1.0 | 156.000 | 0.50 |  | ok (not objected to) |
+| 3 | Clarinet in B♭  1 | m.88 b1.0 | 348.000 | 0.00 | 2026-07-10 audit: **absent** ("Cl1 m.87-end mark not allowed") | ok (not objected to) |
+| 4 | B♭ Clarinet | m.45 b1.0 | 176.000 | 0.00 | 2026-07-10 audit: **absent** ("no m.44-end mark allowed") | no (soft: "understandable somewhat") |
+| 4 | B♭ Clarinet | m.73 b1.0 | 288.000 | 0.00 |  | ok (not objected to) |
+| 4 | B♭ Clarinet | m.75 b4.0 | 299.000 | 0.00 |  | no |
+| 5 | Alto Saxophone | m.56 b1.0 | 220.000 | 0.50 | 2026-07-10 audit: present ("Recommended") | no |
+| 5 | Alto Saxophone | m.58 b1.0 | 228.000 | 0.00 | 2026-07-10 audit: present ("Recommended") | ok (soft: "more understandable") |
+| 6 | Trumpet in B♭ 1 | m.11 b1.0 | 40.000 | 0.00 |  | ok (not objected to) |
+| 6 | Trumpet in B♭ 1 | m.54 b3.0 | 214.000 | 0.00 |  | no |
+| 6 | Trumpet in B♭ 1 | m.57 b1.0 | 224.000 | 0.00 | context: "Trumpet mm.56-57 misalignment" (review 2026-07) | ok (soft: "more understandable") |
+| 7 | Euphonium | m.9 b3.0 | 34.000 | 0.00 |  | no |
+| 7 | Euphonium | m.16 b1.0 | 60.000 | 0.00 | 2026-07-10 audit: **absent** ("Not allowed (existing qn 60)") | no |
+| 7 | Euphonium | m.55 b1.0 | 216.000 | 0.00 | context: reference boundary (audit v2 LIZV2-021) | no |
+| 7 | Euphonium | m.58 b1.0 | 228.000 | 0.00 | context: reference boundary (audit v2 LIZV2-022) | ok (soft: "more understandable") |
+| 7 | Euphonium | m.63 b4.0 | 251.000 | 0.00 |  | no |
+| 7 | Euphonium | m.67 b3.0 | 266.000 | 0.00 |  | no: should be m.66 end |
+| 7 | Euphonium | m.71 b4.0 | 283.000 | 0.00 |  | no |
+| 7 | Euphonium | m.73 b1.0 | 288.000 | 0.00 |  | ok (not objected to) |
+| 8 | Harp | m.24 b1.0 | 92.000 | 0.00 |  | ok (not objected to) |
+| 8 | Harp | m.26 b1.0 | 100.000 | 0.00 |  | ok (not objected to) |
+| 8 | Harp | m.41 b1.0 | 160.000 | 0.00 |  | ok (not objected to) |
+| 8 | Harp | m.42 b1.0 | 164.000 | 0.00 |  | ok (not objected to) |
+| 8 | Harp | m.56 b1.0 | 220.000 | 0.50 | 2026-07-10 audit: present ("Recommended") | no |
+| 8 | Harp | m.63 b1.0 | 248.000 | 1.00 |  | ok ("62 end is understandable"; same breath as the m.63 b1 instant) |
+| 8 | Harp | m.93 b1.0 | 368.000 | 18.00 |  | ok (not objected to) |
+| 9 | Harp | m.92 b3.0 | 366.000 | 20.00 |  | ok ("fine") |
 
 33 positions.
+
+## Reviewer verdicts, 2026-11-03 (Robert)
+
+Reviewed on his own F3 run (boundaries identical to ours: 275/275). Rows he
+did not mention are recorded as ok: he reviewed for what is genuinely wrong
+("some here could be justifiable").
+
+Outside the 33, on boundaries already present in C1:
+
+| part | comma on | breath instant | qn | verdict |
+|---|---|---|---|---|
+| Flute 1 (0) | G4, m.85 b1 | m.85 b3 | 338.000 | no |
+| Harp upper (8) | A5, m.54 b2.5 | m.54 b3 | 214.000 | no |
+| B-flat Clarinet (4) | E-flat4, m.71 b1 | m.71 b4 | 283.000 | no |
+| Harp lower (9) | A-flat3+C4, m.91 b1 | m.91 b3 | 362.000 | no |
+| Alto Saxophone (5) | F#5, m.54 b2.5 | m.54 b3 | 214.000 | no (already banned in GT v2) |
+
+Missing breath:
+
+| part | breath instant | qn | verdict |
+|---|---|---|---|
+| Euphonium (7) | end of m.66 | 264.000 | required (in place of m.67 b3) |
+
+Totals for the 33: 13 no, 20 ok. Note that the 2026-07-10 audit's
+"Recommended" rulings at ASax and Harp end of m.55 are overturned here.
