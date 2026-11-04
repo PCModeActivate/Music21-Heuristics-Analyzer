@@ -83,6 +83,11 @@ def main():
                             comma=comma_on(a.run_dir, i, q), cause=det))
 
     obj = []
+    accepted = []
+    if a.objections and os.path.exists(a.objections):
+        accepted = [(o['part'], float(o['qn'])) for o in json.load(open(a.objections)).get('accepted', [])]
+    n_acc = sum(1 for x in ban if any(x['part'] == ai and abs(x['qn'] - aq) <= 0.1 for ai, aq in accepted))
+    ban = [x for x in ban if not any(x['part'] == ai and abs(x['qn'] - aq) <= 0.1 for ai, aq in accepted)]
     if a.objections and os.path.exists(a.objections):
         for o in json.load(open(a.objections))['objections']:
             if any(abs(b - o['qn']) <= 0.1 for b in R.get(o['part'], [])):
@@ -103,7 +108,7 @@ def main():
         md.append('| %s (%d) | %s | %s | %s | %s: %s | %s |' % (
             x['name'], x['part'], x['where'], x['should'], x['nearest'],
             x['cause'], x['detail'].replace('|', '/'), x['close'] or ''))
-    md.append('\n## Banned positions hit (%d)\n' % len(ban))
+    md.append('\n## Banned positions hit (%d; %d more on reviewer-accepted positions not listed)\n' % (len(ban), n_acc))
     md.append('| part | breath at | comma on | how it got there |')
     md.append('|---|---|---|---|')
     for x in sorted(ban, key=lambda x: (x['part'], x['qn'])):

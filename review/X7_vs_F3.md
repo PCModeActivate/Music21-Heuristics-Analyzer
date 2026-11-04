@@ -1,0 +1,38 @@
+# Review: new conflicts in X7 (best) vs F3
+
+Base: `output_v2_11_A/liz_F3_filter_tie_nms4`  
+New: `output_v2_11_A/liz_X7`
+
+Listed: boundaries in the new run that are not GT, not banned, and not in the base run. "position" is the boundary instant (m.N b1 = after the last note of m.N-1); "comma on note" is the note carrying the comma in the rendered score. Mark only the objectionable ones **no**; the rest pass.
+
+| part | instrument | position | qn | rest after (qn) | comma on note | ok / no |
+|---|---|---|---|---|---|---|
+| 0 | Flute 1 | m.81 b1.0 | 320.000 | 0.00 | m.80 b4.75 B-5 | |
+| 1 | Flute | m.36 b1.0 | 140.000 | 0.00 | m.35 b4.5 F#5 | |
+| 1 | Flute | m.53 b1.0 | 208.000 | 0.50 | m.52 b4.5 F#4 | |
+| 3 | Clarinet in B♭  1 | m.20 b3.0 | 78.000 | 0.00 | m.20 b2 A4 | |
+| 3 | Clarinet in B♭  1 | m.58 b1.0 | 228.000 | 0.00 | m.57 b4.5 A5 | |
+| 3 | Clarinet in B♭  1 | m.60 b3.0 | 238.000 | 0.00 | m.60 b2.5 D5 | |
+| 3 | Clarinet in B♭  1 | m.65 b1.0 | 256.000 | 0.00 | m.64 b4.5 E5 | |
+| 4 | B♭ Clarinet | m.72 b4.0 | 287.000 | 0.00 | m.72 b1 E-4 | |
+| 5 | Alto Saxophone | m.55 b1.0 | 216.000 | 0.50 | m.54 b4.5 E-5 | |
+| 5 | Alto Saxophone | m.57 b1.0 | 224.000 | 0.50 | m.56 b4.5 G4 | |
+| 5 | Alto Saxophone | m.63 b1.0 | 248.000 | 0.00 | m.62 b4 G5 | |
+| 5 | Alto Saxophone | m.65 b1.0 | 256.000 | 0.00 | m.64 b4 E5 | |
+| 6 | Trumpet in B♭ 1 | m.17 b1.0 | 64.000 | 10.00 | m.16 b4.5 A4 | |
+| 6 | Trumpet in B♭ 1 | m.56 b1.0 | 220.000 | 0.00 | m.55 b3 A3 | |
+| 6 | Trumpet in B♭ 1 | m.88 b3.0 | 350.000 | 0.00 | m.88 b1 A4 | |
+| 7 | Euphonium | m.17 b1.0 | 64.000 | 0.00 | m.16 b1 F2 | |
+| 7 | Euphonium | m.21 b1.0 | 80.000 | 0.00 | m.20 b1 G#2 | |
+| 7 | Euphonium | m.52 b1.0 | 204.000 | 0.00 | m.51 b1 G2 | |
+| 7 | Euphonium | m.63 b1.0 | 248.000 | 0.00 | m.62 b4 B-3 | |
+| 7 | Euphonium | m.65 b1.0 | 256.000 | 0.00 | m.64 b1 A3 | |
+| 7 | Euphonium | m.66 b4.0 | 263.000 | 0.00 | m.66 b1 C#4 | |
+| 8 | Harp | m.2 b1.0 | 4.000 | 0.00 | m.1 b1 D5 | |
+| 8 | Harp | m.25 b1.0 | 96.000 | 0.00 | m.24 b1 C4 | |
+| 8 | Harp | m.43 b1.0 | 168.000 | 0.00 | m.42 b1 A4 | |
+| 8 | Harp | m.55 b1.0 | 216.000 | 0.50 | m.54 b4.5 F#5 | |
+| 8 | Harp | m.57 b1.0 | 224.000 | 0.50 | m.56 b4.5 B-4 | |
+| 8 | Harp | m.73 b3.0 | 290.000 | 0.00 | m.73 b1 F4 | |
+
+27 positions.

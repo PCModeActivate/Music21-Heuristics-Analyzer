@@ -60,7 +60,11 @@ def main():
     a = ap.parse_args()
     objs = []
     if a.objections and os.path.exists(a.objections):
-        objs = [(o['part'], float(o['qn'])) for o in json.load(open(a.objections))['objections']]
+        _od = json.load(open(a.objections))
+        objs = [(o['part'], float(o['qn'])) for o in _od['objections']]
+        accepted = [(o['part'], float(o['qn'])) for o in _od.get('accepted', [])]
+    else:
+        accepted = []
     print('%-44s %9s %6s %5s %10s %4s %5s  %s' % ('run', 'exact', 'extras', 'total',
                                                    'audit P/F', 'uni', 'objec', 'FAIL causes'))
     for run in a.runs:
@@ -71,7 +75,9 @@ def main():
                              capture_output=True, text=True).stdout
         m = re.search(r'TOTAL: (\d+) PASS, (\d+) FAIL.*?(\d+) unison', out)
         req_miss = len(re.findall(r'^\s+FAIL .*expect=present', out, re.M))
-        ban_hit = len(re.findall(r'^\s+FAIL .*expect=absent', out, re.M))
+        ban_lines = re.findall(r'^\s+FAIL p\s*(\d+)\s.*?target qn\s+([\d.]+).*expect=absent', out, re.M)
+        ban_hit = sum(1 for pi, q in ban_lines
+                      if not any(int(pi) == ai and abs(float(q) - aq) <= TOL for ai, aq in accepted))
         rj = json.load(open(bj))
         rb = {p['index']: times(p) for p in rj['per_part']}
         obj_hit = sum(1 for i, q in objs if any(abs(b - q) <= TOL for b in rb.get(i, [])))
@@ -89,7 +95,8 @@ def main():
             m.group(1) if m else '?', m.group(2) if m else '?',
             m.group(3) if m else '?', objectionable, summ))
         print('%44s  objectionable = %d required missed + %d banned hit + %d objected'
-              % ('', req_miss, ban_hit, obj_hit))
+              ' (%d banned hits on reviewer-accepted positions not counted)'
+              % ('', req_miss, ban_hit, obj_hit, len(ban_lines) - ban_hit))
 
 
 if __name__ == '__main__':

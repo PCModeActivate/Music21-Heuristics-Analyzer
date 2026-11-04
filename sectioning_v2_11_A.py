@@ -2115,7 +2115,7 @@ _E0B_RELEASE_ANCHOR = {'enabled': True, 'evidence_min': 0.3, 'eps': 0.02}
 def release_anchor_boundaries(bdys, part_notes, long_grid, gap_grid,
                               division, enabled=True, evidence_min=0.3,
                               eps=0.02, score_end_qn=None,
-                              f1_anchors=None):
+                              f1_anchors=None, slur_releases=None):
     """E0b: map onset-landed boundary values to note releases.
 
     Returns (new_boundaries, shift_records). Rest-seam and entry-onset
@@ -2190,7 +2190,14 @@ def release_anchor_boundaries(bdys, part_notes, long_grid, gap_grid,
             # breath at bt is natural (Oboe/Trumpet m.82 end, Euph m.27 end).
             # Measured on X4's shifts: every good one had Long(bt) <= 0.18,
             # every harmful one >= 0.35.
-            if (_ev_n > evidence_min and float(long_grid[_fb]) < _E0B_COMPARE_LONG_MAX):
+            # ...and never when bt is a slur SEAM (one slur releases where the
+            # next starts; only under --slur_seam_open): the strongest phrase
+            # joint a part has (Cl2 m.31 end was pushed to m.32 b3, banned).
+            # Guarding every slur release was tested and cost 3 GT.
+            _on_slur_rel = bool(slur_releases) and any(
+                abs(bt - float(x)) <= eps for x in slur_releases)
+            if (_ev_n > evidence_min and float(long_grid[_fb]) < _E0B_COMPARE_LONG_MAX
+                    and not _on_slur_rel):
                 new_bt, reason = _rn, 'seam_endpoint_compare'
         if reason is not None and abs(new_bt - bt) > eps:
             shifts.append({'from': bt, 'to': new_bt, 'reason': reason})
@@ -2471,6 +2478,8 @@ _FILTER_AFTER_ANCHOR = False
 # and E0b case 2 is disabled (nothing left for it to correct); case 1
 # (mid-note -> release) is kept.
 _ENDPOINT_RELEASE = False
+# v2.11-A: unmask slur seams (one slur's release == next slur's start).
+_SLUR_SEAM_OPEN = False
 # v2.11-A: under endpoint_release, compare endpoint evidence of the note
 # ending at a seam with that of the note starting there (see E0b).
 _E0B_COMPARE = False
@@ -3204,6 +3213,32 @@ def run_sectioning(input_path, output_dir='./output',
             'event_kinds': event_kinds,
         })
 
+    # v2.11-A: slur seams. Where one slur's chain release coincides with the
+    # next slur's start, and no other slur spans that instant, the point is a
+    # phrase joint: a breath there splits nothing (Rulings: breath at a slur
+    # start / chain release is allowed). The slur and hairpin masks include
+    # their start frame and zeroed strong evidence there (Cl1/Cl2/Euph m.31
+    # end: slur-end bump 0.79 + dim. end 0.6 -> Sel 0). Unmask only these
+    # seam frames -- unmasking every slur start was tested and rejected
+    # (16c(5)): pickup slurs after unslurred notes out-ranked real breaths.
+    slur_seams_info = [[] for _ in parts]
+    if _SLUR_SEAM_OPEN:
+        for i in range(len(parts)):
+            spans = slur_info[i].get('phrase_spans') or []
+            if not spans:
+                continue
+            for (st, _last, _rel0) in spans:
+                st = float(st)
+                if not any(abs(float(rel) - st) <= 0.02 for (_s, _l, rel) in spans):
+                    continue
+                if any(float(s0) + 0.02 < st < float(r0) - 0.02 for (s0, _l, r0) in spans):
+                    continue
+                f = int(round(st * division))
+                if 0 <= f < T:
+                    slur_info[i]['in_slur_interior'][f] = 0.0
+                    hairpin_info[i]['in_hairpin'][f] = 0.0
+                    slur_seams_info[i].append(st)
+
     for i in range(len(parts)):
         marker = " [TACET]" if is_tacet[i] else ""
         n_phrase = slur_info[i].get('n_phrase_slurs', 0)
@@ -3497,7 +3532,8 @@ def run_sectioning(input_path, output_dir='./output',
             evidence_min=_E0B_RELEASE_ANCHOR['evidence_min'],
             eps=_E0B_RELEASE_ANCHOR['eps'],
             score_end_qn=_e0b_score_end,
-            f1_anchors=_F1_ANCHOR_SETS.get(i))
+            f1_anchors=_F1_ANCHOR_SETS.get(i),
+            slur_releases=slur_seams_info[i])
         e0b_shift_info.append(_e0b_shifts)
         if short_phrase_filter and _FILTER_AFTER_ANCHOR:
             _src = {}
@@ -3749,6 +3785,7 @@ def run_sectioning(input_path, output_dir='./output',
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
             'e0b_compare': bool(_E0B_COMPARE),
+            'slur_seam_open': bool(_SLUR_SEAM_OPEN),
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3796,6 +3833,7 @@ def run_sectioning(input_path, output_dir='./output',
         'boundary_target_info': boundary_target_info,
         'e0b_shift_info': e0b_shift_info,
         'ensemble_info': ensemble_info,
+        'slur_seams': slur_seams_info,
         'per_part_candidate_diagnostics': per_part_candidate_diagnostics,
         'tempo_segments': tempo_segments,
         'cross_rhythm_support': cross_rhythm_support,
@@ -3823,6 +3861,7 @@ def run_sectioning(input_path, output_dir='./output',
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
             'e0b_compare': bool(_E0B_COMPARE),
+            'slur_seam_open': bool(_SLUR_SEAM_OPEN),
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4505,6 +4544,10 @@ def main():
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
+    parser.add_argument('--slur_seam_open', action='store_true',
+                        help='v2.11-A: unmask slur/hairpin start frames at slur '
+                             'seams (previous slur releases where the next '
+                             'starts, no enclosing slur). Default off.')
     parser.add_argument('--e0b_compare', action='store_true',
                         help='v2.11-A: with --endpoint_release, shift a seam '
                              'boundary to the next note release only when '
@@ -4640,6 +4683,9 @@ def main():
 
     global _E0B_COMPARE
     _E0B_COMPARE = bool(args.e0b_compare)
+
+    global _SLUR_SEAM_OPEN
+    _SLUR_SEAM_OPEN = bool(args.slur_seam_open)
 
     run_sectioning(
         args.input,

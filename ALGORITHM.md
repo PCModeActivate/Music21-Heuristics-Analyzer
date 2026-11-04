@@ -1603,6 +1603,31 @@ extras 64, audit 168/22, 0 unison violations, objectionable 28 (19/3/6)**;
 verifies 10/10. Each refinement alone changes nothing on Liz; together they
 recover Cl1 m.80 end.
 
+### (13) `--slur_seam_open` — m.31 end (2026-11-04)
+
+At m.31 end (qn 124) Cl1, Cl2 and Euph each have one slur ending and the next
+beginning, plus a hairpin starting there. The start-edge masks turned strong
+evidence (slur-end bump 0.79, dim. end 0.6) into Sel 0, and `explain` printed
+"INSIDE SLUR (breath forbidden)" at a point the slur rulings allow. Unmasking
+every slur start was rejected in (5); this flag unmasks only **slur seams**:
+one slur's chain release == the next slur's start, with no slur spanning
+the point. `--e0b_compare` never shifts away from a seam (it had pushed Cl2
+m.31 end to the banned m.32 b3; guarding every slur release instead cost
+3 GT).
+
+Robert's 2026-11-04 verdicts are now in `review/objections_2026-11-03.json`:
+ASax m.38 end objected; Euph and Harp-low m.38 end and Harp-up m.66 end
+**accepted** (banned in GT, not counted). Harp-low misses matter less;
+m.31 end matters.
+
+| Run | Exact | Extras | Audit P/F | Unison | Objectionable (missed/banned/objected) |
+|---|---|---|---|---|---|
+| X6 | 231 | 64 | 168/22 | 0 | 26 (19/0/7) |
+| **X7** = X6 + `--slur_seam_open` | **237** | **63** | **171/19** | **0** | **22** (16/0/6) |
+
+X7 gains Cl1 and Euph m.31 end, the printed Oboe m.40 breath, Cl2 m.20 b3 and
+ASax m.39 b3; verifies 10/10 and renders 300/300 with no extras.
+
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
 | Group | Count | Fix |

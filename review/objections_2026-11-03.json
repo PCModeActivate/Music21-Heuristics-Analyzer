@@ -54,6 +54,14 @@
   },
   {
    "part": 5,
+   "qn": 152.0,
+   "instrument": "Alto Saxophone",
+   "instant": "m.38 end",
+   "source": "reviewer remark 2026-11-04 on X6",
+   "note": "no (\"38 end is not so bad except for A Sax which is not right\")"
+  },
+  {
+   "part": 5,
    "qn": 220.0,
    "instrument": "Alto Saxophone",
    "instant": "m.56 b1.0",
@@ -132,5 +140,29 @@
    "source": "reviewer remark outside the 33 (boundary already in C1)",
    "note": "no"
   }
- ]
+ ],
+ "accepted": [
+  {
+   "part": 7,
+   "qn": 152.0,
+   "instrument": "Euphonium",
+   "instant": "m.38 end",
+   "note": "banned in GT v2, accepted 2026-11-04 (\"38 end is not so bad\")"
+  },
+  {
+   "part": 9,
+   "qn": 152.0,
+   "instrument": "Harp (lower)",
+   "instant": "m.38 end",
+   "note": "banned in GT v2, accepted 2026-11-04"
+  },
+  {
+   "part": 8,
+   "qn": 264.0,
+   "instrument": "Harp (upper)",
+   "instant": "m.66 end",
+   "note": "banned in GT v2, accepted 2026-11-04 (\"if so that is fine\")"
+  }
+ ],
+ "accepted_meaning": "Banned GT positions the reviewer accepts; score_run.py does not count hits on them as objectionable."
 }
