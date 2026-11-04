@@ -1540,10 +1540,16 @@ On soft r6 p2: exact 209 -> 211, extras 56 -> 60, audit 155/35 -> **159/31**,
 objectionable 40 -> **36** (28 / 3 / 5). Relief is the gain (Cl2 m.80 end,
 Euph m.37 end). **Snap is a wash:** +4 GT (Fl1 256, Cl1 272, Harp-up 320,
 Euph 279) and -4 GT (Fl1 273 and 312.5, Cl2 257, Harp-up 280) -- places where
-a part legitimately breathes a beat off the ensemble. Next: snap only when
-the part's own evidence at its current position is weak (e.g. its `Sel`
-below the ensemble target's), and weight support by rhythmic similarity as
-§19 specifies instead of a plain part count.
+a part legitimately breathes a beat off the ensemble.
+
+**Own-evidence check (same day).** The part's own `Sel` at target / current
+separates the two sets cleanly: good snaps 0.74-1.0, bad 0.20-0.48. Snap now
+requires `Sel(target) >= 0.6 * Sel(current)`: the ensemble breaks near-ties
+and never overrides a clear preference of the part. Result (X2): **exact 215,
+extras 56, audit 159/31, objectionable 36** -- +6 GT over soft r6 p2 with no
+added conflicts. Similarity weighting (§19) was not adopted: at these instants
+most supporters have windowed rhythm similarity 0, including every supporter
+of a correct snap, so weighting by it would discard good support.
 
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 

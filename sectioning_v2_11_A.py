@@ -2408,7 +2408,8 @@ _SOFT_POWER = 1.0
 # Support = other parts with a boundary within 0.1 qn, from the pre-pass
 # boundaries (one pass, no cascade). Changed parts are re-validated.
 _ENSEMBLE = False
-_ENS = {'snap_qn': 1.5, 'min_support': 3, 'relief_frac': 0.5, 'clear_qn': 2.0}
+_ENS = {'snap_qn': 1.5, 'min_support': 3, 'relief_frac': 0.5, 'clear_qn': 2.0,
+        'snap_sel_ratio': 0.6}
 
 # v2.11-A: tie masks open at the chain start. A tie (natural, or a same-pitch
 # "tie-like" slur) forbids breaths that split the sustained note. The first
@@ -3550,6 +3551,15 @@ def run_sectioning(input_path, output_dir='./output',
                 if not opts:
                     continue
                 best = max(opts, key=lambda r: (_support(i, r), -abs(r - b)))
+                # the part's own evidence at the target must be comparable
+                # to its current spot: the ensemble breaks near-ties, it
+                # does not override a clear preference of the part itself
+                _sel = (per_part_candidate_diagnostics[i] or {}).get('selection_score')
+                if _sel is not None:
+                    _fb = min(max(int(round(b * division)), 0), len(_sel) - 1)
+                    _ft = min(max(int(round(best * division)), 0), len(_sel) - 1)
+                    if float(_sel[_ft]) < _ENS['snap_sel_ratio'] * float(_sel[_fb]):
+                        continue
                 if _support(i, best) >= _ENS['min_support'] and _support(i, best) > sb:
                     cur[k] = best
                     changed = True
