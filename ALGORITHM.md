@@ -1586,6 +1586,23 @@ on its 12 shifts, every good one had Long(b) <= 0.18 and every harmful one
 X4 verifies 10/10 and renders 294/294 (the one annotation "extra" is a
 printed Oboe comma in the input). All GT unison constraints pass.
 
+### (12) Ensemble consensus refinements (2026-11-04)
+
+- Relief maps a candidate peak to a breath instant as E0b does (the release
+  of the note sounding at the peak), not "nearest release within +0.5 qn":
+  a peak at 319.375 inside a note ending at 320 was unmappable.
+- `--ensemble_passes N`: support is recomputed from the previous pass. At
+  m.80 end only 3 parts breathed before the pass and 4 joined during it, so
+  Cl1 never saw the consensus it belonged to. Bounded, arbitration-only
+  passes -- not the open-ended cascade rejected for E0b.
+- `--ensemble_strong_support K`: with >= K other parts breathing at a
+  candidate, the relief floor drops from 0.5 to 0.33 of the gate.
+
+X6 = X4 + `--ensemble_passes 2 --ensemble_strong_support 5`: **exact 231,
+extras 64, audit 168/22, 0 unison violations, objectionable 28 (19/3/6)**;
+verifies 10/10. Each refinement alone changes nothing on Liz; together they
+recover Cl1 m.80 end.
+
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
 | Group | Count | Fix |

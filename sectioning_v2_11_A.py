@@ -2428,7 +2428,8 @@ _SOFT_POWER = 1.0
 # boundaries (one pass, no cascade). Changed parts are re-validated.
 _ENSEMBLE = False
 _ENS = {'snap_qn': 1.5, 'min_support': 3, 'relief_frac': 0.5, 'clear_qn': 2.0,
-        'snap_sel_ratio': 0.6, 'relief_suppressed': False}
+        'snap_sel_ratio': 0.6, 'relief_suppressed': False,
+        'strong_support': 99, 'strong_frac': 0.33, 'passes': 1}
 
 # v2.11-A: tie masks open at the chain start. A tie (natural, or a same-pitch
 # "tie-like" slur) forbids breaths that split the sustained note. The first
@@ -3546,91 +3547,105 @@ def run_sectioning(input_path, output_dir='./output',
     ensemble_info = [[] for _ in parts]
     if _ENSEMBLE:
         print("[10a] Ensemble alignment (snap + gate relief)")
-        pre = [sorted(float(b) for b in (boundaries_per_part[j] if len(boundaries_per_part[j]) else []))
-               for j in range(len(parts))]
+        for _ens_pass in range(max(1, int(_ENS.get('passes', 1)))):
+            pre = [sorted(float(b) for b in (boundaries_per_part[j] if len(boundaries_per_part[j]) else []))
+                   for j in range(len(parts))]
 
-        def _support(i, x):
-            return sum(1 for j in range(len(parts))
-                       if j != i and not is_tacet[j]
-                       and any(abs(f - x) <= 0.1 for f in pre[j]))
+            def _support(i, x):
+                return sum(1 for j in range(len(parts))
+                           if j != i and not is_tacet[j]
+                           and any(abs(f - x) <= 0.1 for f in pre[j]))
 
-        for i in range(len(parts)):
-            if is_tacet[i]:
-                continue
-            rels = sorted({round(float(n['offset']) + float(n['duration']), 6)
-                           for n in notes_per_part[i]})
-            cur = list(pre[i])
-            changed = False
-            # snap
-            _own = [float(a) for a in (_F1_ANCHOR_SETS.get(i) or [])]
-            for k, b in enumerate(list(cur)):
-                # the part's own explicit notation (fermata / printed breath /
-                # dim. end anchor) outranks the ensemble: never snap away
-                if any(abs(b - a) <= 0.02 for a in _own):
+            for i in range(len(parts)):
+                if is_tacet[i]:
                     continue
-                sb = _support(i, b)
-                opts = [r for r in rels if 0.02 < abs(r - b) <= _ENS['snap_qn']
-                        and not any(abs(r - c) <= 0.1 for c in cur)]
-                if not opts:
-                    continue
-                best = max(opts, key=lambda r: (_support(i, r), -abs(r - b)))
-                # the part's own evidence at the target must be comparable
-                # to its current spot: the ensemble breaks near-ties, it
-                # does not override a clear preference of the part itself
-                _sel = (per_part_candidate_diagnostics[i] or {}).get('selection_score')
-                if _sel is not None:
-                    _fb = min(max(int(round(b * division)), 0), len(_sel) - 1)
-                    _ft = min(max(int(round(best * division)), 0), len(_sel) - 1)
-                    if float(_sel[_ft]) < _ENS['snap_sel_ratio'] * float(_sel[_fb]):
+                rels = sorted({round(float(n['offset']) + float(n['duration']), 6)
+                               for n in notes_per_part[i]})
+                cur = list(pre[i])
+                changed = False
+                # snap
+                _own = [float(a) for a in (_F1_ANCHOR_SETS.get(i) or [])]
+                for k, b in enumerate(list(cur)):
+                    # the part's own explicit notation (fermata / printed breath /
+                    # dim. end anchor) outranks the ensemble: never snap away
+                    if any(abs(b - a) <= 0.02 for a in _own):
                         continue
-                if _support(i, best) >= _ENS['min_support'] and _support(i, best) > sb:
-                    cur[k] = best
-                    changed = True
-                    ensemble_info[i].append({'from': b, 'to': best, 'reason': 'snap',
-                                             'support': _support(i, best), 'support_from': sb})
-            # relief
-            d = per_part_candidate_diagnostics[i]
-            if d:
-                cs, ac, fb = d['candidate_signal'], d['acceptance_score'], d['forbidden_mask']
-                pk, _ = find_peaks(cs, height=candidate_height)
-                for f in pk:
-                    if fb[f] > 0:
+                    sb = _support(i, b)
+                    opts = [r for r in rels if 0.02 < abs(r - b) <= _ENS['snap_qn']
+                            and not any(abs(r - c) <= 0.1 for c in cur)]
+                    if not opts:
                         continue
-                    a_ = float(ac[f])
-                    if a_ < _ENS['relief_frac'] * selection_accept_height:
-                        continue
-                    if a_ >= selection_accept_height and not _ENS['relief_suppressed']:
-                        continue
-                    # relief_suppressed (v2.11-A): a peak that cleared the
-                    # gate but was suppressed by grouping is also eligible
-                    # -- the every-bar passages, where the ensemble itself
-                    # is the local evidence that phrases are one bar long.
-                    t = f / float(division)
-                    near = [r for r in rels if -0.02 <= r - t <= 0.5]
-                    x = min(near, key=lambda r: abs(r - t)) if near else None
-                    if x is None or any(abs(x - c) <= _ENS['clear_qn'] for c in cur):
-                        continue
-                    if _support(i, x) >= _ENS['min_support']:
-                        cur.append(x)
+                    best = max(opts, key=lambda r: (_support(i, r), -abs(r - b)))
+                    # the part's own evidence at the target must be comparable
+                    # to its current spot: the ensemble breaks near-ties, it
+                    # does not override a clear preference of the part itself
+                    _sel = (per_part_candidate_diagnostics[i] or {}).get('selection_score')
+                    if _sel is not None:
+                        _fb = min(max(int(round(b * division)), 0), len(_sel) - 1)
+                        _ft = min(max(int(round(best * division)), 0), len(_sel) - 1)
+                        if float(_sel[_ft]) < _ENS['snap_sel_ratio'] * float(_sel[_fb]):
+                            continue
+                    if _support(i, best) >= _ENS['min_support'] and _support(i, best) > sb:
+                        cur[k] = best
                         changed = True
-                        ensemble_info[i].append({'from': None, 'to': x, 'reason': 'gate_relief',
-                                                 'support': _support(i, x), 'acc': a_})
-            if changed:
-                cur = sorted(set(round(c, 6) for c in cur))
-                bdys_i, recs_i = validate_boundaries_for_part(
-                    parts[i], cur, slur_info[i], structural_info[i], natural_tie_info[i],
-                    reject_rest_boundaries=reject_rest_boundaries,
-                    reject_outgoing_ties=reject_outgoing_ties,
-                )
-                boundaries_per_part[i] = bdys_i
-                # keep the records of boundaries rejected before this pass
-                _old_rej = [t for t in boundary_target_info[i] if not t.get('kept', True)
-                            and not any(abs(t['boundary_time'] - n['boundary_time']) <= 1e-3
-                                        for n in recs_i)]
-                boundary_target_info[i] = sorted(recs_i + _old_rej,
-                                                 key=lambda t: t['boundary_time'])
-                print(f"       part {i:2d} {part_names[i]:25s} "
-                      f"{len(ensemble_info[i])} ensemble change(s)")
+                        ensemble_info[i].append({'from': b, 'to': best, 'reason': 'snap',
+                                                 'support': _support(i, best), 'support_from': sb})
+                # relief
+                d = per_part_candidate_diagnostics[i]
+                if d:
+                    cs, ac, fb = d['candidate_signal'], d['acceptance_score'], d['forbidden_mask']
+                    pk, _ = find_peaks(cs, height=candidate_height)
+                    for f in pk:
+                        if fb[f] > 0:
+                            continue
+                        a_ = float(ac[f])
+                        if a_ < _ENS['strong_frac'] * selection_accept_height:
+                            continue
+                        if a_ >= selection_accept_height and not _ENS['relief_suppressed']:
+                            continue
+                        # relief_suppressed (v2.11-A): a peak that cleared the
+                        # gate but was suppressed by grouping is also eligible
+                        # -- the every-bar passages, where the ensemble itself
+                        # is the local evidence that phrases are one bar long.
+                        t = f / float(division)
+                        # map the peak to a breath instant as E0b does: a note
+                        # release at t, else the release of the note sounding at t
+                        if any(abs(r - t) <= 0.02 for r in rels):
+                            x = min(rels, key=lambda r: abs(r - t))
+                        else:
+                            _snd = [float(n['offset']) + float(n['duration'])
+                                    for n in notes_per_part[i]
+                                    if float(n['offset']) - 0.02 <= t
+                                    < float(n['offset']) + float(n['duration']) - 0.02]
+                            x = min(_snd) if _snd else None
+                        if x is None or any(abs(x - c) <= _ENS['clear_qn'] for c in cur):
+                            continue
+                        _sx = _support(i, x)
+                        # floor: relief_frac * gate, or strong_frac * gate when at
+                        # least strong_support other parts breathe there
+                        _floor = (_ENS['strong_frac'] if _sx >= _ENS['strong_support']
+                                  else _ENS['relief_frac']) * selection_accept_height
+                        if _sx >= _ENS['min_support'] and a_ >= _floor:
+                            cur.append(x)
+                            changed = True
+                            ensemble_info[i].append({'from': None, 'to': x, 'reason': 'gate_relief',
+                                                     'support': _support(i, x), 'acc': a_})
+                if changed:
+                    cur = sorted(set(round(c, 6) for c in cur))
+                    bdys_i, recs_i = validate_boundaries_for_part(
+                        parts[i], cur, slur_info[i], structural_info[i], natural_tie_info[i],
+                        reject_rest_boundaries=reject_rest_boundaries,
+                        reject_outgoing_ties=reject_outgoing_ties,
+                    )
+                    boundaries_per_part[i] = bdys_i
+                    # keep the records of boundaries rejected before this pass
+                    _old_rej = [t for t in boundary_target_info[i] if not t.get('kept', True)
+                                and not any(abs(t['boundary_time'] - n['boundary_time']) <= 1e-3
+                                            for n in recs_i)]
+                    boundary_target_info[i] = sorted(recs_i + _old_rej,
+                                                     key=lambda t: t['boundary_time'])
+                    print(f"       part {i:2d} {part_names[i]:25s} "
+                          f"{len(ensemble_info[i])} ensemble change(s)")
 
     # v2.10-A: phrase material / shape report (passive read-out).
     print("[10b] Phrase material report")
@@ -4468,6 +4483,13 @@ def main():
     parser.add_argument('--ensemble_relief_suppressed', action='store_true',
                         help='v2.11-A: ensemble gate relief also covers peaks '
                              'suppressed by grouping (not only below the gate).')
+    parser.add_argument('--ensemble_passes', type=int, default=1,
+                        help='v2.11-A: ensemble passes; each recomputes '
+                             'support from the previous pass. Default 1.')
+    parser.add_argument('--ensemble_strong_support', type=int, default=99,
+                        help='v2.11-A: with at least this many other parts '
+                             'breathing at a candidate, the relief floor drops '
+                             'to a third of the gate. Default 99 (off).')
     parser.add_argument('--ensemble_clear_qn', type=float, default=2.0,
                         help='v2.11-A: relief requires no own boundary within '
                              'this distance. Default 2.0.')
@@ -4604,6 +4626,8 @@ def main():
     _ENSEMBLE = bool(args.ensemble)
     _ENS['relief_suppressed'] = bool(args.ensemble_relief_suppressed)
     _ENS['clear_qn'] = float(args.ensemble_clear_qn)
+    _ENS['strong_support'] = int(args.ensemble_strong_support)
+    _ENS['passes'] = int(args.ensemble_passes)
 
     global _TIE_OPEN_START
     _TIE_OPEN_START = bool(args.tie_open_start)
