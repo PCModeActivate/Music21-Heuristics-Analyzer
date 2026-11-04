@@ -2396,6 +2396,20 @@ _PEAK_GROUPING = 'transitive'
 # both find.
 _SOFT_POWER = 1.0
 
+# v2.11-A: minimal ensemble alignment (roadmap E, ALGORITHM.md 19).
+# Arbitration only, after every part has its boundaries:
+#  snap   -- a boundary moves to a note release in the same part within
+#            ENS_SNAP_QN when >= ENS_MIN_SUPPORT other parts breathe there
+#            and fewer breathe at its current position;
+#  relief -- a candidate peak that failed the acceptance gate (but has
+#            acc >= ENS_RELIEF_FRAC * gate) is accepted at its note release
+#            when >= ENS_MIN_SUPPORT other parts breathe there and the part
+#            has no boundary within ENS_CLEAR_QN.
+# Support = other parts with a boundary within 0.1 qn, from the pre-pass
+# boundaries (one pass, no cascade). Changed parts are re-validated.
+_ENSEMBLE = False
+_ENS = {'snap_qn': 1.5, 'min_support': 3, 'relief_frac': 0.5, 'clear_qn': 2.0}
+
 # v2.11-A: tie masks open at the chain start. A tie (natural, or a same-pitch
 # "tie-like" slur) forbids breaths that split the sustained note. The first
 # onset of the chain is NOT such a point: it is the release of the PREVIOUS
@@ -3505,6 +3519,80 @@ def run_sectioning(input_path, output_dir='./output',
         print(f"       part {i:2d} {part_names[i]:25s} "
               f"{len(bdys):3d} boundaries")
 
+    ensemble_info = [[] for _ in parts]
+    if _ENSEMBLE:
+        print("[10a] Ensemble alignment (snap + gate relief)")
+        pre = [sorted(float(b) for b in (boundaries_per_part[j] if len(boundaries_per_part[j]) else []))
+               for j in range(len(parts))]
+
+        def _support(i, x):
+            return sum(1 for j in range(len(parts))
+                       if j != i and not is_tacet[j]
+                       and any(abs(f - x) <= 0.1 for f in pre[j]))
+
+        for i in range(len(parts)):
+            if is_tacet[i]:
+                continue
+            rels = sorted({round(float(n['offset']) + float(n['duration']), 6)
+                           for n in notes_per_part[i]})
+            cur = list(pre[i])
+            changed = False
+            # snap
+            _own = [float(a) for a in (_F1_ANCHOR_SETS.get(i) or [])]
+            for k, b in enumerate(list(cur)):
+                # the part's own explicit notation (fermata / printed breath /
+                # dim. end anchor) outranks the ensemble: never snap away
+                if any(abs(b - a) <= 0.02 for a in _own):
+                    continue
+                sb = _support(i, b)
+                opts = [r for r in rels if 0.02 < abs(r - b) <= _ENS['snap_qn']
+                        and not any(abs(r - c) <= 0.1 for c in cur)]
+                if not opts:
+                    continue
+                best = max(opts, key=lambda r: (_support(i, r), -abs(r - b)))
+                if _support(i, best) >= _ENS['min_support'] and _support(i, best) > sb:
+                    cur[k] = best
+                    changed = True
+                    ensemble_info[i].append({'from': b, 'to': best, 'reason': 'snap',
+                                             'support': _support(i, best), 'support_from': sb})
+            # relief
+            d = per_part_candidate_diagnostics[i]
+            if d:
+                cs, ac, fb = d['candidate_signal'], d['acceptance_score'], d['forbidden_mask']
+                pk, _ = find_peaks(cs, height=candidate_height)
+                for f in pk:
+                    if fb[f] > 0:
+                        continue
+                    a_ = float(ac[f])
+                    if not (_ENS['relief_frac'] * selection_accept_height <= a_ < selection_accept_height):
+                        continue
+                    t = f / float(division)
+                    near = [r for r in rels if -0.02 <= r - t <= 0.5]
+                    x = min(near, key=lambda r: abs(r - t)) if near else None
+                    if x is None or any(abs(x - c) <= _ENS['clear_qn'] for c in cur):
+                        continue
+                    if _support(i, x) >= _ENS['min_support']:
+                        cur.append(x)
+                        changed = True
+                        ensemble_info[i].append({'from': None, 'to': x, 'reason': 'gate_relief',
+                                                 'support': _support(i, x), 'acc': a_})
+            if changed:
+                cur = sorted(set(round(c, 6) for c in cur))
+                bdys_i, recs_i = validate_boundaries_for_part(
+                    parts[i], cur, slur_info[i], structural_info[i], natural_tie_info[i],
+                    reject_rest_boundaries=reject_rest_boundaries,
+                    reject_outgoing_ties=reject_outgoing_ties,
+                )
+                boundaries_per_part[i] = bdys_i
+                # keep the records of boundaries rejected before this pass
+                _old_rej = [t for t in boundary_target_info[i] if not t.get('kept', True)
+                            and not any(abs(t['boundary_time'] - n['boundary_time']) <= 1e-3
+                                        for n in recs_i)]
+                boundary_target_info[i] = sorted(recs_i + _old_rej,
+                                                 key=lambda t: t['boundary_time'])
+                print(f"       part {i:2d} {part_names[i]:25s} "
+                      f"{len(ensemble_info[i])} ensemble change(s)")
+
     # v2.10-A: phrase material / shape report (passive read-out).
     print("[10b] Phrase material report")
     if compute_phrase_material_report is None:
@@ -3601,6 +3689,7 @@ def run_sectioning(input_path, output_dir='./output',
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
             'soft_power': _SOFT_POWER,
+            'ensemble': bool(_ENSEMBLE),
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
@@ -3650,6 +3739,7 @@ def run_sectioning(input_path, output_dir='./output',
         'phrase_material_per_part': phrase_material_per_part,
         'boundary_target_info': boundary_target_info,
         'e0b_shift_info': e0b_shift_info,
+        'ensemble_info': ensemble_info,
         'per_part_candidate_diagnostics': per_part_candidate_diagnostics,
         'tempo_segments': tempo_segments,
         'cross_rhythm_support': cross_rhythm_support,
@@ -3671,6 +3761,7 @@ def run_sectioning(input_path, output_dir='./output',
             'slur_end_release': bool(_SLUR_END_RELEASE),
             'peak_grouping': _PEAK_GROUPING,
             'soft_power': _SOFT_POWER,
+            'ensemble': bool(_ENSEMBLE),
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
@@ -4331,6 +4422,9 @@ def main():
     parser.add_argument('--selection_tuplet_penalty', type=float, default=0.45)
     parser.add_argument('--note_candidate_weight', type=float, default=0.65)
     parser.add_argument('--selection_accept_height', type=float, default=0.30)
+    parser.add_argument('--ensemble', action='store_true',
+                        help='v2.11-A: minimal ensemble alignment (snap + '
+                             'gate relief, arbitration only). Default off.')
     parser.add_argument('--soft_power', type=float, default=1.0,
                         help='v2.11-A: exponent of the soft-grouping penalty '
                              '(distance/peak_distance)**p. Default 1.0.')
@@ -4451,6 +4545,9 @@ def main():
 
     global _SOFT_POWER
     _SOFT_POWER = float(args.soft_power)
+
+    global _ENSEMBLE
+    _ENSEMBLE = bool(args.ensemble)
 
     global _TIE_OPEN_START
     _TIE_OPEN_START = bool(args.tie_open_start)

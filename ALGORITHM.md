@@ -1522,6 +1522,29 @@ m.65 b2.25). Under `rest_seam_policy seam`, a note releasing at the boundary
 now makes it a seam. Control unchanged (238); soft r6 p2 gains exactly that
 GT point: 209 exact, audit 155/35, objectionable 40.
 
+### (10) `--ensemble` — minimal ensemble alignment, roadmap E (2026-11-04)
+
+One pass after all parts have boundaries; arbitration only. **Snap:** a
+boundary moves to a note release in the same part within 1.5 qn when >= 3
+other parts breathe there and fewer breathe at its current spot; never away
+from the part's own F1 anchor (fermata / printed breath / dim. end: Oboe
+m.41 b4 must not follow the clarinets to m.41 end). **Gate relief:** a
+candidate peak that failed the gate with acc >= 0.15 is accepted at its note
+release when >= 3 other parts breathe there and the part has none within
+2 qn. Changed parts are re-validated (earlier rejection records kept);
+changes are in `result['ensemble_info']`; `group_trace --verify` applies them
+(9/10 parts; Harp-up differs only by validation's own seam snap 187.75 -> 188,
+recorded at the snapped time).
+
+On soft r6 p2: exact 209 -> 211, extras 56 -> 60, audit 155/35 -> **159/31**,
+objectionable 40 -> **36** (28 / 3 / 5). Relief is the gain (Cl2 m.80 end,
+Euph m.37 end). **Snap is a wash:** +4 GT (Fl1 256, Cl1 272, Harp-up 320,
+Euph 279) and -4 GT (Fl1 273 and 312.5, Cl2 257, Harp-up 280) -- places where
+a part legitimately breathes a beat off the ensemble. Next: snap only when
+the part's own evidence at its current position is weak (e.g. its `Sel`
+below the ensemble target's), and weight support by rhythmic similarity as
+§19 specifies instead of a plain part count.
+
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
 | Group | Count | Fix |

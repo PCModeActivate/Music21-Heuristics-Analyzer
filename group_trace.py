@@ -154,6 +154,10 @@ def verify(r):
         else:
             pre = [b for b in w if round(b, 4) not in removed]
             post = sorted({round(shifts.get(round(b, 4), b), 4) for b in pre})
+        for ch in (r.get('ensemble_info') or [[]] * (i + 1))[i]:
+            if ch['from'] is not None:
+                post = [b for b in post if abs(b - ch['from']) > 1e-3]
+            post = sorted(set(post) | {round(ch['to'], 4)})
         seen = sorted({round(t['boundary_time'], 4)
                        for t in r['boundary_target_info'][i]})
         match = post == seen
