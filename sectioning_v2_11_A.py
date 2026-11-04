@@ -1966,7 +1966,19 @@ def resolve_breath_target_for_part(part, boundary_time, slur_info,
         'seam_snap_to': None,
     }
 
+    # v2.11-A bug fix: a rest in ANOTHER voice is not silence. If a note
+    # releases exactly at bt, bt is a seam (Harp-low m.65 b2.25: voice-1 D4
+    # releases at 257.25 while a voice-2 rest spans 257.0-258.0, and the
+    # boundary was rejected as lying in a rest).
+    _note_releases_here = (
+        _REST_SEAM_POLICY['policy'] == 'seam'
+        and any((not e['is_rest']) and abs(e['end'] - bt) <= 0.02
+                for e in note_rest_events))
+    if _note_releases_here:
+        rec['boundary_at_seam'] = True
     for ev in note_rest_events:
+        if _note_releases_here:
+            break
         if ev['is_rest'] and ev['offset'] - 0.01 <= bt < ev['end'] - 0.01:
             rec['rest_offset'] = ev['offset']
             rec['rest_duration'] = ev['duration']

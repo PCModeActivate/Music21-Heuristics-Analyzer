@@ -1514,6 +1514,24 @@ fewer close pairs; r 6 p 1 recovers more but adds conflicts. The close pairs
 need local evidence (fermata/rit. passages), not a better uniform spacing
 rule. Review sheet for r 6 p 2: `review/S_d6_p2_vs_F3.md`.
 
+### (9) Multi-voice rest check — bug fix (2026-11-04, unconditional)
+
+Validation rejected a boundary as `boundary_lies_in_rest` when a rest in
+*another voice* covered it, though a note released exactly there (Harp-low
+m.65 b2.25). Under `rest_seam_policy seam`, a note releasing at the boundary
+now makes it a seam. Control unchanged (238); soft r6 p2 gains exactly that
+GT point: 209 exact, audit 155/35, objectionable 40.
+
+### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
+
+| Group | Count | Fix |
+|---|---|---|
+| Ensemble seams m.80 end, m.31 end + bans m.38 end, m.81 b2 + Harp-low with no own evidence | ~15 | **E** (§19) |
+| Every-bar passages (close GT pairs, m.40-43, m.58-60) | ~10 | local spacing relief where fermata/rit./repeated phrases signal it |
+| Breath one note early (stuck at final note's onset) | 5 | finish D1: type Struct and Cross |
+| Oboe m.93 b15 (quintuplets vs D = 8), m.94 end (gate) | 2 | snap boundaries to real note releases |
+| Harp-up m.61 b3 (short entry note after rest, no shift) | 1 | E0c entry shift when the entering note is short |
+
 ### Tools added
 
 | Tool | Purpose |
@@ -1836,9 +1854,10 @@ re-litigate.** Robert holds all musical authority; these are his calls.
 
 - **m.93 unison**: breath after the first note of m.93, release at b3, in Fl1,
   Fl2, Cl1, Cl2, Euph — constraint parts [0,1,3,4,7].
-- **m.94 final chord**: comma after it, m.94 end, required in [0,1,3,7,8,9];
-  **Oboe banned** — its last m.93 note ties into m.94, and the tied chain is its
-  own section.
+- **m.94 final chord**: comma after it, m.94 end, required in [0,1,2,3,7,8,9].
+  **Oboe unbanned 2026-11-04** (Robert): the earlier ban (its last m.93 note
+  ties into m.94) is withdrawn; GT carries Oboe m.94 end as required, matching
+  the hand-corrected score.
 - **Euphonium m.89 end → m.90 end**: Robert's manual GT edit, intentional.
 - **Oboe m.93 b14.8 stays banned.** 0.2 qn off is wrong and wrong.
 - **Oboe m.86 b4.75 (qn 343.75) is not a breath** (2026-09-02). The GT mark sat
