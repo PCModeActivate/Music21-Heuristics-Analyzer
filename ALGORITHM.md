@@ -1551,6 +1551,21 @@ added conflicts. Similarity weighting (§19) was not adopted: at these instants
 most supporters have windowed rhythm similarity 0, including every supporter
 of a correct snap, so weighting by it would discard good support.
 
+**Relief for suppressed peaks — the every-bar passages (same day).** Most
+missed close-pair GT breaths have their own peak (acc 0.4-1.4) one bar from a
+found breath; soft r6 p2 scales a peak 4 qn away by (4/6)^2 = 0.44, under the
+gate. The ensemble is the local evidence that a passage breathes every bar, so
+`--ensemble_relief_suppressed` extends gate relief to peaks that cleared the
+gate but were suppressed by grouping (support >= 3, no own boundary within
+`--ensemble_clear_qn`, 3.5 qn so bar-spaced breaths pass). X3:
+
+| Run | Exact | Extras | Audit P/F | Objectionable (missed/banned/objected) |
+|---|---|---|---|---|
+| X2 `--ensemble` | 215 | 56 | 159/31 | 36 (28/3/5) |
+| **X3** + `--ensemble_relief_suppressed --ensemble_clear_qn 3.5` | **227** | 66 | **165/25** | **31** (22/3/6) |
+
++12 GT for +10 conflicts (F 0.81 -> 0.82; clear 2.0 gives the same within 2).
+
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
 | Group | Count | Fix |

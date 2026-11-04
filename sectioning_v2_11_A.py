@@ -2409,7 +2409,7 @@ _SOFT_POWER = 1.0
 # boundaries (one pass, no cascade). Changed parts are re-validated.
 _ENSEMBLE = False
 _ENS = {'snap_qn': 1.5, 'min_support': 3, 'relief_frac': 0.5, 'clear_qn': 2.0,
-        'snap_sel_ratio': 0.6}
+        'snap_sel_ratio': 0.6, 'relief_suppressed': False}
 
 # v2.11-A: tie masks open at the chain start. A tie (natural, or a same-pitch
 # "tie-like" slur) forbids breaths that split the sustained note. The first
@@ -3574,8 +3574,14 @@ def run_sectioning(input_path, output_dir='./output',
                     if fb[f] > 0:
                         continue
                     a_ = float(ac[f])
-                    if not (_ENS['relief_frac'] * selection_accept_height <= a_ < selection_accept_height):
+                    if a_ < _ENS['relief_frac'] * selection_accept_height:
                         continue
+                    if a_ >= selection_accept_height and not _ENS['relief_suppressed']:
+                        continue
+                    # relief_suppressed (v2.11-A): a peak that cleared the
+                    # gate but was suppressed by grouping is also eligible
+                    # -- the every-bar passages, where the ensemble itself
+                    # is the local evidence that phrases are one bar long.
                     t = f / float(division)
                     near = [r for r in rels if -0.02 <= r - t <= 0.5]
                     x = min(near, key=lambda r: abs(r - t)) if near else None
@@ -3700,6 +3706,7 @@ def run_sectioning(input_path, output_dir='./output',
             'peak_grouping': _PEAK_GROUPING,
             'soft_power': _SOFT_POWER,
             'ensemble': bool(_ENSEMBLE),
+            'ensemble_params': dict(_ENS),
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
@@ -3772,6 +3779,7 @@ def run_sectioning(input_path, output_dir='./output',
             'peak_grouping': _PEAK_GROUPING,
             'soft_power': _SOFT_POWER,
             'ensemble': bool(_ENSEMBLE),
+            'ensemble_params': dict(_ENS),
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
@@ -4432,6 +4440,12 @@ def main():
     parser.add_argument('--selection_tuplet_penalty', type=float, default=0.45)
     parser.add_argument('--note_candidate_weight', type=float, default=0.65)
     parser.add_argument('--selection_accept_height', type=float, default=0.30)
+    parser.add_argument('--ensemble_relief_suppressed', action='store_true',
+                        help='v2.11-A: ensemble gate relief also covers peaks '
+                             'suppressed by grouping (not only below the gate).')
+    parser.add_argument('--ensemble_clear_qn', type=float, default=2.0,
+                        help='v2.11-A: relief requires no own boundary within '
+                             'this distance. Default 2.0.')
     parser.add_argument('--ensemble', action='store_true',
                         help='v2.11-A: minimal ensemble alignment (snap + '
                              'gate relief, arbitration only). Default off.')
@@ -4558,6 +4572,8 @@ def main():
 
     global _ENSEMBLE
     _ENSEMBLE = bool(args.ensemble)
+    _ENS['relief_suppressed'] = bool(args.ensemble_relief_suppressed)
+    _ENS['clear_qn'] = float(args.ensemble_clear_qn)
 
     global _TIE_OPEN_START
     _TIE_OPEN_START = bool(args.tie_open_start)
