@@ -2490,6 +2490,9 @@ _FILTER_AFTER_ANCHOR = False
 _ENDPOINT_RELEASE = False
 # v2.11-A: unmask slur seams (one slur's release == next slur's start).
 _SLUR_SEAM_OPEN = False
+# v2.11-A: doubling vote (parts with identical onsets breathe together).
+_DOUBLING_VOTE = False
+_DOUBLING = {'window_qn': 4.0, 'clear_qn': 2.0}
 # v2.11-A: under endpoint_release, compare endpoint evidence of the note
 # ending at a seam with that of the note starting there (see E0b).
 _E0B_COMPARE = False
@@ -3693,6 +3696,81 @@ def run_sectioning(input_path, output_dir='./output',
                     print(f"       part {i:2d} {part_names[i]:25s} "
                           f"{len(ensemble_info[i])} ensemble change(s)")
 
+    # v2.11-A: doubling vote. Parts with identical note onsets around a
+    # breath (octave/unison doublings) play one phrase and should breathe
+    # together. Each breath instant is decided once for its doubling group,
+    # weighted by the parts' own Sel there: holders outweigh non-holders ->
+    # add to the doublers lacking it (unless one already has a kept breath
+    # within 2 qn); otherwise remove it. Strongest instants first.
+    if _DOUBLING_VOTE:
+        print("[10a2] Doubling vote")
+        W = _DOUBLING['window_qn']
+        cur = {i: sorted(float(b) for b in boundaries_per_part[i])
+               for i in range(len(parts)) if not is_tacet[i]}
+        ons = {i: [round(float(n['offset']), 3) for n in notes_per_part[i]] for i in cur}
+
+        def _onsets(i, t):
+            return [o for o in ons[i] if t - W <= o <= t + W]
+
+        def _sel(i, t):
+            d = per_part_candidate_diagnostics[i] or {}
+            a_ = d.get('selection_score')
+            if a_ is None:
+                return 0.0
+            return float(a_[min(max(int(round(t * division)), 0), len(a_) - 1)])
+
+        inst = sorted({round(b, 3) for i in cur for b in cur[i]},
+                      key=lambda t: -sum(_sel(i, t) for i in cur
+                                         if any(abs(t - b) <= 0.1 for b in cur[i])))
+        decided = {i: [] for i in cur}
+        changed_parts = set()
+        for t in inst:
+            holders = [i for i in cur if any(abs(t - b) <= 0.1 for b in cur[i])]
+            for i0 in holders:
+                o0 = _onsets(i0, t)
+                if not o0:
+                    continue
+                grp = [j for j in cur if _onsets(j, t) == o0]
+                if len(grp) < 2:
+                    continue
+                h = [j for j in grp if j in holders]
+                n_ = [j for j in grp if j not in holders]
+                if not n_:
+                    break
+                if sum(_sel(j, t) for j in h) >= sum(_sel(j, t) for j in n_):
+                    for j in n_:
+                        if any(abs(t - b) <= _DOUBLING['clear_qn'] for b in decided[j]):
+                            continue
+                        cur[j] = sorted(cur[j] + [t])
+                        decided[j].append(t)
+                        changed_parts.add(j)
+                        ensemble_info[j].append({'from': None, 'to': t, 'reason': 'doubling_add',
+                                                 'group': grp})
+                    for j in h:
+                        decided[j].append(t)
+                else:
+                    for j in h:
+                        if any(abs(t - d) <= 0.1 for d in decided[j]):
+                            continue
+                        cur[j] = [b for b in cur[j] if abs(b - t) > 0.1]
+                        changed_parts.add(j)
+                        ensemble_info[j].append({'from': t, 'to': None, 'reason': 'doubling_remove',
+                                                 'group': grp})
+                break
+        for i in sorted(changed_parts):
+            bdys_i, recs_i = validate_boundaries_for_part(
+                parts[i], cur[i], slur_info[i], structural_info[i], natural_tie_info[i],
+                reject_rest_boundaries=reject_rest_boundaries,
+                reject_outgoing_ties=reject_outgoing_ties,
+            )
+            boundaries_per_part[i] = bdys_i
+            _old_rej = [t for t in boundary_target_info[i] if not t.get('kept', True)
+                        and not any(abs(t['boundary_time'] - n['boundary_time']) <= 1e-3
+                                    for n in recs_i)]
+            boundary_target_info[i] = sorted(recs_i + _old_rej, key=lambda t: t['boundary_time'])
+            print(f"       part {i:2d} {part_names[i]:25s} "
+                  f"{sum(1 for c in ensemble_info[i] if c['reason'].startswith('doubling'))} doubling change(s)")
+
     # v2.10-A: phrase material / shape report (passive read-out).
     print("[10b] Phrase material report")
     if compute_phrase_material_report is None:
@@ -3796,6 +3874,7 @@ def run_sectioning(input_path, output_dir='./output',
             'endpoint_release': bool(_ENDPOINT_RELEASE),
             'e0b_compare': bool(_E0B_COMPARE),
             'slur_seam_open': bool(_SLUR_SEAM_OPEN),
+            'doubling_vote': bool(_DOUBLING_VOTE),
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3872,6 +3951,7 @@ def run_sectioning(input_path, output_dir='./output',
             'endpoint_release': bool(_ENDPOINT_RELEASE),
             'e0b_compare': bool(_E0B_COMPARE),
             'slur_seam_open': bool(_SLUR_SEAM_OPEN),
+            'doubling_vote': bool(_DOUBLING_VOTE),
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4554,6 +4634,10 @@ def main():
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
+    parser.add_argument('--doubling_vote', action=argparse.BooleanOptionalAction, default=False,
+                        help='v2.11-A: parts with identical note onsets around '
+                             'a breath (doublings) vote, Sel-weighted, to '
+                             'breathe together. Default off.')
     parser.add_argument('--slur_seam_open', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: unmask slur/hairpin start frames at slur '
                              'seams (previous slur releases where the next '
@@ -4704,6 +4788,9 @@ def main():
 
     global _SLUR_SEAM_OPEN
     _SLUR_SEAM_OPEN = bool(args.slur_seam_open)
+
+    global _DOUBLING_VOTE
+    _DOUBLING_VOTE = bool(args.doubling_vote)
 
     run_sectioning(
         args.input,

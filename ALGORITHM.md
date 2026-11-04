@@ -1663,6 +1663,35 @@ Findings to check, before any tuning on Dvořák:
   quarter rest).
 - Whether 777 is over-segmentation is Robert's call from the score.
 
+### (16) Dvořák ensemble agreement and the doubling vote (2026-11-04)
+
+Robert's read of m.1-35: good, a bit extraneous; most breaths here should be
+unison and most unison ones are present. `ensemble_report.py` clusters breath
+instants across parts and labels each UNISON (>= 60% of the parts sounding
+there breathe), LONE (<= 2 parts and <= 25%), or partial. X7, m.1-35: 37
+clusters, 16 unison, 10 partial, 11 lone; whole excerpt 197 / 49 / 49 / 99
+(`review/dvorak_X7_ensemble_*.md`).
+
+- Tutti unison points are found: m.9 end 14/15, m.13 b2 12/15, m.15 b2 13/15,
+  m.19 b2 13/15, m.23 b2 13/15, m.25 b3.5 13/15.
+- 7 of the 11 lone breaths are in Horns III-IV, Trumpets and Trombone III at
+  m.12 b3, m.15 end, m.19 b2.5, m.23 b2.5 -- the theme-carrying brass, which
+  are exactly the parts "sounding but not breathing" at the tutti points. They
+  may be the theme's own phrase ends (relevant to melody detection), or a
+  near-miss of the tutti breath one eighth earlier. Robert's call.
+- Strings-only passages split: m.6-7 the five string parts play identical
+  onsets and slurs (qn 20-28) yet breathe at 19.75 / 20 / 21.5 / 27.5 / 29;
+  m.26-32 Vn1 and Viola share a rhythm but not breaths (Vc = Cb agree).
+
+**Rejected: `--doubling_vote`** (kept, default off). Parts with identical
+onsets within +/-4 qn vote, Sel-weighted, to breathe together. Dvořák: lone
+clusters 99 -> 75, unison 49 -> 55. But it does not unify m.6-7 (the window
+spans the preceding bar, where the strings' figures differ), and on Liz it
+costs: 8 of its 9 additions are conflicts and it removes one GT breath
+(exact 237 -> 236, extras 63 -> 71, objectionable 22 -> 24). In Liz, parts
+with identical rhythm (Tpt/Euph, the two harp staves) are often given
+different breaths in GT: rhythmic doubling is not phrase identity.
+
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
 | Group | Count | Fix |
