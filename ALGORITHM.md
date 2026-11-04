@@ -5,7 +5,7 @@
 **Reference outputs:** `output_v2_10_F1b/liz_seam_B3_all`, `output_v2_10_F1c/liz_seam_C1_slur_release` (regenerable; not in git)
 **Input:** `Liz_and_the_Blue_Bird_III-1.2_colored.mxl` (sha256 `2f4090f999e36d64…`), music21 10.5.2 reproduces every number here
 **Test score:** *Liz and the Blue Bird III*, 10 parts, 94 measures, 390 qn
-**Held out:** Dvořák 9/iv — untouched
+**Held out:** Dvořák 9/iv — unsealed 2026-11-04 for a first qualitative run (no GT yet; §16c(15))
 **Last revised:** 2026-11-03 — F1c(a) measured (PENDING blocks filled); v2.11-A structural fixes (§16c); two experiments rejected and recorded
 
 > All mathematics below is written in plain text inside code blocks. No LaTeX,
@@ -1640,6 +1640,28 @@ Printed breath weight stays 0. Each boolean has a `--no-` form;
 `--legacy_defaults` restores F1c (verified identical, 105/105 and with C1
 flags 238/238). Defaults are CLI-level: code calling `run_sectioning()`
 directly still gets the module globals' legacy values.
+
+### (15) Dvořák 9/iv, first run (2026-11-04, unsealed by Robert)
+
+`Dvorak_no9_colored_cut.mxl`: 15 parts (winds, brass, timpani, strings),
+608 qn, no GT, no printed breath marks. Runs in ~60 s; replay verifies 15/15.
+
+| Run | Boundaries | Median same-part gap | Gaps < 4 qn | Gaps < 2 qn | Ensemble changes | annotation_check |
+|---|---|---|---|---|---|---|
+| C1 settings (`--legacy_defaults` + C1 flags) | 553 | 8.0 qn | 33 | 11 | 0 | 531 ok, 4 late, 18 missing, 17 extra |
+| **X7 defaults** | 777 | 8.0 qn | 2 | 1 | 156 | 765 ok, 2 late, 10 missing, 10 extra |
+
+Findings to check, before any tuning on Dvořák:
+- **Ensemble support threshold does not scale.** `min_support = 3` other parts
+  is far easier with 15 parts than with 10; 156 changes over two passes.
+  Likely needs a fraction of active parts (e.g. >= 30%) instead of a count.
+- **Entry-instant boundaries after short rests** (e.g. strings qn 64, m.16
+  end): no note releases there, so the comma renders on the note before the
+  rest -- musically plausible, but the boundary time sits one rest late. E0c
+  says the written rest is the separator: such a boundary should snap to
+  the release before the rest (the 0.25 qn seam snap does not reach a
+  quarter rest).
+- Whether 777 is over-segmentation is Robert's call from the score.
 
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
