@@ -1566,6 +1566,26 @@ gate but were suppressed by grouping (support >= 3, no own boundary within
 
 +12 GT for +10 conflicts (F 0.81 -> 0.82; clear 2.0 gives the same within 2).
 
+### (11) `--e0b_compare` — one-note-early breaths (2026-11-04)
+
+With endpoint evidence at releases, a seam can be tested properly: evidence
+at b describes the note ending at b; evidence at rel(n) describes the note n
+starting at b. Under `--endpoint_release`, `--e0b_compare` moves a seam
+boundary to rel(n) only when n has endpoint evidence (> ev_min) **and the
+note ending at b is a short passing note (Long(b) < 0.2)** -- after a long
+arrival note a breath at b is natural. A first version with an evidence
+margin re-created the late landings (Oboe/Trumpet m.82 end -> m.83 b2);
+on its 12 shifts, every good one had Long(b) <= 0.18 and every harmful one
+>= 0.35. Threshold fitted on one piece: check on Dvořák.
+
+| Run | Exact | Extras | Audit P/F | Unison | Objectionable |
+|---|---|---|---|---|---|
+| X3 | 227 | 66 | 165/25 | 1 | 31 (22/3/6) |
+| **X4** = X3 + `--e0b_compare` | **230** | **64** | **167/23** | **0** | **29** (20/3/6) |
+
+X4 verifies 10/10 and renders 294/294 (the one annotation "extra" is a
+printed Oboe comma in the input). All GT unison constraints pass.
+
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
 | Group | Count | Fix |

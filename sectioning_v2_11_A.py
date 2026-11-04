@@ -2173,6 +2173,25 @@ def release_anchor_boundaries(bdys, part_notes, long_grid, gap_grid,
                     new_bt = _cand
                     reason = ('seam_arrival_evidence' if at_rel
                               else 'entry_onset_arrival_evidence')
+        elif (k_on.size and _ENDPOINT_RELEASE and at_rel and _E0B_COMPARE):
+            # v2.11-A: with endpoint evidence at releases, a seam boundary
+            # can be tested properly: evidence at bt describes the note
+            # ENDING at bt; evidence at rel(n) describes the note n STARTING
+            # at bt. Move to rel(n) only when n's endpoint evidence clearly
+            # exceeds the ending note's (the one-note-early cases), never by
+            # default (the late-landing cases).
+            _rn = float(rels[k_on[0]])
+            _fb = min(max(int(round(bt * division)), 0), T - 1)
+            _fn = min(max(int(round(_rn * division)), 0), T - 1)
+            _ev_b = max(float(long_grid[_fb]), float(gap_grid[_fb]))
+            _ev_n = max(float(long_grid[_fn]), float(gap_grid[_fn]))
+            # Shift only when the note ending at bt is a short passing note
+            # (no long-note arrival of its own): after a long arrival note a
+            # breath at bt is natural (Oboe/Trumpet m.82 end, Euph m.27 end).
+            # Measured on X4's shifts: every good one had Long(bt) <= 0.18,
+            # every harmful one >= 0.35.
+            if (_ev_n > evidence_min and float(long_grid[_fb]) < _E0B_COMPARE_LONG_MAX):
+                new_bt, reason = _rn, 'seam_endpoint_compare'
         if reason is not None and abs(new_bt - bt) > eps:
             shifts.append({'from': bt, 'to': new_bt, 'reason': reason})
         mapped.append(new_bt)
@@ -2451,6 +2470,10 @@ _FILTER_AFTER_ANCHOR = False
 # and E0b case 2 is disabled (nothing left for it to correct); case 1
 # (mid-note -> release) is kept.
 _ENDPOINT_RELEASE = False
+# v2.11-A: under endpoint_release, compare endpoint evidence of the note
+# ending at a seam with that of the note starting there (see E0b).
+_E0B_COMPARE = False
+_E0B_COMPARE_LONG_MAX = 0.2
 
 
 def _endpoint_pos(note):
@@ -3710,6 +3733,7 @@ def run_sectioning(input_path, output_dir='./output',
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
+            'e0b_compare': bool(_E0B_COMPARE),
             'all_knobs': _knobs,
         })
         with open(summary_path, 'w', encoding='utf-8') as _f:
@@ -3783,6 +3807,7 @@ def run_sectioning(input_path, output_dir='./output',
             'tie_open_start': bool(_TIE_OPEN_START),
             'filter_after_anchor': bool(_FILTER_AFTER_ANCHOR),
             'endpoint_release': bool(_ENDPOINT_RELEASE),
+            'e0b_compare': bool(_E0B_COMPARE),
             'all_knobs': _knobs,
             'division': division,
             'kernel_size_frames': kernel_size_frames,
@@ -4458,6 +4483,11 @@ def main():
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
+    parser.add_argument('--e0b_compare', action='store_true',
+                        help='v2.11-A: with --endpoint_release, shift a seam '
+                             'boundary to the next note release only when '
+                             'that note\'s endpoint evidence clearly exceeds '
+                             'the ending note\'s. Default off.')
     parser.add_argument('--endpoint_release', action='store_true',
                         help='v2.11-A (D1): project LBDM, Long and Gap at the '
                              'note release and disable E0b case 2. Default off.')
@@ -4583,6 +4613,9 @@ def main():
 
     global _ENDPOINT_RELEASE
     _ENDPOINT_RELEASE = bool(args.endpoint_release)
+
+    global _E0B_COMPARE
+    _E0B_COMPARE = bool(args.e0b_compare)
 
     run_sectioning(
         args.input,
