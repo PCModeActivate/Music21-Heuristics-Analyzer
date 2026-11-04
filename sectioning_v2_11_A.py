@@ -2434,6 +2434,16 @@ _SOFT_POWER = 1.0
 # Support = other parts with a boundary within 0.1 qn, from the pre-pass
 # boundaries (one pass, no cascade). Changed parts are re-validated.
 _ENSEMBLE = False
+# v2.11-A defaults (2026-11-04): the CLI defaults are the X7 configuration
+# (ALGORITHM.md 16c(13)). --legacy_defaults restores exactly these pre-v2.11
+# values (identical output to sectioning_v2_10_F1c.py without flags).
+LEGACY_CLI_DEFAULTS = dict(
+    slur_end_release=False, filter_after_anchor=False, tie_open_start=False,
+    endpoint_release=False, e0b_compare=False, slur_seam_open=False,
+    ensemble=False, ensemble_relief_suppressed=False, ensemble_passes=1,
+    ensemble_strong_support=99, ensemble_clear_qn=2.0,
+    peak_grouping='transitive', peak_distance_qn=2.5, soft_power=1.0,
+    rest_seam_policy='legacy', f1_fermata_weight=0.0, f1_dim_end_weight=0.0)
 _ENS = {'snap_qn': 1.5, 'min_support': 3, 'relief_frac': 0.5, 'clear_qn': 2.0,
         'snap_sel_ratio': 0.6, 'relief_suppressed': False,
         'strong_support': 99, 'strong_frac': 0.33, 'passes': 1}
@@ -4509,7 +4519,7 @@ def main():
     parser.add_argument('--structural_sigma_qn', type=float, default=0.5)
     parser.add_argument('--peak_height', type=float, default=0.3)
     parser.add_argument('--candidate_height', type=float, default=0.22)
-    parser.add_argument('--peak_distance_qn', type=float, default=2.5)
+    parser.add_argument('--peak_distance_qn', type=float, default=6.0)
     parser.add_argument('--selection_lbdm_weight', type=float, default=0.30)
     parser.add_argument('--selection_long_weight', type=float, default=0.30)
     parser.add_argument('--selection_gap_weight', type=float, default=0.20)
@@ -4519,52 +4529,52 @@ def main():
     parser.add_argument('--selection_tuplet_penalty', type=float, default=0.45)
     parser.add_argument('--note_candidate_weight', type=float, default=0.65)
     parser.add_argument('--selection_accept_height', type=float, default=0.30)
-    parser.add_argument('--ensemble_relief_suppressed', action='store_true',
+    parser.add_argument('--ensemble_relief_suppressed', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: ensemble gate relief also covers peaks '
                              'suppressed by grouping (not only below the gate).')
-    parser.add_argument('--ensemble_passes', type=int, default=1,
+    parser.add_argument('--ensemble_passes', type=int, default=2,
                         help='v2.11-A: ensemble passes; each recomputes '
                              'support from the previous pass. Default 1.')
-    parser.add_argument('--ensemble_strong_support', type=int, default=99,
+    parser.add_argument('--ensemble_strong_support', type=int, default=5,
                         help='v2.11-A: with at least this many other parts '
                              'breathing at a candidate, the relief floor drops '
                              'to a third of the gate. Default 99 (off).')
-    parser.add_argument('--ensemble_clear_qn', type=float, default=2.0,
+    parser.add_argument('--ensemble_clear_qn', type=float, default=3.5,
                         help='v2.11-A: relief requires no own boundary within '
                              'this distance. Default 2.0.')
-    parser.add_argument('--ensemble', action='store_true',
+    parser.add_argument('--ensemble', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: minimal ensemble alignment (snap + '
                              'gate relief, arbitration only). Default off.')
-    parser.add_argument('--soft_power', type=float, default=1.0,
+    parser.add_argument('--soft_power', type=float, default=2.0,
                         help='v2.11-A: exponent of the soft-grouping penalty '
                              '(distance/peak_distance)**p. Default 1.0.')
     parser.add_argument('--peak_grouping', choices=['transitive', 'nms', 'soft'],
-                        default='transitive',
+                        default='soft',
                         help='v2.11-A: candidate peak grouping. transitive = '
                              'legacy chained groups (FM2); nms = non-maximum '
                              'suppression by selection score. Default '
                              'transitive.')
-    parser.add_argument('--slur_seam_open', action='store_true',
+    parser.add_argument('--slur_seam_open', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: unmask slur/hairpin start frames at slur '
                              'seams (previous slur releases where the next '
                              'starts, no enclosing slur). Default off.')
-    parser.add_argument('--e0b_compare', action='store_true',
+    parser.add_argument('--e0b_compare', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: with --endpoint_release, shift a seam '
                              'boundary to the next note release only when '
                              'that note\'s endpoint evidence clearly exceeds '
                              'the ending note\'s. Default off.')
-    parser.add_argument('--endpoint_release', action='store_true',
+    parser.add_argument('--endpoint_release', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A (D1): project LBDM, Long and Gap at the '
                              'note release and disable E0b case 2. Default off.')
-    parser.add_argument('--filter_after_anchor', action='store_true',
+    parser.add_argument('--filter_after_anchor', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: run the short-phrase filter after E0b '
                              'release anchoring, in release coordinates. '
                              'Default off.')
-    parser.add_argument('--tie_open_start', action='store_true',
+    parser.add_argument('--tie_open_start', action=argparse.BooleanOptionalAction, default=True,
                         help='v2.11-A: allow a breath at the first onset of '
                              'a tie chain (natural or tie-like), i.e. before '
                              'the tied note. Default off.')
-    parser.add_argument('--slur_end_release', action='store_true',
+    parser.add_argument('--slur_end_release', action=argparse.BooleanOptionalAction, default=True,
                         help='F1c: project the slur endpoint bump at the last '
                              'slurred note tie-chain release instead of its '
                              'onset. Default off (one validation run).')
@@ -4607,7 +4617,7 @@ def main():
     parser.add_argument('--convention', choices=['muller', 'foote'],
                         default='muller')
     parser.add_argument('--rest_seam_policy', choices=['legacy', 'seam'],
-                        default='legacy',
+                        default='seam',
                         help="'legacy': at-seam boundaries classify as "
                              "in-rest (v2.9.1 behavior). 'seam': at-seam "
                              "boundaries are kept (breath after the final "
@@ -4620,10 +4630,10 @@ def main():
                         help='v2.11-A: F1 weight for breath marks printed in '
                              'the input score (anchored at the marked note '
                              'release). Default 0.0.')
-    parser.add_argument('--f1_fermata_weight', type=float, default=0.0,
+    parser.add_argument('--f1_fermata_weight', type=float, default=1.0,
                         help='F1 fermata chain-release evidence weight '
                              '(proposed 1.0; >=0.30 fires alone)')
-    parser.add_argument('--f1_dim_end_weight', type=float, default=0.0,
+    parser.add_argument('--f1_dim_end_weight', type=float, default=0.6,
                         help='F1 diminuendo-end evidence weight '
                              '(proposed 0.6)')
     parser.add_argument('--f1_cresc_end_weight', type=float, default=0.0,
@@ -4642,6 +4652,14 @@ def main():
                         help='F1b: add F1 evidence after the continuation '
                              'multiplier (pre-F1b placement)')
 
+    parser.add_argument('--legacy_defaults', action='store_true',
+                        help='Restore the pre-v2.11 (F1c) defaults: every '
+                             'v2.11-A mechanism off, transitive grouping at '
+                             '2.5 qn, legacy rest seams, F1 weights 0. Explicit '
+                             'flags still override.')
+    _pre, _ = parser.parse_known_args()
+    if _pre.legacy_defaults:
+        parser.set_defaults(**LEGACY_CLI_DEFAULTS)
     args = parser.parse_args()
     _F1B.update(
         slur_deferral=not args.f1b_no_slur_deferral,

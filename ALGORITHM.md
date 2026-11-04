@@ -1,6 +1,6 @@
 # Sectioning: an explainable algorithm for phrase/section boundary detection in polyphonic symbolic music
 
-**Pipeline version:** `sectioning_v2_11_A.py` (F1c + four v2.11-A flags, all default off; with no new flags it is identical to `sectioning_v2_10_F1c.py`). Validated reference kept untouched: `sectioning_v2_10_F1b.py`.
+**Pipeline version:** `sectioning_v2_11_A.py`. Since 2026-11-04 its CLI defaults are the X7 configuration (§16c(13)); `--legacy_defaults` reproduces `sectioning_v2_10_F1c.py` exactly. Validated reference kept untouched: `sectioning_v2_10_F1b.py`.
 **Reference runs:** B3 — `--f1_fermata_weight 1.0 --f1_dim_end_weight 0.6 --rest_seam_policy seam`; C1 — B3 + `--slur_end_release`. v2.11-A candidates in §16c.
 **Reference outputs:** `output_v2_10_F1b/liz_seam_B3_all`, `output_v2_10_F1c/liz_seam_C1_slur_release` (regenerable; not in git)
 **Input:** `Liz_and_the_Blue_Bird_III-1.2_colored.mxl` (sha256 `2f4090f999e36d64…`), music21 10.5.2 reproduces every number here
@@ -1627,6 +1627,19 @@ m.31 end matters.
 
 X7 gains Cl1 and Euph m.31 end, the printed Oboe m.40 breath, Cl2 m.20 b3 and
 ASax m.39 b3; verifies 10/10 and renders 300/300 with no extras.
+
+### (14) Defaults (2026-11-04)
+
+The CLI defaults of `sectioning_v2_11_A.py` are now X7: `--slur_end_release
+--filter_after_anchor --tie_open_start --endpoint_release --e0b_compare
+--slur_seam_open --ensemble --ensemble_relief_suppressed` on;
+`--peak_grouping soft --peak_distance_qn 6.0 --soft_power 2
+--ensemble_passes 2 --ensemble_strong_support 5 --ensemble_clear_qn 3.5
+--rest_seam_policy seam --f1_fermata_weight 1.0 --f1_dim_end_weight 0.6`.
+Printed breath weight stays 0. Each boolean has a `--no-` form;
+`--legacy_defaults` restores F1c (verified identical, 105/105 and with C1
+flags 238/238). Defaults are CLI-level: code calling `run_sectioning()`
+directly still gets the module globals' legacy values.
 
 ### Remaining violations, soft r6 p2 (2026-11-04, `violations_report.py`)
 
