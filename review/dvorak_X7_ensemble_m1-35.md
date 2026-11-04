@@ -67,3 +67,16 @@ Clusters of breath instants across parts (merged within 0.25 qn). UNISON = at le
 | Fagotti I. II. | m.35 b2.5 | 137.500 | 0.32 | own evidence |
 
 Lone breaths per part: Corni III. IV. E 4, Trombe I. II. E 4, Viole 2, Tromboni III. 2, Timpani E, H 2, Violini II. 2, Fagotti I. II. 1
+
+## Reviewer notes (Robert, 2026-11-04) -- parked, not yet acted on
+
+- Overall: mostly serviceable for melody detection; a bit extraneous.
+- Brass (Horns III-IV, Trumpets, Trombone III lone breaths at m.12 b3,
+  m.15 end, m.19 b2.5, m.23 b2.5): **mostly right** -- the theme's own phrasing.
+- m.5: Violin I has no breath at m.5, Violin II has an extraneous one
+  (run: Vn2 at qn 20 = m.5 end; Vn1 none until qn 29).
+- m.26-27: Violin I, Violin II and Cello should have **only** the breath at
+  the end of m.25 (qn 100). Run: Vn1 102, 108; Vn2 102, 108; Vc 110 -- none
+  at 100.
+- m.31-32: should be **unison at the end of m.31** (qn 124). Run: Vn2 and
+  Viola at 124; Vn1, Cello, Bass at 126 (m.32 b3).
