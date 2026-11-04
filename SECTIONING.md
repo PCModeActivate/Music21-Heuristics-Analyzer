@@ -3,8 +3,6 @@
 **Status:** v2.11-A, 4 November 2026 · **Code:** `sectioning_v2_11_A.py` (branch `v2`)
 **Development log and full derivations:** `ALGORITHM.md` · **Handover:** `HANDOVER_v2_11_A_2026-11-04.md`
 
-All mathematics is plain text, readable in any viewer.
-
 ---
 
 ## 1. What it does
@@ -14,11 +12,19 @@ independently**, the instants where that part's phrase ends, i.e. where a
 player would breathe or a phrase would break. It writes them as breath marks
 (red commas) into a copy of the score and as a JSON list per part.
 
+The methodology explicitly uses **white-box methods**, i.e. heuristics such as
+LBDM, music theory, etc. and explicitly **rejects the use of any black-box methods**
+to guarantee determinism and explainability.
+
 It exists to give melody detection phrase-level segments. It is built to be
 **explainable**: every quantity is a closed-form function of score features
 with named, serialised parameters. There are no learned weights. Any
 boundary can be decomposed into the evidence that produced it, and any
 dropped boundary leaves a record.
+
+While the goal may be to give a good set of phrases or section data, this is a
+secondary goal, where the primary goal is to provide sections **useful to advise 
+method** detection with.
 
 Two conventions run through everything:
 
